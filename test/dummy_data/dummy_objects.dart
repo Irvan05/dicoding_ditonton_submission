@@ -1,7 +1,11 @@
 import 'package:ditonton/data/models/movie_table.dart';
+import 'package:ditonton/data/models/tv_table.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
+import 'package:ditonton/domain/entities/season.dart';
+import 'package:ditonton/domain/entities/tv.dart';
+import 'package:ditonton/domain/entities/tv_detail.dart';
 
 final testMovie = Movie(
   adult: false,
@@ -19,8 +23,23 @@ final testMovie = Movie(
   voteAverage: 7.2,
   voteCount: 13507,
 );
+final testTv = Tv(
+    backdropPath: "/56v2KjBlU4XaOv9rVYEQypROD7P.jpg",
+    firstAirDate: DateTime(2016, 7, 15), //"2016-07-15",
+    genreIds: [18, 10765, 9648],
+    id: 66732,
+    name: "Stranger Things",
+    originCountry: ["US"],
+    originalLanguage: "en",
+    originalName: "Stranger Things",
+    overview: "overview",
+    popularity: 475.516,
+    posterPath: "/49WJfeN0moxb9IPfGn8AIqMGskD.jpg",
+    voteAverage: 8.6,
+    voteCount: 14335);
 
 final testMovieList = [testMovie];
+final testTvList = [testTv];
 
 final testMovieDetail = MovieDetail(
   adult: false,
@@ -36,11 +55,39 @@ final testMovieDetail = MovieDetail(
   voteAverage: 1,
   voteCount: 1,
 );
+final testTvDetail = TvDetail(
+    adult: false,
+    backdropPath: "/56v2KjBlU4XaOv9rVYEQypROD7P.jpg",
+    genres: [Genre(id: 18, name: 'Drama')],
+    id: 66732,
+    name: 'Stranger Things',
+    overview: "overview",
+    posterPath: "/49WJfeN0moxb9IPfGn8AIqMGskD.jpg",
+    firstAirDate: DateTime(2017, 7, 15),
+    seasons: [
+      Season(
+          airDate: DateTime(2017, 7, 15),
+          episodeCount: 8,
+          id: 77680,
+          name: "Season 1",
+          overview: "overview",
+          posterPath: "/rbnuP7hlynAMLdqcQRCpZW9qDkV.jpg",
+          seasonNumber: 1)
+    ],
+    status: "Returning Series",
+    voteAverage: 8.641,
+    voteCount: 14342);
 
 final testWatchlistMovie = Movie.watchlist(
   id: 1,
   title: 'title',
   posterPath: 'posterPath',
+  overview: 'overview',
+);
+final testWatchlistTv = Tv.watchlist(
+  id: 66732,
+  name: 'Stranger Things',
+  posterPath: '/49WJfeN0moxb9IPfGn8AIqMGskD.jpg',
   overview: 'overview',
 );
 
@@ -50,10 +97,22 @@ final testMovieTable = MovieTable(
   posterPath: 'posterPath',
   overview: 'overview',
 );
+final testTvTable = TvTable(
+  id: 66732,
+  name: 'Stranger Things',
+  posterPath: '/49WJfeN0moxb9IPfGn8AIqMGskD.jpg',
+  overview: 'overview',
+);
 
 final testMovieMap = {
   'id': 1,
   'overview': 'overview',
   'posterPath': 'posterPath',
   'title': 'title',
+};
+final testTvMap = {
+  'id': 66732,
+  'name': 'Stranger Things',
+  'posterPath': '/49WJfeN0moxb9IPfGn8AIqMGskD.jpg',
+  'overview': 'overview',
 };

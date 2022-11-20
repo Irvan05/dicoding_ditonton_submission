@@ -198,14 +198,14 @@ void main() {
     group('cache now playing movies', () {
       test('should call database helper to save data', () async {
         // arrange
-        when(mockDatabaseHelper.clearCache('now playing'))
+        when(mockDatabaseHelper.clearCacheMovie('now playing'))
             .thenAnswer((_) async => 1);
         // act
         await dataSource.cacheNowPlayingMovies([testMovieCache]);
         // assert
-        verify(mockDatabaseHelper.clearCache('now playing'));
+        verify(mockDatabaseHelper.clearCacheMovie('now playing'));
         verify(mockDatabaseHelper
-            .insertCacheTransaction([testMovieCache], 'now playing'));
+            .insertCacheTransactionMovie([testMovieCache], 'now playing'));
       });
 
       test('should return list of movies from db when data exist', () async {
@@ -467,7 +467,7 @@ void main() {
   group('save watchlist', () {
     test('should return success message when saving successful', () async {
       // arrange
-      when(mockLocalDataSource.insertWatchlist(testMovieTable))
+      when(mockLocalDataSource.insertWatchlistMovie(testMovieTable))
           .thenAnswer((_) async => 'Added to Watchlist');
       // act
       final result = await repository.saveWatchlist(testMovieDetail);
@@ -477,7 +477,7 @@ void main() {
 
     test('should return DatabaseFailure when saving unsuccessful', () async {
       // arrange
-      when(mockLocalDataSource.insertWatchlist(testMovieTable))
+      when(mockLocalDataSource.insertWatchlistMovie(testMovieTable))
           .thenThrow(DatabaseException('Failed to add watchlist'));
       // act
       final result = await repository.saveWatchlist(testMovieDetail);
@@ -489,7 +489,7 @@ void main() {
   group('remove watchlist', () {
     test('should return success message when remove successful', () async {
       // arrange
-      when(mockLocalDataSource.removeWatchlist(testMovieTable))
+      when(mockLocalDataSource.removeWatchlistMovie(testMovieTable))
           .thenAnswer((_) async => 'Removed from watchlist');
       // act
       final result = await repository.removeWatchlist(testMovieDetail);
@@ -499,7 +499,7 @@ void main() {
 
     test('should return DatabaseFailure when remove unsuccessful', () async {
       // arrange
-      when(mockLocalDataSource.removeWatchlist(testMovieTable))
+      when(mockLocalDataSource.removeWatchlistMovie(testMovieTable))
           .thenThrow(DatabaseException('Failed to remove watchlist'));
       // act
       final result = await repository.removeWatchlist(testMovieDetail);
@@ -514,7 +514,7 @@ void main() {
       final tId = 1;
       when(mockLocalDataSource.getMovieById(tId)).thenAnswer((_) async => null);
       // act
-      final result = await repository.isAddedToWatchlist(tId);
+      final result = await repository.isAddedToWatchlistMovie(tId);
       // assert
       expect(result, false);
     });
