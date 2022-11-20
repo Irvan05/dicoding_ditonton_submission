@@ -21,11 +21,12 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-        () => Provider.of<MovieListNotifier>(context, listen: false)
-          ..fetchNowPlayingMovies()
-          ..fetchPopularMovies()
-          ..fetchTopRatedMovies());
+    Future.microtask(() {
+      Provider.of<MovieListNotifier>(context, listen: false);
+      // ..fetchNowPlayingMovies()
+      // ..fetchPopularMovies()
+      // ..fetchTopRatedMovies();
+    });
   }
 
   @override
@@ -66,7 +67,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
         ),
       ),
       appBar: AppBar(
-        title: Text('Ditonton'),
+        title: Text('Movies'),
         actions: [
           IconButton(
             onPressed: () {

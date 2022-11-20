@@ -470,7 +470,7 @@ void main() {
       when(mockLocalDataSource.insertWatchlistMovie(testMovieTable))
           .thenAnswer((_) async => 'Added to Watchlist');
       // act
-      final result = await repository.saveWatchlist(testMovieDetail);
+      final result = await repository.saveWatchlistMovie(testMovieDetail);
       // assert
       expect(result, Right('Added to Watchlist'));
     });
@@ -480,7 +480,7 @@ void main() {
       when(mockLocalDataSource.insertWatchlistMovie(testMovieTable))
           .thenThrow(DatabaseException('Failed to add watchlist'));
       // act
-      final result = await repository.saveWatchlist(testMovieDetail);
+      final result = await repository.saveWatchlistMovie(testMovieDetail);
       // assert
       expect(result, Left(DatabaseFailure('Failed to add watchlist')));
     });
@@ -492,7 +492,7 @@ void main() {
       when(mockLocalDataSource.removeWatchlistMovie(testMovieTable))
           .thenAnswer((_) async => 'Removed from watchlist');
       // act
-      final result = await repository.removeWatchlist(testMovieDetail);
+      final result = await repository.removeWatchlistMovie(testMovieDetail);
       // assert
       expect(result, Right('Removed from watchlist'));
     });
@@ -502,7 +502,7 @@ void main() {
       when(mockLocalDataSource.removeWatchlistMovie(testMovieTable))
           .thenThrow(DatabaseException('Failed to remove watchlist'));
       // act
-      final result = await repository.removeWatchlist(testMovieDetail);
+      final result = await repository.removeWatchlistMovie(testMovieDetail);
       // assert
       expect(result, Left(DatabaseFailure('Failed to remove watchlist')));
     });
