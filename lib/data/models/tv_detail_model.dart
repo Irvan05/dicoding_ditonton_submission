@@ -83,43 +83,70 @@ class TvDetailResponse extends Equatable {
       TvDetailResponse(
         adult: json["adult"],
         backdropPath: json["backdrop_path"],
-        createdBy: List<CreatedBy>.from(
-            json["created_by"].map((x) => CreatedBy.fromJson(x))),
-        episodeRunTime: List<int>.from(json["episode_run_time"].map((x) => x)),
+        createdBy: json["created_by"] == null
+            ? null
+            : List<CreatedBy>.from(
+                json["created_by"].map((x) => CreatedBy.fromJson(x))),
+        episodeRunTime: json["episode_run_time"] == null
+            ? null
+            : List<int>.from(json["episode_run_time"].map((x) => x)),
         firstAirDate: DateTime.parse(json["first_air_date"]),
         genres: List<GenreModel>.from(
             json["genres"].map((x) => GenreModel.fromJson(x))),
-        homepage: json["homepage"],
+        homepage: json["homepage"] == null ? null : json["homepage"],
         id: json["id"],
-        inProduction: json["in_production"],
-        languages: List<String>.from(json["languages"].map((x) => x)),
-        lastAirDate: DateTime.parse(json["last_air_date"]),
-        lastEpisodeToAir:
-            LastEpisodeToAir.fromJson(json["last_episode_to_air"]),
+        inProduction:
+            json["in_production"] == null ? null : json["in_production"],
+        languages: json["languages"] == null
+            ? null
+            : List<String>.from(json["languages"].map((x) => x)),
+        lastAirDate: json["last_air_date"] == null
+            ? null
+            : DateTime.parse(json["last_air_date"]),
+        lastEpisodeToAir: json["last_episode_to_air"] == null
+            ? null
+            : LastEpisodeToAir.fromJson(json["last_episode_to_air"]),
         name: json["name"],
         nextEpisodeToAir: json["next_episode_to_air"],
-        networks: List<Network>.from(
-            json["networks"].map((x) => Network.fromJson(x))),
-        numberOfEpisodes: json["number_of_episodes"],
-        numberOfSeasons: json["number_of_seasons"],
-        originCountry: List<String>.from(json["origin_country"].map((x) => x)),
-        originalLanguage: json["original_language"],
-        originalName: json["original_name"],
+        networks: json["networks"] == null
+            ? null
+            : List<Network>.from(
+                json["networks"].map((x) => Network.fromJson(x))),
+        numberOfEpisodes: json["number_of_episodes"] == null
+            ? null
+            : json["number_of_episodes"],
+        numberOfSeasons: json["number_of_seasons"] == null
+            ? null
+            : json["number_of_seasons"],
+        originCountry: json["origin_country"] == null
+            ? null
+            : List<String>.from(json["origin_country"].map((x) => x)),
+        originalLanguage: json["original_language"] == null
+            ? null
+            : json["original_language"],
+        originalName:
+            json["original_name"] == null ? null : json["original_name"],
         overview: json["overview"],
-        popularity: json["popularity"].toDouble(),
+        popularity:
+            json["popularity"] == null ? null : json["popularity"].toDouble(),
         posterPath: json["poster_path"],
-        productionCompanies: List<Network>.from(
-            json["production_companies"].map((x) => Network.fromJson(x))),
-        productionCountries: List<ProductionCountry>.from(
-            json["production_countries"]
+        productionCompanies: json["production_companies"] == null
+            ? null
+            : List<Network>.from(
+                json["production_companies"].map((x) => Network.fromJson(x))),
+        productionCountries: json["production_countries"] == null
+            ? null
+            : List<ProductionCountry>.from(json["production_countries"]
                 .map((x) => ProductionCountry.fromJson(x))),
         seasons: List<SeasonModel>.from(
             json["seasons"].map((x) => SeasonModel.fromJson(x))),
-        spokenLanguages: List<SpokenLanguage>.from(
-            json["spoken_languages"].map((x) => SpokenLanguage.fromJson(x))),
+        spokenLanguages: json["spoken_languages"] == null
+            ? null
+            : List<SpokenLanguage>.from(json["spoken_languages"]
+                .map((x) => SpokenLanguage.fromJson(x))),
         status: json["status"],
-        tagline: json["tagline"],
-        type: json["type"],
+        tagline: json["tagline"] == null ? null : json["tagline"],
+        type: json["type"] == null ? null : json["type"],
         voteAverage: json["vote_average"].toDouble(),
         voteCount: json["vote_count"],
       );
@@ -224,10 +251,10 @@ class CreatedBy {
   });
 
   int id;
-  String creditId;
-  String name;
-  int gender;
-  String profilePath;
+  String? creditId;
+  String? name;
+  int? gender;
+  String? profilePath;
 
   factory CreatedBy.fromRawJson(String str) =>
       CreatedBy.fromJson(json.decode(str));
@@ -267,18 +294,18 @@ class LastEpisodeToAir {
     required this.voteCount,
   });
 
-  DateTime airDate;
-  int episodeNumber;
+  DateTime? airDate;
+  int? episodeNumber;
   int id;
-  String name;
-  String overview;
-  String productionCode;
-  int runtime;
-  int seasonNumber;
-  int showId;
-  String stillPath;
-  double voteAverage;
-  int voteCount;
+  String? name;
+  String? overview;
+  String? productionCode;
+  int? runtime;
+  int? seasonNumber;
+  int? showId;
+  String? stillPath;
+  double? voteAverage;
+  int? voteCount;
 
   factory LastEpisodeToAir.fromRawJson(String str) =>
       LastEpisodeToAir.fromJson(json.decode(str));
@@ -302,8 +329,9 @@ class LastEpisodeToAir {
       );
 
   Map<String, dynamic> toJson() => {
-        "air_date":
-            "${airDate.year.toString().padLeft(4, '0')}-${airDate.month.toString().padLeft(2, '0')}-${airDate.day.toString().padLeft(2, '0')}",
+        "air_date": airDate == null
+            ? null
+            : "${airDate!.year.toString().padLeft(4, '0')}-${airDate!.month.toString().padLeft(2, '0')}-${airDate!.day.toString().padLeft(2, '0')}",
         "episode_number": episodeNumber,
         "id": id,
         "name": name,
@@ -327,9 +355,9 @@ class Network {
   });
 
   int id;
-  String name;
-  String logoPath;
-  String originCountry;
+  String? name;
+  String? logoPath;
+  String? originCountry;
 
   factory Network.fromRawJson(String str) => Network.fromJson(json.decode(str));
 
@@ -345,7 +373,7 @@ class Network {
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "logo_path": logoPath == null ? null : logoPath,
+        "logo_path": logoPath,
         "origin_country": originCountry,
       };
 }
@@ -356,8 +384,8 @@ class ProductionCountry {
     required this.name,
   });
 
-  String iso31661;
-  String name;
+  String? iso31661;
+  String? name;
 
   factory ProductionCountry.fromRawJson(String str) =>
       ProductionCountry.fromJson(json.decode(str));
@@ -383,9 +411,9 @@ class SpokenLanguage {
     required this.name,
   });
 
-  String englishName;
-  String iso6391;
-  String name;
+  String? englishName;
+  String? iso6391;
+  String? name;
 
   factory SpokenLanguage.fromRawJson(String str) =>
       SpokenLanguage.fromJson(json.decode(str));
@@ -404,47 +432,3 @@ class SpokenLanguage {
         "name": name,
       };
 }
-
-
-/*
-
-  TvDetail toEntity() {
-    return TvDetail(
-      adult: this.adult,
-      backdropPath: this.backdropPath,
-      genres: this.genres.map((genre) => genre.toEntity()).toList(),
-      id: this.id,
-      originalTitle: this.originalTitle,
-      overview: this.overview,
-      posterPath: this.posterPath,
-      releaseDate: this.releaseDate,
-      runtime: this.runtime,
-      title: this.title,
-      voteAverage: this.voteAverage,
-      voteCount: this.voteCount,
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-        adult,
-        backdropPath,
-        genres,
-        homepage,
-        id,
-        originalLanguage,
-        originalTitle,
-        overview,
-        popularity,
-        posterPath,
-        releaseDate,
-        revenue,
-        runtime,
-        status,
-        tagline,
-        title,
-        video,
-        voteAverage,
-        voteCount,
-      ];
-*/

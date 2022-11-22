@@ -4,6 +4,7 @@ import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
 import 'package:ditonton/domain/entities/season.dart';
+import 'package:ditonton/domain/entities/season_episode.dart';
 import 'package:ditonton/domain/entities/tv.dart';
 import 'package:ditonton/domain/entities/tv_detail.dart';
 
@@ -56,27 +57,53 @@ final testMovieDetail = MovieDetail(
   voteCount: 1,
 );
 final testTvDetail = TvDetail(
-    adult: false,
-    backdropPath: "/56v2KjBlU4XaOv9rVYEQypROD7P.jpg",
-    genres: [Genre(id: 18, name: 'Drama')],
-    id: 66732,
-    name: 'Stranger Things',
-    overview: "overview",
-    posterPath: "/49WJfeN0moxb9IPfGn8AIqMGskD.jpg",
-    firstAirDate: DateTime(2017, 7, 15),
-    seasons: [
-      Season(
-          airDate: DateTime(2017, 7, 15),
-          episodeCount: 8,
-          id: 77680,
-          name: "Season 1",
-          overview: "overview",
-          posterPath: "/rbnuP7hlynAMLdqcQRCpZW9qDkV.jpg",
-          seasonNumber: 1)
-    ],
-    status: "Returning Series",
-    voteAverage: 8.641,
-    voteCount: 14342);
+  adult: false,
+  backdropPath: "/56v2KjBlU4XaOv9rVYEQypROD7P.jpg",
+  genres: [Genre(id: 18, name: 'Drama')],
+  id: 66732,
+  name: 'Stranger Things',
+  overview: "overview",
+  posterPath: "/49WJfeN0moxb9IPfGn8AIqMGskD.jpg",
+  firstAirDate: DateTime(2017, 7, 15),
+  seasons: [
+    Season(
+        airDate: DateTime(2017, 7, 15),
+        episodeCount: 8,
+        id: 77680,
+        name: "Season 1",
+        overview: "overview",
+        posterPath: "/rbnuP7hlynAMLdqcQRCpZW9qDkV.jpg",
+        seasonNumber: 1)
+  ],
+  status: "Returning Series",
+  voteAverage: 8.641,
+  voteCount: 14342,
+);
+
+final testEpisode = Episode(
+  airDate: DateTime(2016, 7, 15),
+  episodeNumber: 1,
+  id: 1198665,
+  name: "Chapter One: The Vanishing of Will Byers",
+  overview: "overview",
+  productionCode: "tt6020684",
+  runtime: 49,
+  seasonNumber: 1,
+  showId: 66732,
+  stillPath: "/AdwF2jXvhdODr6gUZ61bHKRkz09.jpg",
+  voteAverage: 8.47,
+  voteCount: 919,
+);
+final testSeasonEpisode = SeasonEpisode(
+  airDate: DateTime(2016, 7, 15),
+  episodes: [testEpisode],
+  name: "Season 1",
+  overview: "overview",
+  id: "57599ae2c3a3684ea900242d",
+  posterPath: "/rbnuP7hlynAMLdqcQRCpZW9qDkV.jpg",
+  seasonNumber: 1,
+  seasonDetailId: 77680,
+);
 
 final testWatchlistMovie = Movie.watchlist(
   id: 1,
