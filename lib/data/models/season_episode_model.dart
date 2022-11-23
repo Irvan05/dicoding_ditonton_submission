@@ -28,11 +28,6 @@ class SeasonEpisodeResponse extends Equatable {
   final String? posterPath;
   final int? seasonNumber;
 
-  factory SeasonEpisodeResponse.fromRawJson(String str) =>
-      SeasonEpisodeResponse.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
   factory SeasonEpisodeResponse.fromJson(Map<String, dynamic> json) =>
       SeasonEpisodeResponse(
         id: json["_id"] == null ? null : json["_id"],
@@ -120,11 +115,6 @@ class EpisodeResponse extends Equatable {
   final String? stillPath;
   final double? voteAverage;
   final int? voteCount;
-
-  factory EpisodeResponse.fromRawJson(String str) =>
-      EpisodeResponse.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
 
   factory EpisodeResponse.fromJson(Map<String, dynamic> json) =>
       EpisodeResponse(

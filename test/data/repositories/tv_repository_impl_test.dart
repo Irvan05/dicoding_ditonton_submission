@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/data/datasources/tv_local_data_source.dart';
 import 'package:ditonton/data/models/genre_model.dart';
+import 'package:ditonton/data/models/season_episode_model.dart';
 import 'package:ditonton/data/models/season_model.dart';
 import 'package:ditonton/data/models/tv_detail_model.dart';
 import 'package:ditonton/data/models/tv_model.dart';
@@ -10,6 +11,7 @@ import 'package:ditonton/data/models/tv_table.dart';
 import 'package:ditonton/data/repositories/tv_repository_impl.dart';
 import 'package:ditonton/common/exception.dart';
 import 'package:ditonton/common/failure.dart';
+import 'package:ditonton/domain/entities/season_episode.dart';
 import 'package:ditonton/domain/entities/tv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -535,6 +537,75 @@ void main() {
       // assert
       final resultList = result.getOrElse(() => []);
       expect(resultList, [testWatchlistTv]);
+    });
+  });
+
+  group('Get Season Episode', () {
+    final tId = 1;
+    final tSeasonNum = 1;
+    final tEpisodeResponse = EpisodeResponse(
+      airDate: DateTime(2016, 7, 15),
+      episodeNumber: 1,
+      id: 1198665,
+      name: "Chapter One: The Vanishing of Will Byers",
+      overview: "overview",
+      productionCode: "tt6020684",
+      runtime: 49,
+      seasonNumber: 1,
+      showId: 66732,
+      stillPath: "/AdwF2jXvhdODr6gUZ61bHKRkz09.jpg",
+      voteAverage: 8.47,
+      voteCount: 919,
+    );
+    final tSeasonEpisodeResponse = SeasonEpisodeResponse(
+      airDate: DateTime(2016, 7, 15),
+      episodes: [tEpisodeResponse],
+      name: "Season 1",
+      overview: "overview",
+      id: "57599ae2c3a3684ea900242d",
+      posterPath: "/rbnuP7hlynAMLdqcQRCpZW9qDkV.jpg",
+      seasonNumber: 1,
+      seasonDetailId: 77680,
+    );
+
+    test(
+        'should return Tv data when the call to remote data source is successful',
+        () async {
+      // arrange
+      when(mockRemoteDataSource.getSeasonDetail(tId, tSeasonNum))
+          .thenAnswer((_) async => tSeasonEpisodeResponse);
+      // act
+      final result = await repository.getSeasonDetailTv(tId, tSeasonNum);
+      // assert
+      verify(mockRemoteDataSource.getSeasonDetail(tId, tSeasonNum));
+      expect(result, equals(Right(testSeasonEpisode)));
+    });
+
+    test(
+        'should return Server Failure when the call to remote data source is unsuccessful',
+        () async {
+      // arrange
+      when(mockRemoteDataSource.getSeasonDetail(tId, tSeasonNum))
+          .thenThrow(ServerException());
+      // act
+      final result = await repository.getSeasonDetailTv(tId, tSeasonNum);
+      // assert
+      verify(mockRemoteDataSource.getSeasonDetail(tId, tSeasonNum));
+      expect(result, equals(Left(ServerFailure(''))));
+    });
+
+    test(
+        'should return connection failure when the device is not connected to internet',
+        () async {
+      // arrange
+      when(mockRemoteDataSource.getSeasonDetail(tId, tSeasonNum))
+          .thenThrow(SocketException('Failed to connect to the network'));
+      // act
+      final result = await repository.getSeasonDetailTv(tId, tSeasonNum);
+      // assert
+      verify(mockRemoteDataSource.getSeasonDetail(tId, tSeasonNum));
+      expect(result,
+          equals(Left(ConnectionFailure('Failed to connect to the network'))));
     });
   });
 }

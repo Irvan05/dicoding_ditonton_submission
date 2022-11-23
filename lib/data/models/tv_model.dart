@@ -38,10 +38,6 @@ class TvModel extends Equatable {
   final double? voteAverage;
   final int? voteCount;
 
-  factory TvModel.fromRawJson(String str) => TvModel.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
   factory TvModel.fromJson(Map<String, dynamic> json) => TvModel(
         backdropPath: json["backdrop_path"],
         firstAirDate:

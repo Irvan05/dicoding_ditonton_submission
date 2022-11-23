@@ -74,11 +74,6 @@ class TvDetailResponse extends Equatable {
   final double voteAverage;
   final int voteCount;
 
-  factory TvDetailResponse.fromRawJson(String str) =>
-      TvDetailResponse.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
   factory TvDetailResponse.fromJson(Map<String, dynamic> json) =>
       TvDetailResponse(
         adult: json["adult"],
@@ -151,61 +146,6 @@ class TvDetailResponse extends Equatable {
         voteCount: json["vote_count"],
       );
 
-  Map<String, dynamic> toJson() => {
-        "adult": adult,
-        "backdrop_path": backdropPath,
-        "created_by": createdBy == null
-            ? null
-            : List<dynamic>.from(createdBy!.map((x) => x.toJson())),
-        "episode_run_time": episodeRunTime == null
-            ? null
-            : List<dynamic>.from(episodeRunTime!.map((x) => x)),
-        "first_air_date":
-            "${firstAirDate.year.toString().padLeft(4, '0')}-${firstAirDate.month.toString().padLeft(2, '0')}-${firstAirDate.day.toString().padLeft(2, '0')}",
-        "genres": List<dynamic>.from(genres.map((x) => x.toJson())),
-        "homepage": homepage,
-        "id": id,
-        "in_production": inProduction,
-        "languages": languages == null
-            ? null
-            : List<dynamic>.from(languages!.map((x) => x)),
-        "last_air_date": lastAirDate == null
-            ? null
-            : "${lastAirDate!.year.toString().padLeft(4, '0')}-${lastAirDate!.month.toString().padLeft(2, '0')}-${lastAirDate!.day.toString().padLeft(2, '0')}",
-        "last_episode_to_air":
-            lastEpisodeToAir == null ? null : lastEpisodeToAir!.toJson(),
-        "name": name,
-        "next_episode_to_air": nextEpisodeToAir,
-        "networks": networks == null
-            ? null
-            : List<dynamic>.from(networks!.map((x) => x.toJson())),
-        "number_of_episodes": numberOfEpisodes,
-        "number_of_seasons": numberOfSeasons,
-        "origin_country": originCountry == null
-            ? null
-            : List<dynamic>.from(originCountry!.map((x) => x)),
-        "original_language": originalLanguage,
-        "original_name": originalName,
-        "overview": overview,
-        "popularity": popularity,
-        "poster_path": posterPath,
-        "production_companies": productionCompanies == null
-            ? null
-            : List<dynamic>.from(productionCompanies!.map((x) => x.toJson())),
-        "production_countries": productionCountries == null
-            ? null
-            : List<dynamic>.from(productionCountries!.map((x) => x.toJson())),
-        "seasons": List<dynamic>.from(seasons.map((x) => x.toJson())),
-        "spoken_languages": spokenLanguages == null
-            ? null
-            : List<dynamic>.from(spokenLanguages!.map((x) => x.toJson())),
-        "status": status,
-        "tagline": tagline,
-        "type": type,
-        "vote_average": voteAverage,
-        "vote_count": voteCount,
-      };
-
   TvDetail toEntity() {
     return TvDetail(
       adult: this.adult,
@@ -256,11 +196,6 @@ class CreatedBy {
   int? gender;
   String? profilePath;
 
-  factory CreatedBy.fromRawJson(String str) =>
-      CreatedBy.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
   factory CreatedBy.fromJson(Map<String, dynamic> json) => CreatedBy(
         id: json["id"],
         creditId: json["credit_id"],
@@ -268,14 +203,6 @@ class CreatedBy {
         gender: json["gender"],
         profilePath: json["profile_path"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "credit_id": creditId,
-        "name": name,
-        "gender": gender,
-        "profile_path": profilePath,
-      };
 }
 
 class LastEpisodeToAir {
@@ -307,11 +234,6 @@ class LastEpisodeToAir {
   double? voteAverage;
   int? voteCount;
 
-  factory LastEpisodeToAir.fromRawJson(String str) =>
-      LastEpisodeToAir.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
   factory LastEpisodeToAir.fromJson(Map<String, dynamic> json) =>
       LastEpisodeToAir(
         airDate: DateTime.parse(json["air_date"]),
@@ -327,23 +249,6 @@ class LastEpisodeToAir {
         voteAverage: json["vote_average"].toDouble(),
         voteCount: json["vote_count"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "air_date": airDate == null
-            ? null
-            : "${airDate!.year.toString().padLeft(4, '0')}-${airDate!.month.toString().padLeft(2, '0')}-${airDate!.day.toString().padLeft(2, '0')}",
-        "episode_number": episodeNumber,
-        "id": id,
-        "name": name,
-        "overview": overview,
-        "production_code": productionCode,
-        "runtime": runtime,
-        "season_number": seasonNumber,
-        "show_id": showId,
-        "still_path": stillPath,
-        "vote_average": voteAverage,
-        "vote_count": voteCount,
-      };
 }
 
 class Network {
@@ -359,23 +264,12 @@ class Network {
   String? logoPath;
   String? originCountry;
 
-  factory Network.fromRawJson(String str) => Network.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
   factory Network.fromJson(Map<String, dynamic> json) => Network(
         id: json["id"],
         name: json["name"],
         logoPath: json["logo_path"] == null ? null : json["logo_path"],
         originCountry: json["origin_country"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "logo_path": logoPath,
-        "origin_country": originCountry,
-      };
 }
 
 class ProductionCountry {
@@ -387,21 +281,11 @@ class ProductionCountry {
   String? iso31661;
   String? name;
 
-  factory ProductionCountry.fromRawJson(String str) =>
-      ProductionCountry.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
   factory ProductionCountry.fromJson(Map<String, dynamic> json) =>
       ProductionCountry(
         iso31661: json["iso_3166_1"],
         name: json["name"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "iso_3166_1": iso31661,
-        "name": name,
-      };
 }
 
 class SpokenLanguage {
@@ -415,20 +299,9 @@ class SpokenLanguage {
   String? iso6391;
   String? name;
 
-  factory SpokenLanguage.fromRawJson(String str) =>
-      SpokenLanguage.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
   factory SpokenLanguage.fromJson(Map<String, dynamic> json) => SpokenLanguage(
         englishName: json["english_name"],
         iso6391: json["iso_639_1"],
         name: json["name"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "english_name": englishName,
-        "iso_639_1": iso6391,
-        "name": name,
-      };
 }
