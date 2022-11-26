@@ -1,0 +1,95 @@
+{
+  "adult": false,
+  "backdrop_path": "/56v2KjBlU4XaOv9rVYEQypROD7P.jpg",
+  "created_by": [
+    {
+      "id": 1179419,
+      "credit_id": "57599b0e925141378a002c87",
+      "name": "Matt Duffer",
+      "gender": 2,
+      "profile_path": "/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"
+    }
+  ],
+  "episode_run_time": [50],
+  "first_air_date": "2016-07-15",
+  "genres": [
+    {
+      "id": 18,
+      "name": "Drama"
+    }
+  ],
+  "homepage": "https://www.netflix.com/title/80057281",
+  "id": 66732,
+  "in_production": true,
+  "languages": ["en"],
+  "last_air_date": "2022-07-01",
+  "last_episode_to_air": {
+    "air_date": "2022-07-01",
+    "episode_number": 9,
+    "id": 3325045,
+    "name": "Chapter Nine: The Piggyback",
+    "overview": "overview",
+    "production_code": "",
+    "runtime": 142,
+    "season_number": 4,
+    "show_id": 66732,
+    "still_path": "/fvoa0Hosu4yK7TUiHglV8TvjMUB.jpg",
+    "vote_average": 8.6,
+    "vote_count": 97
+  },
+  "name": "Stranger Things",
+  "next_episode_to_air": null,
+  "networks": [
+    {
+      "id": 213,
+      "name": "Netflix",
+      "logo_path": "/wwemzKWzjKYJFfCeiB57q3r4Bcm.png",
+      "origin_country": ""
+    }
+  ],
+  "number_of_episodes": 34,
+  "number_of_seasons": 4,
+  "origin_country": ["US"],
+  "original_language": "en",
+  "original_name": "Stranger Things",
+  "overview": "overview",
+  "popularity": 475.516,
+  "poster_path": "/49WJfeN0moxb9IPfGn8AIqMGskD.jpg",
+  "production_companies": [
+    {
+      "id": 2575,
+      "logo_path": "/9YJrHYlcfHtwtulkFMAies3aFEl.png",
+      "name": "21 Laps Entertainment",
+      "origin_country": "US"
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "US",
+      "name": "United States of America"
+    }
+  ],
+  "seasons": [
+    {
+      "air_date": "2016-07-15",
+      "episode_count": 8,
+      "id": 77680,
+      "name": "Season 1",
+      "overview": "overview",
+      "poster_path": "/rbnuP7hlynAMLdqcQRCpZW9qDkV.jpg",
+      "season_number": 1
+    }
+  ],
+  "spoken_languages": [
+    {
+      "english_name": "English",
+      "iso_639_1": "en",
+      "name": "English"
+    }
+  ],
+  "status": "Returning Series",
+  "tagline": "Every ending has a beginning.",
+  "type": "Scripted",
+  "vote_average": 8.641,
+  "vote_count": 14342
+}
