@@ -4,7 +4,7 @@ Repository ini merupakan starter project submission kelas Flutter Expert Dicodin
 
 ---
 
-[![Codemagic build status](https://api.codemagic.io/apps/6381bf3a543f9faec812766b/Default-Workflow/status_badge.svg)](https://codemagic.io/apps/6381bf3a543f9faec812766b/Default-Workflow/latest_build)
+[![Codemagic build status](https://api.codemagic.io/apps/6381ba3d543f9fb5f3f01560/6381ba3d543f9fb5f3f0155f/status_badge.svg)](https://codemagic.io/apps/6381ba3d543f9fb5f3f01560/6381ba3d543f9fb5f3f0155f/latest_build)
 
 
 ## Tips Submission Akhir
