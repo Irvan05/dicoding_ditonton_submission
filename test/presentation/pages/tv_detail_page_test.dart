@@ -1,5 +1,4 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/entities/season_episode.dart';
+import 'package:core/utils/state_enum.dart';
 import 'package:ditonton/domain/entities/tv.dart';
 import 'package:ditonton/presentation/pages/tv_detail_page.dart';
 import 'package:ditonton/presentation/provider/tv_detail_notifier.dart';

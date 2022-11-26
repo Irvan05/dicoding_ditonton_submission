@@ -1,4 +1,4 @@
-import 'package:ditonton/common/state_enum.dart';
+import 'package:core/utils/state_enum.dart';
 import 'package:ditonton/domain/entities/tv.dart';
 import 'package:ditonton/presentation/pages/on_the_air_tvs_page.dart';
 import 'package:ditonton/presentation/provider/on_the_air_tvs_notifier.dart';

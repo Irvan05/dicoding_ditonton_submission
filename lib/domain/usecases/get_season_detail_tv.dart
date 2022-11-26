@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/domain/entities/season_episode.dart';
 import 'package:ditonton/domain/repositories/tv_repository.dart';
-import 'package:ditonton/common/failure.dart';
+import 'package:core/utils/failure.dart';
 
 class GetSeasonDetailTv {
   final TvRepository repository;

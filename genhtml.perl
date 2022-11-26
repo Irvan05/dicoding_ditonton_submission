@@ -1,4 +1,5 @@
 #!/usr/bin/perl -w
+#   ./genhtml.perl ./coverage/lcov.info -o coverage/html
 #
 #   Copyright (c) International Business Machines  Corp., 2002,2012
 #

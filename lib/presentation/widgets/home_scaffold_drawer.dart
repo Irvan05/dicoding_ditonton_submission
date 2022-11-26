@@ -1,8 +1,10 @@
-import 'package:ditonton/presentation/pages/about_page.dart';
+import 'package:core/utils/routes.dart';
 import 'package:ditonton/presentation/pages/home_movie_page.dart';
 import 'package:ditonton/presentation/pages/home_tv_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_page.dart';
 import 'package:flutter/material.dart';
+
+// import 'package:about/about.dart';
 
 class HomeScaffoldDrawer extends StatelessWidget {
   final currentPath;
@@ -48,7 +50,7 @@ class HomeScaffoldDrawer extends StatelessWidget {
         ),
         ListTile(
           onTap: () {
-            Navigator.pushNamed(context, AboutPage.ROUTE_NAME);
+            Navigator.pushNamed(context, ABOUT_ROUTE);
           },
           leading: Icon(Icons.info_outline),
           title: Text('About'),

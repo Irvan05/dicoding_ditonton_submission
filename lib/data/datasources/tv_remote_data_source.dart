@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
 
+import 'package:core/utils/exception.dart';
 import 'package:ditonton/data/models/season_episode_model.dart';
 import 'package:ditonton/data/models/tv_detail_model.dart';
 import 'package:ditonton/data/models/tv_model.dart';
 import 'package:ditonton/data/models/tv_response.dart';
-import 'package:ditonton/common/exception.dart';
 import 'package:http/http.dart' as http;
 
 abstract class TvRemoteDataSource {
