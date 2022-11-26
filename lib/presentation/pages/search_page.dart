@@ -19,6 +19,7 @@ class SearchPage extends StatelessWidget {
       initialIndex: setInitialTab(initialTab),
       length: 2,
       child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             title: Text('Search'),
             bottom: const TabBar(tabs: [

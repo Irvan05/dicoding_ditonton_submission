@@ -18,7 +18,13 @@ void main() {
     final movieListFinder = find.byType(MovieList, skipOffstage: false);
     expect(movieListFinder, findsNWidgets(3));
 
+    final scrollFinder = find.byType(Scrollable);
     final popularPageButton = find.byKey(Key('Popular-inkwell'));
+    await tester.scrollUntilVisible(
+      popularPageButton,
+      500.0,
+      scrollable: scrollFinder.first,
+    );
     await tester.tap(popularPageButton);
     await tester.pumpAndSettle();
     expect(find.byType(MovieCard), findsAtLeastNWidgets(1));
@@ -48,6 +54,12 @@ void main() {
     expect(movieListFinder, findsNWidgets(3));
 
     final topRatedPageButton = find.byKey(Key('Top Rated-inkwell'));
+    final scrollFinder = find.byType(Scrollable);
+    await tester.scrollUntilVisible(
+      topRatedPageButton,
+      500.0,
+      scrollable: scrollFinder.first,
+    );
     await tester.tap(topRatedPageButton);
     await tester.pumpAndSettle();
     expect(find.byType(MovieCard), findsAtLeastNWidgets(1));
