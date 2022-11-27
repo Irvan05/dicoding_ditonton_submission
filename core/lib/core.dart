@@ -1,11 +1,11 @@
 library core;
 
-export 'styles/colors.dart';
-export 'styles/text_styles.dart';
-export 'utils/constants.dart';
-export 'utils/exception.dart';
-export 'utils/failure.dart';
-export 'utils/state_enum.dart';
-export 'utils/routes.dart';
-export 'utils/utils.dart';
-export 'utils/network_info.dart';
+export 'commons/styles/colors.dart';
+export 'commons/styles/text_styles.dart';
+export 'commons/utils/constants.dart';
+export 'commons/utils/exception.dart';
+export 'commons/utils/failure.dart';
+export 'commons/utils/state_enum.dart';
+export 'commons/utils/routes.dart';
+export 'commons/utils/utils.dart';
+export 'commons/utils/network_info.dart';

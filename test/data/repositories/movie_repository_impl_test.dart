@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/data/datasources/movie_local_data_source.dart';
-import 'package:ditonton/data/models/genre_model.dart';
+import '../../../movie/lib/data/movie_local_data_source.dart';
+import 'package:core/data/models/genre_model.dart';
 import 'package:ditonton/data/models/movie_detail_model.dart';
 import 'package:ditonton/data/models/movie_model.dart';
 import 'package:ditonton/data/models/movie_table.dart';
-import 'package:ditonton/data/repositories/movie_repository_impl.dart';
+import '../../../movie/lib/data/repositories/movie_repository_impl.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';

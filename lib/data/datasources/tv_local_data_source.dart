@@ -1,5 +1,5 @@
 import 'package:core/utils/exception.dart';
-import 'package:ditonton/data/datasources/db/database_helper.dart';
+import 'package:ditonton/data/datasources/db/database_helper_tv.dart';
 import 'package:ditonton/data/models/tv_table.dart';
 
 abstract class TvLocalDataSource {
@@ -12,7 +12,7 @@ abstract class TvLocalDataSource {
 }
 
 class TvLocalDataSourceImpl implements TvLocalDataSource {
-  final DatabaseHelper databaseHelper;
+  final DatabaseHelperTv databaseHelper;
 
   TvLocalDataSourceImpl({required this.databaseHelper});
 
