@@ -51,6 +51,9 @@ dependencies:
   movie:
     path: movie
 
+  tv:
+    path: tv
+
   # search:
   #   path: search
 

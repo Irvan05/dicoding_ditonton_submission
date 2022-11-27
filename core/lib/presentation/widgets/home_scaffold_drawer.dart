@@ -1,7 +1,8 @@
 import 'package:core/commons/utils/routes.dart';
-import 'package:ditonton/presentation/pages/watchlist_page.dart';
+// import 'package:ditonton/presentation/pages/watchlist_page.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/movie.dart';
+import 'package:tv/tv.dart';
 
 // import 'package:about/about.dart';
 
@@ -40,13 +41,13 @@ class HomeScaffoldDrawer extends StatelessWidget {
                     context, HomeTvPage.ROUTE_NAME);
           },
         ),
-        ListTile(
-          leading: Icon(Icons.save_alt),
-          title: Text('Watchlist'),
-          onTap: () {
-            Navigator.pushNamed(context, WatchlistPage.ROUTE_NAME);
-          },
-        ),
+        // ListTile(
+        //   leading: Icon(Icons.save_alt),
+        //   title: Text('Watchlist'),
+        //   onTap: () {
+        //     Navigator.pushNamed(context, WatchlistPage.ROUTE_NAME);
+        //   },
+        // ),
         ListTile(
           onTap: () {
             Navigator.pushNamed(context, ABOUT_ROUTE);
@@ -58,4 +59,3 @@ class HomeScaffoldDrawer extends StatelessWidget {
     );
   }
 }
-//TODO:: CREATE WATCHLIST PAGE AND MAKE MOVIE AND TV TAB INTO WIDGETS ON CORRESPONDING MODULE
