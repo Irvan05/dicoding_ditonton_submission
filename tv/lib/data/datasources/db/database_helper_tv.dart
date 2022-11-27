@@ -20,7 +20,7 @@ class DatabaseHelperTv {
     return _database;
   }
 
-  static const String _tblWatchlistTv = 'watchlistTv';
+  // static const String _tblWatchlistTv = 'watchlistTv';
   static const String _tblCacheTv = 'cacheTv';
 
   Future<Database> _initDb() async {
@@ -32,14 +32,14 @@ class DatabaseHelperTv {
   }
 
   void _onCreate(Database db, int version) async {
-    await db.execute('''
-      CREATE TABLE  $_tblWatchlistTv (
-        id INTEGER PRIMARY KEY,
-        name TEXT,
-        overview TEXT,
-        posterPath TEXT
-      );
-    ''');
+    // await db.execute('''
+    //   CREATE TABLE  $_tblWatchlistTv (
+    //     id INTEGER PRIMARY KEY,
+    //     name TEXT,
+    //     overview TEXT,
+    //     posterPath TEXT
+    //   );
+    // ''');
     await db.execute('''
       CREATE TABLE  $_tblCacheTv (
         id INTEGER PRIMARY KEY,
@@ -51,41 +51,41 @@ class DatabaseHelperTv {
     ''');
   }
 
-  Future<int> insertWatchlistTv(TvTable tv) async {
-    final db = await database;
-    return await db!.insert(_tblWatchlistTv, tv.toJson());
-  }
+  // Future<int> insertWatchlistTv(TvTable tv) async {
+  //   final db = await database;
+  //   return await db!.insert(_tblWatchlistTv, tv.toJson());
+  // }
 
-  Future<int> removeWatchlistTv(TvTable tv) async {
-    final db = await database;
-    return await db!.delete(
-      _tblWatchlistTv,
-      where: 'id = ?',
-      whereArgs: [tv.id],
-    );
-  }
+  // Future<int> removeWatchlistTv(TvTable tv) async {
+  //   final db = await database;
+  //   return await db!.delete(
+  //     _tblWatchlistTv,
+  //     where: 'id = ?',
+  //     whereArgs: [tv.id],
+  //   );
+  // }
 
-  Future<Map<String, dynamic>?> getTvById(int id) async {
-    final db = await database;
-    final results = await db!.query(
-      _tblWatchlistTv,
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+  // Future<Map<String, dynamic>?> getTvById(int id) async {
+  //   final db = await database;
+  //   final results = await db!.query(
+  //     _tblWatchlistTv,
+  //     where: 'id = ?',
+  //     whereArgs: [id],
+  //   );
 
-    if (results.isNotEmpty) {
-      return results.first;
-    } else {
-      return null;
-    }
-  }
+  //   if (results.isNotEmpty) {
+  //     return results.first;
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
-  Future<List<Map<String, dynamic>>> getWatchlistTvs() async {
-    final db = await database;
-    final List<Map<String, dynamic>> results = await db!.query(_tblWatchlistTv);
+  // Future<List<Map<String, dynamic>>> getWatchlistTvs() async {
+  //   final db = await database;
+  //   final List<Map<String, dynamic>> results = await db!.query(_tblWatchlistTv);
 
-    return results;
-  }
+  //   return results;
+  // }
 
   Future<void> insertCacheTransactionTv(
       List<TvTable> tvs, String category) async {

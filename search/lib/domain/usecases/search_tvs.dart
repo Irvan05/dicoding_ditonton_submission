@@ -1,10 +1,10 @@
+import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
-import 'package:core/utils/failure.dart';
-import 'package:ditonton/domain/entities/tv.dart';
-import 'package:ditonton/domain/repositories/tv_repository.dart';
+import 'package:search/domain/repositories/search_repository.dart';
+import 'package:tv/tv.dart';
 
 class SearchTvs {
-  final TvRepository repository;
+  final SearchRepository repository;
 
   SearchTvs(this.repository);
 

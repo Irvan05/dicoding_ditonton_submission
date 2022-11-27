@@ -30,10 +30,10 @@ export 'domain/usecases/get_season_detail_tv.dart';
 export 'domain/usecases/get_top_rated_tvs.dart';
 export 'domain/usecases/get_tv_detail.dart';
 export 'domain/usecases/get_tv_recommendations.dart';
-export 'domain/usecases/get_watchlist_status_tv.dart';
-export 'domain/usecases/get_watchlist_tvs.dart';
-export 'domain/usecases/remove_watchlist_tv.dart';
-export 'domain/usecases/save_watchlist_tv.dart';
+// export 'domain/usecases/get_watchlist_status_tv.dart';
+// export 'domain/usecases/get_watchlist_tvs.dart';
+// export 'domain/usecases/remove_watchlist_tv.dart';
+// export 'domain/usecases/save_watchlist_tv.dart';
 
 //presentation
 //pages

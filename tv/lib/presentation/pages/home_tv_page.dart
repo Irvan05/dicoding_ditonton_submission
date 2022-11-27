@@ -33,7 +33,7 @@ class _HomeTvPageState extends State<HomeTvPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(child: HomeScaffoldDrawer(HomeTvPage.ROUTE_NAME)),
+      drawer: const Drawer(child: HomeScaffoldDrawer(HomeTvPage.ROUTE_NAME)),
       appBar: AppBar(
         title: const Text('Tvs'),
         actions: [
@@ -135,10 +135,7 @@ class _HomeTvPageState extends State<HomeTvPage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: [
-                const Text('See More'),
-                const Icon(Icons.arrow_forward_ios)
-              ],
+              children: const [Text('See More'), Icon(Icons.arrow_forward_ios)],
             ),
           ),
         ),
@@ -150,11 +147,11 @@ class _HomeTvPageState extends State<HomeTvPage> {
 class TvList extends StatelessWidget {
   final List<Tv> tvs;
 
-  TvList(this.tvs);
+  const TvList(this.tvs, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,

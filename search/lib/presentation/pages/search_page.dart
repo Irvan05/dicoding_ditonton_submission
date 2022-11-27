@@ -1,15 +1,15 @@
 import 'package:core/core.dart';
-import 'package:ditonton/presentation/provider/movie_search_notifier.dart';
-import 'package:ditonton/presentation/provider/tv_search_notifier.dart';
-import 'package:ditonton/presentation/widgets/movie_card_list.dart';
-import 'package:ditonton/presentation/widgets/tv_card_list.dart';
 import 'package:flutter/material.dart';
+import 'package:movie/movie.dart';
 import 'package:provider/provider.dart';
+import 'package:search/presentation/provider/movie_search_notifier.dart';
+import 'package:search/presentation/provider/tv_search_notifier.dart';
+import 'package:tv/tv.dart';
 
 class SearchPage extends StatelessWidget {
   final CategoryState initialTab;
 
-  SearchPage({this.initialTab = CategoryState.Movies});
+  const SearchPage({super.key, this.initialTab = CategoryState.Movies});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class SearchPage extends StatelessWidget {
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
-            title: Text('Search'),
+            title: const Text('Search'),
             bottom: const TabBar(tabs: [
               Tab(
                 icon: Icon(Icons.movie),
@@ -31,7 +31,7 @@ class SearchPage extends StatelessWidget {
               )
             ]),
           ),
-          body: TabBarView(
+          body: const TabBarView(
             children: [
               MovieTabView(),
               TvTabView(),
@@ -69,14 +69,14 @@ class MovieTabView extends StatelessWidget {
               Provider.of<MovieSearchNotifier>(context, listen: false)
                   .fetchMovieSearch(query);
             },
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Search title',
               prefixIcon: Icon(Icons.search),
               border: OutlineInputBorder(),
             ),
             textInputAction: TextInputAction.search,
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text(
             'Search Result',
             style: kHeading6,
@@ -84,7 +84,7 @@ class MovieTabView extends StatelessWidget {
           Consumer<MovieSearchNotifier>(
             builder: (context, data, child) {
               if (data.state == RequestState.Loading) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else if (data.state == RequestState.Loaded) {
@@ -129,14 +129,14 @@ class TvTabView extends StatelessWidget {
               Provider.of<TvSearchNotifier>(context, listen: false)
                   .fetchTvSearch(query);
             },
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Search title',
               prefixIcon: Icon(Icons.search),
               border: OutlineInputBorder(),
             ),
             textInputAction: TextInputAction.search,
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text(
             'Search Result',
             style: kHeading6,
@@ -144,7 +144,7 @@ class TvTabView extends StatelessWidget {
           Consumer<TvSearchNotifier>(
             builder: (context, data, child) {
               if (data.state == RequestState.Loading) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else if (data.state == RequestState.Loaded) {

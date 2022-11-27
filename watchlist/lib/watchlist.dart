@@ -1,7 +1,25 @@
 library watchlist;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+//data
+//datasources
+export 'data/datasources/db/database_helper_watchlist.dart';
+export 'data/datasources/watchlist_local_datasources.dart';
+//repo
+export 'data/repositories/watchlist_repositories_impl.dart';
+//domain
+//repo
+export 'domain/repositories/watchlist_repositories.dart';
+//usecases
+export 'domain/usecases/get_watchlist_movies.dart';
+export 'domain/usecases/get_watchlist_status_tv.dart';
+export 'domain/usecases/get_watchlist_status.dart';
+export 'domain/usecases/get_watchlist_tvs.dart';
+export 'domain/usecases/remove_watchlist_movie.dart';
+export 'domain/usecases/remove_watchlist_tv.dart';
+export 'domain/usecases/save_watchlist_movie.dart';
+export 'domain/usecases/save_watchlist_tv.dart';
+//presentation
+//pages
+export 'presentation/pages/watchlist_page.dart';
+//provider
+export 'watchlist.dart';

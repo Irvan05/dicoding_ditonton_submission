@@ -1,13 +1,13 @@
 import 'package:core/core.dart';
-import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
-import 'package:ditonton/presentation/provider/watchlist_tv_notifier.dart';
-import 'package:movie/presentation/widgets/movie_card_list.dart';
-import 'package:ditonton/presentation/widgets/tv_card_list.dart';
+import 'package:movie/movie.dart';
+import 'package:tv/tv.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class WatchlistPage extends StatefulWidget {
   static const ROUTE_NAME = '/watchlist';
+
+  const WatchlistPage({super.key});
 
   @override
   _WatchlistPageState createState() => _WatchlistPageState();
@@ -31,6 +31,7 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
     routeObserver.subscribe(this, ModalRoute.of(context)!);
   }
 
+  @override
   void didPopNext() {
     Provider.of<WatchlistMovieNotifier>(context, listen: false)
         .fetchWatchlistMovies();
@@ -44,7 +45,7 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Watchlist'),
+          title: const Text('Watchlist'),
           bottom: const TabBar(tabs: [
             Tab(
               icon: Icon(Icons.movie),
@@ -56,8 +57,8 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
             )
           ]),
         ),
-        body: Padding(
-            padding: const EdgeInsets.all(8.0),
+        body: const Padding(
+            padding: EdgeInsets.all(8.0),
             child: TabBarView(
               children: [
                 MovieTabView(),
@@ -85,7 +86,7 @@ class MovieTabView extends StatelessWidget {
     return Consumer<WatchlistMovieNotifier>(
       builder: (context, data, child) {
         if (data.watchlistState == RequestState.Loading) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         } else if (data.watchlistState == RequestState.Loaded) {
@@ -98,7 +99,7 @@ class MovieTabView extends StatelessWidget {
           );
         } else {
           return Center(
-            key: Key('error_message'),
+            key: const Key('error_message'),
             child: Text(data.message),
           );
         }
@@ -117,7 +118,7 @@ class TvTabView extends StatelessWidget {
     return Consumer<WatchlistTvNotifier>(
       builder: (context, data, child) {
         if (data.watchlistState == RequestState.Loading) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         } else if (data.watchlistState == RequestState.Loaded) {
@@ -130,7 +131,7 @@ class TvTabView extends StatelessWidget {
           );
         } else {
           return Center(
-            key: Key('error_message'),
+            key: const Key('error_message'),
             child: Text(data.message),
           );
         }

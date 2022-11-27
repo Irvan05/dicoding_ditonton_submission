@@ -15,6 +15,8 @@ dependencies:
     path: ../movie
   tv:
     path: ../tv
+  watchlist:
+    path: ../watchlist
 
   equatable: ^2.0.2
   google_fonts: ^3.0.1

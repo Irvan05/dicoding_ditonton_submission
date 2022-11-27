@@ -1,6 +1,6 @@
 import 'package:core/core.dart';
 import 'package:movie/domain/entities/movie.dart';
-import 'package:movie/domain/usecases/get_watchlist_movies.dart';
+import 'package:watchlist/watchlist.dart';
 import 'package:flutter/foundation.dart';
 
 class WatchlistMovieNotifier extends ChangeNotifier {

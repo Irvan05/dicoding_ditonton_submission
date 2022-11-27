@@ -4,13 +4,14 @@ import 'package:movie/movie.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:tv/tv.dart';
 
-class DatabaseHelper {
-  static DatabaseHelper? _databaseHelper;
-  DatabaseHelper._instance() {
+class DatabaseHelperWatchlist {
+  static DatabaseHelperWatchlist? _databaseHelper;
+  DatabaseHelperWatchlist._instance() {
     _databaseHelper = this;
   }
 
-  factory DatabaseHelper() => _databaseHelper ?? DatabaseHelper._instance();
+  factory DatabaseHelperWatchlist() =>
+      _databaseHelper ?? DatabaseHelperWatchlist._instance();
 
   static Database? _database;
 

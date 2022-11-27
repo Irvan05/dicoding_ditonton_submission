@@ -54,8 +54,11 @@ dependencies:
   tv:
     path: tv
 
-  # search:
-  #   path: search
+  watchlist:
+    path: watchlist
+
+  search:
+    path: search
 
 dev_dependencies:
   mockito: ^5.0.8

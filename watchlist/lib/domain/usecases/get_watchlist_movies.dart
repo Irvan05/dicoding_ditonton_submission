@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:movie/domain/entities/movie.dart';
-import 'package:movie/domain/repositories/movie_repository.dart';
 import 'package:core/core.dart';
+import 'package:watchlist/domain/repositories/watchlist_repositories.dart';
 
 class GetWatchlistMovies {
-  final MovieRepository _repository;
+  final WatchlistRepository _repository;
 
   GetWatchlistMovies(this._repository);
 

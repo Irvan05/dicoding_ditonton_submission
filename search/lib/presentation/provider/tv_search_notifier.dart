@@ -1,7 +1,7 @@
-import 'package:core/utils/state_enum.dart';
-import 'package:ditonton/domain/entities/tv.dart';
-import '../../domain/usecases/search_tvs.dart';
+import 'package:core/core.dart';
 import 'package:flutter/foundation.dart';
+import 'package:search/domain/usecases/search_tvs.dart';
+import 'package:tv/tv.dart';
 
 class TvSearchNotifier extends ChangeNotifier {
   final SearchTvs searchTvs;

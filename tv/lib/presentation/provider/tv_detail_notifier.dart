@@ -5,9 +5,7 @@ import 'package:tv/domain/usecases/get_season_detail_tv.dart';
 import 'package:tv/domain/usecases/get_tv_detail.dart';
 import 'package:tv/domain/usecases/get_tv_recommendations.dart';
 import 'package:core/core.dart';
-import 'package:tv/domain/usecases/get_watchlist_status_tv.dart';
-import 'package:tv/domain/usecases/remove_watchlist_tv.dart';
-import 'package:tv/domain/usecases/save_watchlist_tv.dart';
+import 'package:watchlist/watchlist.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

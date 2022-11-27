@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:core/core.dart';
-import 'package:movie/domain/entities/movie_detail.dart';
-import 'package:movie/domain/repositories/movie_repository.dart';
+import 'package:movie/movie.dart';
+import 'package:watchlist/domain/repositories/watchlist_repositories.dart';
 
 class SaveWatchlistMovie {
-  final MovieRepository repository;
+  final WatchlistRepository repository;
 
   SaveWatchlistMovie(this.repository);
 

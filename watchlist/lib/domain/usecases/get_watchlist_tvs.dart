@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:core/core.dart';
-import 'package:tv/domain/entities/tv.dart';
-import 'package:tv/domain/repositories/tv_repository.dart';
+import 'package:tv/tv.dart';
+import 'package:watchlist/domain/repositories/watchlist_repositories.dart';
 
 class GetWatchlistTvs {
-  final TvRepository _repository;
+  final WatchlistRepository _repository;
 
   GetWatchlistTvs(this._repository);
 

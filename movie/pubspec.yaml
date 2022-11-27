@@ -13,6 +13,8 @@ dependencies:
     sdk: flutter
   core:
     path: ../core
+  watchlist:
+    path: ../watchlist
   dartz: ^0.10.0-nullsafety.2
   equatable: ^2.0.2
   sqflite: ^2.0.0+3

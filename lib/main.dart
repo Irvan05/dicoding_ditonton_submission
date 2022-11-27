@@ -6,7 +6,9 @@ import 'package:ditonton/injection.dart' as di;
 
 import 'package:about/about.dart';
 import 'package:core/core.dart';
+import 'package:search/search.dart';
 import 'package:tv/tv.dart';
+import 'package:watchlist/watchlist.dart';
 // import 'package:search/search.dart';
 
 void main() {
@@ -25,9 +27,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => di.locator<MovieDetailNotifier>(),
         ),
-        // ChangeNotifierProvider(
-        //   create: (_) => di.locator<MovieSearchNotifier>(),
-        // ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TopRatedMoviesNotifier>(),
         ),
@@ -53,9 +52,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => di.locator<TvDetailNotifier>(),
         ),
-        // ChangeNotifierProvider(
-        //   create: (_) => di.locator<TvSearchNotifier>(),
-        // ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<MovieSearchNotifier>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TvSearchNotifier>(),
+        ),
         ChangeNotifierProvider(
           create: (_) => di.locator<WatchlistTvNotifier>(),
         ),
@@ -98,20 +100,18 @@ class MyApp extends StatelessWidget {
                 builder: (_) => TvDetailPage(id: id),
                 settings: settings,
               );
-            //TODO:: CREATE WATCHLIST AND SEARCH PAGE AND MAKE MOVIE AND TV TAB INTO WIDGETS ON CORRESPONDING MODULE
-
-            // case SEARCH_ROUTE:
-            //   if (settings.arguments != null) {
-            //     final category = settings.arguments as CategoryState;
-            //     return CupertinoPageRoute(
-            //         builder: (_) => SearchPage(
-            //               initialTab: category,
-            //             ));
-            //   } else {
-            //     return CupertinoPageRoute(builder: (_) => SearchPage());
-            //   }
-            // case WatchlistPage.ROUTE_NAME:
-            //   return MaterialPageRoute(builder: (_) => WatchlistPage());
+            case SEARCH_ROUTE:
+              if (settings.arguments != null) {
+                final category = settings.arguments as CategoryState;
+                return CupertinoPageRoute(
+                    builder: (_) => SearchPage(
+                          initialTab: category,
+                        ));
+              } else {
+                return CupertinoPageRoute(builder: (_) => SearchPage());
+              }
+            case WATCHLIST_PAGE:
+              return MaterialPageRoute(builder: (_) => WatchlistPage());
             case ABOUT_ROUTE:
               return MaterialPageRoute(builder: (_) => AboutPage());
             default:

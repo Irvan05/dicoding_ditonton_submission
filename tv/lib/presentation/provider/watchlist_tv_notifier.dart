@@ -1,6 +1,6 @@
 import 'package:core/core.dart';
 import 'package:tv/domain/entities/tv.dart';
-import 'package:tv/domain/usecases/get_watchlist_tvs.dart';
+import 'package:watchlist/watchlist.dart';
 import 'package:flutter/foundation.dart';
 
 class WatchlistTvNotifier extends ChangeNotifier {
