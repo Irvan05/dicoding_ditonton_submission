@@ -22,7 +22,7 @@ class DatabaseHelperWatchlist {
     return _database;
   }
 
-  static const String _tblWatchlistMovie = 'watchlist';
+  static const String _tblWatchlistMovie = 'watchlistMovie';
   static const String _tblWatchlistTv = 'watchlistTv';
 
   Future<Database> _initDb() async {

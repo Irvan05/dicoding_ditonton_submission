@@ -80,19 +80,31 @@ void init() {
       getTopRatedTvs: locator(),
     ),
   );
-  locator.registerFactory(
-    () => MovieSearchNotifier(
-      searchMovies: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => TvSearchNotifier(
-      searchTvs: locator(),
-    ),
-  );
+  // locator.registerFactory(
+  //   () => MovieSearchNotifier(
+  //     searchMovies: locator(),
+  //   ),
+  // );
+  // locator.registerFactory(
+  //   () => TvSearchNotifier(
+  //     searchTvs: locator(),
+  //   ),
+  // );
   locator.registerFactory(
     () => WatchlistTvNotifier(
       getWatchlistTvs: locator(),
+    ),
+  );
+
+  // bloc
+  locator.registerFactory(
+    () => MovieSearchBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TvSearchBloc(
+      locator(),
     ),
   );
 
@@ -165,8 +177,8 @@ void init() {
   locator.registerLazySingleton<WatchlistLocalDataSource>(
       () => WatchlistLocalDataSourceImpl(databaseHelper: locator()));
 
-  locator.registerLazySingleton<SearchRemoteDatasources>(
-      () => SearchRemoteDatasourceImpls(client: locator()));
+  locator.registerLazySingleton<SearchRemoteDataSource>(
+      () => SearchRemoteDataSourceImpl(client: locator()));
 
   // helper
   locator

@@ -1,9 +1,12 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie/movie.dart';
 import 'package:provider/provider.dart';
-import 'package:search/presentation/provider/movie_search_notifier.dart';
-import 'package:search/presentation/provider/tv_search_notifier.dart';
+import 'package:search/presentation/bloc/movie_search_bloc.dart';
+import 'package:search/presentation/bloc/tv_search_bloc.dart';
+// import 'package:search/presentation/provider/movie_search_notifier.dart';
+// import 'package:search/presentation/provider/tv_search_notifier.dart';
 import 'package:tv/tv.dart';
 
 class SearchPage extends StatelessWidget {
@@ -20,16 +23,20 @@ class SearchPage extends StatelessWidget {
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
             title: const Text('Search'),
-            bottom: const TabBar(tabs: [
-              Tab(
-                icon: Icon(Icons.movie),
-                text: 'Movies',
-              ),
-              Tab(
-                icon: Icon(Icons.tv),
-                text: 'Tvs',
-              )
-            ]),
+            bottom: TabBar(
+                onTap: (_) {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                tabs: const [
+                  Tab(
+                    icon: Icon(Icons.movie),
+                    text: 'Movies',
+                  ),
+                  Tab(
+                    icon: Icon(Icons.tv),
+                    text: 'Tvs',
+                  )
+                ]),
           ),
           body: const TabBarView(
             children: [
@@ -65,9 +72,8 @@ class MovieTabView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextField(
-            onSubmitted: (query) {
-              Provider.of<MovieSearchNotifier>(context, listen: false)
-                  .fetchMovieSearch(query);
+            onChanged: (query) {
+              context.read<MovieSearchBloc>().add(OnMovieQueryChanged(query));
             },
             decoration: const InputDecoration(
               hintText: 'Search title',
@@ -81,22 +87,28 @@ class MovieTabView extends StatelessWidget {
             'Search Result',
             style: kHeading6,
           ),
-          Consumer<MovieSearchNotifier>(
-            builder: (context, data, child) {
-              if (data.state == RequestState.Loading) {
+          BlocBuilder<MovieSearchBloc, MovieSearchState>(
+            builder: (context, state) {
+              if (state is MovieSearchLoading) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              } else if (data.state == RequestState.Loaded) {
-                final result = data.searchResult;
+              } else if (state is MovieSearchHasData) {
+                final result = state.result;
                 return Expanded(
                   child: ListView.builder(
                     padding: const EdgeInsets.all(8),
                     itemBuilder: (context, index) {
-                      final movie = data.searchResult[index];
+                      final movie = result[index];
                       return MovieCard(movie);
                     },
                     itemCount: result.length,
+                  ),
+                );
+              } else if (state is MovieSearchError) {
+                return Expanded(
+                  child: Center(
+                    child: Text(state.message),
                   ),
                 );
               } else {
@@ -106,6 +118,32 @@ class MovieTabView extends StatelessWidget {
               }
             },
           ),
+
+          // Consumer<MovieSearchNotifier>(
+          //   builder: (context, data, child) {
+          //     if (data.state == RequestState.Loading) {
+          //       return const Center(
+          //         child: CircularProgressIndicator(),
+          //       );
+          //     } else if (data.state == RequestState.Loaded) {
+          //       final result = data.searchResult;
+          //       return Expanded(
+          //         child: ListView.builder(
+          //           padding: const EdgeInsets.all(8),
+          //           itemBuilder: (context, index) {
+          //             final movie = data.searchResult[index];
+          //             return MovieCard(movie);
+          //           },
+          //           itemCount: result.length,
+          //         ),
+          //       );
+          //     } else {
+          //       return Expanded(
+          //         child: Container(),
+          //       );
+          //     }
+          //   },
+          // ),
         ],
       ),
     );
@@ -125,9 +163,12 @@ class TvTabView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextField(
-            onSubmitted: (query) {
-              Provider.of<TvSearchNotifier>(context, listen: false)
-                  .fetchTvSearch(query);
+            // onSubmitted: (query) {
+            //   Provider.of<TvSearchNotifier>(context, listen: false)
+            //       .fetchTvSearch(query);
+            // },
+            onChanged: (query) {
+              context.read<TvSearchBloc>().add(OnTvQueryChanged(query));
             },
             decoration: const InputDecoration(
               hintText: 'Search title',
@@ -141,22 +182,28 @@ class TvTabView extends StatelessWidget {
             'Search Result',
             style: kHeading6,
           ),
-          Consumer<TvSearchNotifier>(
-            builder: (context, data, child) {
-              if (data.state == RequestState.Loading) {
+          BlocBuilder<TvSearchBloc, TvSearchState>(
+            builder: (context, state) {
+              if (state is TvSearchLoading) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              } else if (data.state == RequestState.Loaded) {
-                final result = data.searchResult;
+              } else if (state is TvSearchHasData) {
+                final result = state.result;
                 return Expanded(
                   child: ListView.builder(
                     padding: const EdgeInsets.all(8),
                     itemBuilder: (context, index) {
-                      final tv = data.searchResult[index];
-                      return TvCard(tv);
+                      final movie = result[index];
+                      return TvCard(movie);
                     },
                     itemCount: result.length,
+                  ),
+                );
+              } else if (state is TvSearchError) {
+                return Expanded(
+                  child: Center(
+                    child: Text(state.message),
                   ),
                 );
               } else {
@@ -166,6 +213,31 @@ class TvTabView extends StatelessWidget {
               }
             },
           ),
+          // Consumer<TvSearchNotifier>(
+          //   builder: (context, data, child) {
+          //     if (data.state == RequestState.Loading) {
+          //       return const Center(
+          //         child: CircularProgressIndicator(),
+          //       );
+          //     } else if (data.state == RequestState.Loaded) {
+          //       final result = data.searchResult;
+          //       return Expanded(
+          //         child: ListView.builder(
+          //           padding: const EdgeInsets.all(8),
+          //           itemBuilder: (context, index) {
+          //             final tv = data.searchResult[index];
+          //             return TvCard(tv);
+          //           },
+          //           itemCount: result.length,
+          //         ),
+          //       );
+          //     } else {
+          //       return Expanded(
+          //         child: Container(),
+          //       );
+          //     }
+          //   },
+          // ),
         ],
       ),
     );

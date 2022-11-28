@@ -1,0 +1,55 @@
+{
+  "_id": "57599ae2c3a3684ea900242d",
+  "air_date": "2016-07-15",
+  "episodes": [
+    {
+      "air_date": "2016-07-15",
+      "episode_number": 1,
+      "id": 1198665,
+      "name": "Chapter One: The Vanishing of Will Byers",
+      "overview": "overview",
+      "production_code": "tt6020684",
+      "runtime": 49,
+      "season_number": 1,
+      "show_id": 66732,
+      "still_path": "/AdwF2jXvhdODr6gUZ61bHKRkz09.jpg",
+      "vote_average": 8.47,
+      "vote_count": 919,
+      "crew": [
+        {
+          "job": "Director",
+          "department": "Directing",
+          "credit_id": "57b20164c3a36869e5000ba5",
+          "adult": false,
+          "gender": 2,
+          "id": 1179419,
+          "known_for_department": "Writing",
+          "name": "Matt Duffer",
+          "original_name": "Matt Duffer",
+          "popularity": 3.097,
+          "profile_path": "/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"
+        }
+      ],
+      "guest_stars": [
+        {
+          "character": "Will Byers",
+          "credit_id": "5759b99a9251416b530002a5",
+          "order": 1,
+          "adult": false,
+          "gender": 2,
+          "id": 1393177,
+          "known_for_department": "Acting",
+          "name": "Noah Schnapp",
+          "original_name": "Noah Schnapp",
+          "popularity": 19.137,
+          "profile_path": "/tYtxIVUrtfNkrmMridULC7Yu93J.jpg"
+        }
+      ]
+    }
+  ],
+  "name": "Season 1",
+  "overview": "overview",
+  "id": 77680,
+  "poster_path": "/rbnuP7hlynAMLdqcQRCpZW9qDkV.jpg",
+  "season_number": 1
+}

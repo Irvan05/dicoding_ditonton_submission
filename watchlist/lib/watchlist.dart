@@ -3,7 +3,7 @@ library watchlist;
 //data
 //datasources
 export 'data/datasources/db/database_helper_watchlist.dart';
-export 'data/datasources/watchlist_local_datasources.dart';
+export 'data/datasources/watchlist_local_data_sources.dart';
 //repo
 export 'data/repositories/watchlist_repositories_impl.dart';
 //domain

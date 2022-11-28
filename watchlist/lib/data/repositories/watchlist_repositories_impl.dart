@@ -2,7 +2,7 @@ import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:movie/movie.dart';
 import 'package:tv/tv.dart';
-import 'package:watchlist/data/datasources/watchlist_local_datasources.dart';
+import 'package:watchlist/data/datasources/watchlist_local_data_sources.dart';
 import 'package:watchlist/domain/repositories/watchlist_repositories.dart';
 
 class WatchlistRepositoryImpl implements WatchlistRepository {

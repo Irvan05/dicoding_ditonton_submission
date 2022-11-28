@@ -3,12 +3,12 @@ import 'dart:io';
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:movie/movie.dart';
-import 'package:search/data/datasources/search_remote_datasources.dart';
+import 'package:search/data/datasources/search_remote_data_sources.dart';
 import 'package:search/domain/repositories/search_repository.dart';
 import 'package:tv/tv.dart';
 
 class SearchRepositoryImpl implements SearchRepository {
-  SearchRemoteDatasources remoteDataSource;
+  SearchRemoteDataSource remoteDataSource;
 
   SearchRepositoryImpl({required this.remoteDataSource});
 

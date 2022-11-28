@@ -21,7 +21,6 @@ class DatabaseHelperMovie {
     return _database;
   }
 
-  // static const String _tblWatchlistMovie = 'watchlist';
   static const String _tblCacheMovie = 'cache';
 
   Future<Database> _initDb() async {
@@ -33,14 +32,6 @@ class DatabaseHelperMovie {
   }
 
   void _onCreate(Database db, int version) async {
-    // await db.execute('''
-    //   CREATE TABLE  $_tblWatchlistMovie (
-    //     id INTEGER PRIMARY KEY,
-    //     title TEXT,
-    //     overview TEXT,
-    //     posterPath TEXT
-    //   );
-    // ''');
     await db.execute('''
       CREATE TABLE  $_tblCacheMovie (
         id INTEGER PRIMARY KEY,
@@ -51,43 +42,6 @@ class DatabaseHelperMovie {
       );
     ''');
   }
-
-  // Future<int> insertWatchlistMovie(MovieTable movie) async {
-  //   final db = await database;
-  //   return await db!.insert(_tblWatchlistMovie, movie.toJson());
-  // }
-
-  // Future<int> removeWatchlistMovie(MovieTable movie) async {
-  //   final db = await database;
-  //   return await db!.delete(
-  //     _tblWatchlistMovie,
-  //     where: 'id = ?',
-  //     whereArgs: [movie.id],
-  //   );
-  // }
-
-  // Future<Map<String, dynamic>?> getMovieById(int id) async {
-  //   final db = await database;
-  //   final results = await db!.query(
-  //     _tblWatchlistMovie,
-  //     where: 'id = ?',
-  //     whereArgs: [id],
-  //   );
-
-  //   if (results.isNotEmpty) {
-  //     return results.first;
-  //   } else {
-  //     return null;
-  //   }
-  // }
-
-  // Future<List<Map<String, dynamic>>> getWatchlistMovies() async {
-  //   final db = await database;
-  //   final List<Map<String, dynamic>> results =
-  //       await db!.query(_tblWatchlistMovie);
-
-  //   return results;
-  // }
 
   Future<void> insertCacheTransactionMovie(
       List<MovieTable> movies, String category) async {
