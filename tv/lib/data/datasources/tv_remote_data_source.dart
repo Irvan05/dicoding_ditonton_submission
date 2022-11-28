@@ -45,6 +45,7 @@ class TvRemoteDataSourceImpl implements TvRemoteDataSource {
     final response = await client.get(Uri.parse('$BASE_URL/tv/$id?$API_KEY'));
 
     if (response.statusCode == 200) {
+      print(json.decode(response.body)['first_air_date']);
       return TvDetailResponse.fromJson(json.decode(response.body));
     } else {
       throw ServerException();

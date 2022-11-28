@@ -1,10 +1,10 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie/movie.dart';
-import 'package:provider/provider.dart';
-import 'package:search/presentation/bloc/movie_search_bloc.dart';
-import 'package:search/presentation/bloc/tv_search_bloc.dart';
+import 'package:search/search.dart';
 // import 'package:search/presentation/provider/movie_search_notifier.dart';
 // import 'package:search/presentation/provider/tv_search_notifier.dart';
 import 'package:tv/tv.dart';
@@ -12,7 +12,7 @@ import 'package:tv/tv.dart';
 class SearchPage extends StatelessWidget {
   final CategoryState initialTab;
 
-  const SearchPage({super.key, this.initialTab = CategoryState.Movies});
+  const SearchPage({this.initialTab = CategoryState.Movies});
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +91,9 @@ class MovieTabView extends StatelessWidget {
             builder: (context, state) {
               if (state is MovieSearchLoading) {
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    key: Key('loading-movie-indicator'),
+                  ),
                 );
               } else if (state is MovieSearchHasData) {
                 final result = state.result;
@@ -105,15 +107,30 @@ class MovieTabView extends StatelessWidget {
                     itemCount: result.length,
                   ),
                 );
+              } else if (state is MovieSearchEmpty) {
+                return Column(
+                  children: const [
+                    Divider(),
+                    Center(
+                      child: Text(
+                        'No result found...',
+                        key: Key('no-result-movie'),
+                      ),
+                    )
+                  ],
+                );
               } else if (state is MovieSearchError) {
                 return Expanded(
                   child: Center(
-                    child: Text(state.message),
+                    child: Text(
+                      state.message,
+                      key: const Key('movie-error-text'),
+                    ),
                   ),
                 );
               } else {
-                return Expanded(
-                  child: Container(),
+                return const Expanded(
+                  child: Center(),
                 );
               }
             },
@@ -199,6 +216,15 @@ class TvTabView extends StatelessWidget {
                     },
                     itemCount: result.length,
                   ),
+                );
+              } else if (state is TvSearchEmpty) {
+                return Column(
+                  children: const [
+                    Divider(),
+                    Center(
+                      child: Text('No result found...'),
+                    )
+                  ],
                 );
               } else if (state is TvSearchError) {
                 return Expanded(

@@ -15,6 +15,11 @@ class MovieSearchBloc extends Bloc<MovieSearchEvent, MovieSearchState> {
       (event, emit) async {
         final query = event.query;
 
+        if (query.isEmpty || query == '') {
+          emit(MovieSearchEmpty());
+          return;
+        }
+
         emit(MovieSearchLoading());
         final result = await _searchMovies.execute(query);
 
@@ -23,7 +28,11 @@ class MovieSearchBloc extends Bloc<MovieSearchEvent, MovieSearchState> {
             emit(MovieSearchError(failure.message));
           },
           (data) {
-            emit(MovieSearchHasData(data));
+            if (data.isEmpty) {
+              emit(MovieSearchEmpty());
+            } else {
+              emit(MovieSearchHasData(data));
+            }
           },
         );
       },

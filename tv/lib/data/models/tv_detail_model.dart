@@ -40,10 +40,10 @@ class TvDetailResponse extends Equatable {
   });
 
   final bool adult;
-  final String backdropPath;
+  final String? backdropPath;
   final List<CreatedBy>? createdBy;
   final List<int>? episodeRunTime;
-  final DateTime firstAirDate;
+  final DateTime? firstAirDate;
   final List<GenreModel> genres;
   final String? homepage;
   final int id;
@@ -83,13 +83,15 @@ class TvDetailResponse extends Equatable {
         episodeRunTime: json["episode_run_time"] == null
             ? null
             : List<int>.from(json["episode_run_time"].map((x) => x)),
-        firstAirDate: DateTime.parse(json["first_air_date"]),
+        firstAirDate:
+            json["first_air_date"] == null || json["first_air_date"] == ''
+                ? null
+                : DateTime.parse(json["first_air_date"]),
         genres: List<GenreModel>.from(
             json["genres"].map((x) => GenreModel.fromJson(x))),
-        homepage: json["homepage"] == null ? null : json["homepage"],
+        homepage: json["homepage"],
         id: json["id"],
-        inProduction:
-            json["in_production"] == null ? null : json["in_production"],
+        inProduction: json["in_production"],
         languages: json["languages"] == null
             ? null
             : List<String>.from(json["languages"].map((x) => x)),
@@ -105,20 +107,13 @@ class TvDetailResponse extends Equatable {
             ? null
             : List<Network>.from(
                 json["networks"].map((x) => Network.fromJson(x))),
-        numberOfEpisodes: json["number_of_episodes"] == null
-            ? null
-            : json["number_of_episodes"],
-        numberOfSeasons: json["number_of_seasons"] == null
-            ? null
-            : json["number_of_seasons"],
+        numberOfEpisodes: json["number_of_episodes"],
+        numberOfSeasons: json["number_of_seasons"],
         originCountry: json["origin_country"] == null
             ? null
             : List<String>.from(json["origin_country"].map((x) => x)),
-        originalLanguage: json["original_language"] == null
-            ? null
-            : json["original_language"],
-        originalName:
-            json["original_name"] == null ? null : json["original_name"],
+        originalLanguage: json["original_language"],
+        originalName: json["original_name"],
         overview: json["overview"],
         popularity:
             json["popularity"] == null ? null : json["popularity"].toDouble(),
@@ -138,26 +133,26 @@ class TvDetailResponse extends Equatable {
             : List<SpokenLanguage>.from(json["spoken_languages"]
                 .map((x) => SpokenLanguage.fromJson(x))),
         status: json["status"],
-        tagline: json["tagline"] == null ? null : json["tagline"],
-        type: json["type"] == null ? null : json["type"],
+        tagline: json["tagline"],
+        type: json["type"],
         voteAverage: json["vote_average"].toDouble(),
         voteCount: json["vote_count"],
       );
 
   TvDetail toEntity() {
     return TvDetail(
-      adult: this.adult,
-      backdropPath: this.backdropPath,
-      genres: this.genres.map((genre) => genre.toEntity()).toList(),
-      id: this.id,
-      name: this.name,
-      overview: this.overview,
-      posterPath: this.posterPath,
-      firstAirDate: this.firstAirDate,
-      seasons: this.seasons.map((seasons) => seasons.toEntity()).toList(),
-      status: this.status,
-      voteAverage: this.voteAverage,
-      voteCount: this.voteCount,
+      adult: adult,
+      backdropPath: backdropPath,
+      genres: genres.map((genre) => genre.toEntity()).toList(),
+      id: id,
+      name: name,
+      overview: overview,
+      posterPath: posterPath,
+      firstAirDate: firstAirDate,
+      seasons: seasons.map((seasons) => seasons.toEntity()).toList(),
+      status: status,
+      voteAverage: voteAverage,
+      voteCount: voteCount,
     );
   }
 
@@ -265,7 +260,7 @@ class Network {
   factory Network.fromJson(Map<String, dynamic> json) => Network(
         id: json["id"],
         name: json["name"],
-        logoPath: json["logo_path"] == null ? null : json["logo_path"],
+        logoPath: json["logo_path"],
         originCountry: json["origin_country"],
       );
 }

@@ -16,9 +16,7 @@ class DatabaseHelperWatchlist {
   static Database? _database;
 
   Future<Database?> get database async {
-    if (_database == null) {
-      _database = await _initDb();
-    }
+    _database ??= await _initDb();
     return _database;
   }
 
@@ -29,28 +27,44 @@ class DatabaseHelperWatchlist {
     final path = await getDatabasesPath();
     final databasePath = '$path/ditonton.db';
 
-    var db = await openDatabase(databasePath, version: 1, onCreate: _onCreate);
+    var db = await openDatabase(databasePath, version: 1);
+    partialCreate(db);
     return db;
   }
 
-  void _onCreate(Database db, int version) async {
-    await db.execute('''
-      CREATE TABLE  $_tblWatchlistMovie (
+  void partialCreate(Database db) {
+    db.execute('''CREATE TABLE IF NOT EXISTS $_tblWatchlistMovie (
         id INTEGER PRIMARY KEY,
         title TEXT,
         overview TEXT,
         posterPath TEXT
-      );
-    ''');
-    await db.execute('''
-      CREATE TABLE  $_tblWatchlistTv (
+      );''');
+    db.execute('''CREATE TABLE IF NOT EXISTS $_tblWatchlistTv (
         id INTEGER PRIMARY KEY,
         name TEXT,
         overview TEXT,
         posterPath TEXT
-      );
-    ''');
+      );''');
   }
+
+  // void _onCreate(Database db, int version) async {
+  //   await db.execute('''
+  //     CREATE TABLE  $_tblWatchlistMovie (
+  //       id INTEGER PRIMARY KEY,
+  //       title TEXT,
+  //       overview TEXT,
+  //       posterPath TEXT
+  //     );
+  //   ''');
+  //   await db.execute('''
+  //     CREATE TABLE  $_tblWatchlistTv (
+  //       id INTEGER PRIMARY KEY,
+  //       name TEXT,
+  //       overview TEXT,
+  //       posterPath TEXT
+  //     );
+  //   ''');
+  // }
 
   Future<int> insertWatchlistMovie(MovieTable movie) async {
     final db = await database;

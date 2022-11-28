@@ -15,6 +15,11 @@ class TvSearchBloc extends Bloc<TvSearchEvent, TvSearchState> {
       (event, emit) async {
         final query = event.query;
 
+        if (query.isEmpty || query == '') {
+          emit(TvSearchEmpty());
+          return;
+        }
+
         emit(TvSearchLoading());
         final result = await _searchTvs.execute(query);
 
@@ -23,7 +28,11 @@ class TvSearchBloc extends Bloc<TvSearchEvent, TvSearchState> {
             emit(TvSearchError(failure.message));
           },
           (data) {
-            emit(TvSearchHasData(data));
+            if (data.isEmpty) {
+              emit(TvSearchEmpty());
+            } else {
+              emit(TvSearchHasData(data));
+            }
           },
         );
       },

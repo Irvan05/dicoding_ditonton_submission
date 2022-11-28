@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 
 import 'package:movie/movie.dart';
+import 'package:movie/presentation/blocs/movie_detail_bloc.dart';
 import 'package:search/search.dart';
 import 'package:tv/tv.dart';
 import 'package:watchlist/watchlist.dart';
@@ -24,15 +25,15 @@ void init() {
       getTopRatedMovies: locator(),
     ),
   );
-  locator.registerFactory(
-    () => MovieDetailNotifier(
-      getMovieDetail: locator(),
-      getMovieRecommendations: locator(),
-      getWatchListStatus: locator(),
-      saveWatchlist: locator(),
-      removeWatchlist: locator(),
-    ),
-  );
+  // locator.registerFactory(
+  //   () => MovieDetailNotifier(
+  //     getMovieDetail: locator(),
+  //     getMovieRecommendations: locator(),
+  //     getWatchListStatus: locator(),
+  //     saveWatchlist: locator(),
+  //     removeWatchlist: locator(),
+  //   ),
+  // );
   locator.registerFactory(
     () => PopularMoviesNotifier(
       locator(),
@@ -105,6 +106,15 @@ void init() {
   locator.registerFactory(
     () => TvSearchBloc(
       locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => MovieDetailBloc(
+      getMovieDetail: locator(),
+      getMovieRecommendations: locator(),
+      getWatchListStatus: locator(),
+      saveWatchlist: locator(),
+      removeWatchlist: locator(),
     ),
   );
 

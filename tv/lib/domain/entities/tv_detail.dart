@@ -25,7 +25,7 @@ class TvDetail extends Equatable {
   final String name;
   final String overview;
   final String posterPath;
-  final DateTime firstAirDate;
+  final DateTime? firstAirDate;
   final List<Season> seasons;
   final String status;
   final double voteAverage;
