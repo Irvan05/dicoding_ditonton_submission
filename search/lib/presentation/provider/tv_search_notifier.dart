@@ -1,38 +1,38 @@
-import 'package:core/core.dart';
-import 'package:flutter/foundation.dart';
-import 'package:search/domain/usecases/search_tvs.dart';
-import 'package:tv/tv.dart';
+// import 'package:core/core.dart';
+// import 'package:flutter/foundation.dart';
+// import 'package:search/domain/usecases/search_tvs.dart';
+// import 'package:tv/tv.dart';
 
-class TvSearchNotifier extends ChangeNotifier {
-  final SearchTvs searchTvs;
+// class TvSearchNotifier extends ChangeNotifier {
+//   final SearchTvs searchTvs;
 
-  TvSearchNotifier({required this.searchTvs});
+//   TvSearchNotifier({required this.searchTvs});
 
-  RequestState _state = RequestState.Empty;
-  RequestState get state => _state;
+//   RequestState _state = RequestState.Empty;
+//   RequestState get state => _state;
 
-  List<Tv> _searchResult = [];
-  List<Tv> get searchResult => _searchResult;
+//   List<Tv> _searchResult = [];
+//   List<Tv> get searchResult => _searchResult;
 
-  String _message = '';
-  String get message => _message;
+//   String _message = '';
+//   String get message => _message;
 
-  Future<void> fetchTvSearch(String query) async {
-    _state = RequestState.Loading;
-    notifyListeners();
+//   Future<void> fetchTvSearch(String query) async {
+//     _state = RequestState.Loading;
+//     notifyListeners();
 
-    final result = await searchTvs.execute(query);
-    result.fold(
-      (failure) {
-        _message = failure.message;
-        _state = RequestState.Error;
-        notifyListeners();
-      },
-      (data) {
-        _searchResult = data;
-        _state = RequestState.Loaded;
-        notifyListeners();
-      },
-    );
-  }
-}
+//     final result = await searchTvs.execute(query);
+//     result.fold(
+//       (failure) {
+//         _message = failure.message;
+//         _state = RequestState.Error;
+//         notifyListeners();
+//       },
+//       (data) {
+//         _searchResult = data;
+//         _state = RequestState.Loaded;
+//         notifyListeners();
+//       },
+//     );
+//   }
+// }

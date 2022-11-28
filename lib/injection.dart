@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 
 import 'package:movie/movie.dart';
-import 'package:movie/presentation/blocs/movie_detail_bloc.dart';
 import 'package:search/search.dart';
 import 'package:tv/tv.dart';
 import 'package:watchlist/watchlist.dart';
@@ -34,16 +33,16 @@ void init() {
   //     removeWatchlist: locator(),
   //   ),
   // );
-  locator.registerFactory(
-    () => PopularMoviesNotifier(
-      locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => TopRatedMoviesNotifier(
-      getTopRatedMovies: locator(),
-    ),
-  );
+  // locator.registerFactory(
+  //   () => PopularMoviesNotifier(
+  //     locator(),
+  //   ),
+  // );
+  // locator.registerFactory(
+  //   () => TopRatedMoviesNotifier(
+  //     getTopRatedMovies: locator(),
+  //   ),
+  // );
   locator.registerFactory(
     () => WatchlistMovieNotifier(
       getWatchlistMovies: locator(),
@@ -99,13 +98,13 @@ void init() {
 
   // bloc
   locator.registerFactory(
-    () => MovieSearchBloc(
-      locator(),
+    () => PopularMoviesBloc(
+      getPopularMovies: locator(),
     ),
   );
   locator.registerFactory(
-    () => TvSearchBloc(
-      locator(),
+    () => TopRatedMoviesBloc(
+      getTopRatedMovies: locator(),
     ),
   );
   locator.registerFactory(
@@ -115,6 +114,16 @@ void init() {
       getWatchListStatus: locator(),
       saveWatchlist: locator(),
       removeWatchlist: locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => MovieSearchBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TvSearchBloc(
+      locator(),
     ),
   );
 

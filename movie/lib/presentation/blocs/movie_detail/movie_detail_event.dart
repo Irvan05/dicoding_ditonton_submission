@@ -24,9 +24,3 @@ class RemoveFromWatchlist extends MovieDetailEvent {
 
   const RemoveFromWatchlist({required this.movie});
 }
-
-// class LoadWatchlistStatus extends MovieDetailEvent {
-//   final int id;
-
-//   const LoadWatchlistStatus({required this.id});
-// }

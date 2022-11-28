@@ -28,12 +28,12 @@ class MyApp extends StatelessWidget {
         // ChangeNotifierProvider(
         //   create: (_) => di.locator<MovieDetailNotifier>(),
         // ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedMoviesNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<PopularMoviesNotifier>(),
-        ),
+        // ChangeNotifierProvider(
+        //   create: (_) => di.locator<TopRatedMoviesNotifier>(),
+        // ),
+        // ChangeNotifierProvider(
+        //   create: (_) => di.locator<PopularMoviesNotifier>(),
+        // ),
         ChangeNotifierProvider(
           create: (_) => di.locator<WatchlistMovieNotifier>(),
         ),
@@ -68,6 +68,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => di.locator<TvSearchBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<PopularMoviesBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TopRatedMoviesBloc>(),
         ),
         BlocProvider(
           create: (_) => di.locator<MovieDetailBloc>(),

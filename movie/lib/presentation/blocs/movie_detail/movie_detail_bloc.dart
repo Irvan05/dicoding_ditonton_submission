@@ -30,7 +30,6 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
     on<FetchMovieDetail>(fetchMovieDetail);
     on<AddWatchlist>(addWatchlist);
     on<RemoveFromWatchlist>(removeFromWatchlist);
-    // on<LoadWatchlistStatus>(loadWatchlistStatus);
   }
 
   void fetchMovieDetail(
@@ -62,30 +61,10 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
           (failure) {
             _isRecommentaionError = true;
             _recommentaionError = failure.message;
-            // emit(MovieDetailLoaded(
-            //   data: MovieDetailLoadedData(
-            //     movie: _movie,
-            //     movieRecommendations: [],
-            //     isRecommentaionError: _isRecommentaionError,
-            //     isAddedToWatchlist: false,
-            //     watchlistMessage: '',
-            //     recommentaionError: _recommentaionError,
-            //   ),
-            // ));
           },
           (movies) {
             _isRecommentaionError = false;
             _movies = movies;
-            // emit(MovieDetailLoaded(
-            //   data: MovieDetailLoadedData(
-            //     movie: _movie,
-            //     movieRecommendations: _movies,
-            //     isRecommentaionError: _isRecommentaionError,
-            //     isAddedToWatchlist: false,
-            //     watchlistMessage: '',
-            //     recommentaionError: '',
-            //   ),
-            // ));
           },
         );
       },
@@ -122,23 +101,11 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
                   content: Text(watchlistMessage),
                 );
               });
-          // emit(
-          //   MovieDetailLoaded(
-          //       data: currentState.data.copyWith(
-          //     watchlistMessage: failure.message,
-          //   )),
-          // );
         },
         (successMessage) {
           watchlistMessage = successMessage;
           ScaffoldMessenger.of(navigatorKey.currentContext!)
               .showSnackBar(SnackBar(content: Text(watchlistMessage)));
-          // emit(
-          //   MovieDetailLoaded(
-          //       data: currentState.data.copyWith(
-          //     watchlistMessage: successMessage,
-          //   )),
-          // );
         },
       );
 
@@ -172,23 +139,11 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
                   content: Text(watchlistMessage),
                 );
               });
-          // emit(
-          //   MovieDetailLoaded(
-          //       data: currentState.data.copyWith(
-          //     watchlistMessage: failure.message,
-          //   )),
-          // );
         },
         (successMessage) {
           watchlistMessage = successMessage;
           ScaffoldMessenger.of(navigatorKey.currentContext!)
               .showSnackBar(SnackBar(content: Text(watchlistMessage)));
-          // emit(
-          //   MovieDetailLoaded(
-          //       data: currentState.data.copyWith(
-          //     watchlistMessage: successMessage,
-          //   )),
-          // );
         },
       );
 
@@ -205,9 +160,6 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
   }
 
   Future<bool> loadWatchlistStatus(int id) async {
-    final str = await getWatchListStatus.execute(id);
-    print('loadWatchlistStatus');
-    print(str.toString());
     return await getWatchListStatus.execute(id);
   }
 }
