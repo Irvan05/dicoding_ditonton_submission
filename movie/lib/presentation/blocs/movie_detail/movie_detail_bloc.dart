@@ -94,18 +94,9 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
       result.fold(
         (failure) {
           watchlistMessage = failure.message;
-          showDialog(
-              context: navigatorKey.currentContext!,
-              builder: (context) {
-                return AlertDialog(
-                  content: Text(watchlistMessage),
-                );
-              });
         },
         (successMessage) {
           watchlistMessage = successMessage;
-          ScaffoldMessenger.of(navigatorKey.currentContext!)
-              .showSnackBar(SnackBar(content: Text(watchlistMessage)));
         },
       );
 
@@ -132,18 +123,9 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
       result.fold(
         (failure) {
           watchlistMessage = failure.message;
-          showDialog(
-              context: navigatorKey.currentContext!,
-              builder: (context) {
-                return AlertDialog(
-                  content: Text(watchlistMessage),
-                );
-              });
         },
         (successMessage) {
           watchlistMessage = successMessage;
-          ScaffoldMessenger.of(navigatorKey.currentContext!)
-              .showSnackBar(SnackBar(content: Text(watchlistMessage)));
         },
       );
 

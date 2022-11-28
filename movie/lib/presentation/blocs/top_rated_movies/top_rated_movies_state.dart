@@ -12,11 +12,11 @@ class TopRatedMoviesLoading extends TopRatedMoviesState {}
 class TopRatedMoviesError extends TopRatedMoviesState {
   final String error;
 
-  TopRatedMoviesError({required this.error});
+  const TopRatedMoviesError({required this.error});
 }
 
 class TopRatedMoviesLoaded extends TopRatedMoviesState {
   final List<Movie> movies;
 
-  TopRatedMoviesLoaded({required this.movies});
+  const TopRatedMoviesLoaded({required this.movies});
 }

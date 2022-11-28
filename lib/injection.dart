@@ -17,13 +17,13 @@ bool isInit = false;
 void init() {
   isInit = true;
   // provider
-  locator.registerFactory(
-    () => MovieListNotifier(
-      getNowPlayingMovies: locator(),
-      getPopularMovies: locator(),
-      getTopRatedMovies: locator(),
-    ),
-  );
+  // locator.registerFactory(
+  //   () => MovieListNotifier(
+  //     getNowPlayingMovies: locator(),
+  //     getPopularMovies: locator(),
+  //     getTopRatedMovies: locator(),
+  //   ),
+  // );
   // locator.registerFactory(
   //   () => MovieDetailNotifier(
   //     getMovieDetail: locator(),
@@ -97,6 +97,11 @@ void init() {
   );
 
   // bloc
+  locator.registerFactory(
+    () => HomeMovieBloc(
+      getNowPlayingMovies: locator(),
+    ),
+  );
   locator.registerFactory(
     () => PopularMoviesBloc(
       getPopularMovies: locator(),
