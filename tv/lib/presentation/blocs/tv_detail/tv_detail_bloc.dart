@@ -20,7 +20,7 @@ class TvDetailBloc extends Bloc<TvDetailEvent, TvDetailState> {
 
   final GetTvDetail getTvDetail;
   final GetTvRecommendations getTvRecommendations;
-  final GetWatchListStatus getWatchListStatus;
+  final GetWatchListStatusTv getWatchListStatus;
   final SaveWatchlistTv saveWatchlist;
   final RemoveWatchlistTv removeWatchlist;
   final GetSeasonDetailTv getSeasonDetailTv;

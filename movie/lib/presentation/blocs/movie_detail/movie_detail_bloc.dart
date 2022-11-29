@@ -17,7 +17,7 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
 
   final GetMovieDetail getMovieDetail;
   final GetMovieRecommendations getMovieRecommendations;
-  final GetWatchListStatus getWatchListStatus;
+  final GetWatchListStatusMovie getWatchListStatus;
   final SaveWatchlistMovie saveWatchlist;
   final RemoveWatchlistMovie removeWatchlist;
 
