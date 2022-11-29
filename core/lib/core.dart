@@ -12,6 +12,7 @@ export 'commons/utils/network_info.dart';
 export 'commons/utils/routes.dart';
 export 'commons/utils/state_enum.dart';
 export 'commons/utils/utils.dart';
+export 'commons/utils/ssl_pinning.dart';
 
 //data
 //models

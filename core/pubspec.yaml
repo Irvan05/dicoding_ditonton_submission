@@ -17,6 +17,7 @@ dependencies:
     path: ../tv
   watchlist:
     path: ../watchlist
+  http: ^0.13.3
 
   equatable: ^2.0.2
   google_fonts: ^3.0.1

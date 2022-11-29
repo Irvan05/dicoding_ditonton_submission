@@ -2,6 +2,7 @@ import 'package:core/core.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
+import 'package:http/io_client.dart';
 
 import 'package:movie/movie.dart';
 import 'package:search/search.dart';
@@ -14,8 +15,9 @@ final locator = GetIt.instance;
 
 bool isInit = false;
 
-void init() {
+Future<void> init() async {
   isInit = true;
+  IOClient ioClient = await SslPinning.ioClient;
   // provider
   // locator.registerFactory(
   //   () => MovieListNotifier(
@@ -247,6 +249,9 @@ void init() {
 
 // network info
   locator.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(locator()));
+
+//utils
+  locator.registerLazySingleton<IOClient>(() => ioClient);
 
 // external
   locator.registerLazySingleton(() => http.Client());

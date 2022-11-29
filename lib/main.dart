@@ -12,8 +12,9 @@ import 'package:tv/tv.dart';
 import 'package:watchlist/watchlist.dart';
 // import 'package:search/search.dart';
 
-void main() {
-  di.init();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
   runApp(MyApp());
 }
 
