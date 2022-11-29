@@ -24,6 +24,7 @@ dependencies:
   tv:
     path: ../tv
   rxdart: ^0.27.1
+  mocktail: ^0.3.0
 
 dev_dependencies:
   build_runner: ^2.0.4

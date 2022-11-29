@@ -28,3 +28,5 @@ class TvSearchHasData extends TvSearchState {
   @override
   List<Object> get props => [result];
 }
+
+class TvDummyFail extends TvSearchState {}

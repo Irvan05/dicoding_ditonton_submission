@@ -28,3 +28,5 @@ class MovieSearchHasData extends MovieSearchState {
   @override
   List<Object> get props => [result];
 }
+
+class MovieDummyFail extends MovieSearchState {}

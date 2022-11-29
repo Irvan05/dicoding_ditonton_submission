@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:search/domain/usecases/search_tvs.dart';
 import 'package:tv/tv.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:search/search.dart';
 
 part 'tv_search_state.dart';
 part 'tv_search_event.dart';

@@ -5,7 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:movie/movie.dart';
-import 'package:search/search.dart';
+import 'package:search/domain/usecases/search_movies.dart';
+import 'package:search/presentation/blocs/movie_search_bloc.dart';
 
 import 'movie_search_bloc_test.mocks.dart';
 
@@ -26,7 +27,7 @@ void main() {
   final tMovie = Movie(
     adult: false,
     backdropPath: '/muth4OYamXf41G2evdrLEg8d3om.jpg',
-    genreIds: [14, 28],
+    genreIds: const [14, 28],
     id: 557,
     originalTitle: 'Spider-Man',
     overview:
@@ -76,5 +77,32 @@ void main() {
     verify: (bloc) {
       verify(mockSearchMovies.execute(tQuery));
     },
+  );
+
+  blocTest<MovieSearchBloc, MovieSearchState>(
+    'Should emit [Empty] when search is empty',
+    build: () {
+      return searchBloc;
+    },
+    act: (bloc) => bloc.add(const OnMovieQueryChanged('')),
+    wait: const Duration(milliseconds: 500),
+    expect: () => [
+      MovieSearchEmpty(),
+    ],
+  );
+
+  blocTest<MovieSearchBloc, MovieSearchState>(
+    'Should emit [Loading, Empty] when result is empty',
+    build: () {
+      when(mockSearchMovies.execute(tQuery))
+          .thenAnswer((_) async => const Right([]));
+      return searchBloc;
+    },
+    act: (bloc) => bloc.add(const OnMovieQueryChanged(tQuery)),
+    wait: const Duration(milliseconds: 500),
+    expect: () => [
+      MovieSearchLoading(),
+      MovieSearchEmpty(),
+    ],
   );
 }

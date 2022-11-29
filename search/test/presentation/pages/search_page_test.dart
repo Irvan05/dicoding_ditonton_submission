@@ -1,42 +1,40 @@
+import 'package:bloc_test/bloc_test.dart';
+import 'package:core/commons/utils/state_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:search/search.dart';
+import 'package:movie/movie.dart';
+import 'package:search/presentation/blocs/movie_search_bloc.dart';
+import 'package:search/presentation/blocs/tv_search_bloc.dart';
+import 'package:search/presentation/pages/search_page.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:tv/tv.dart';
 
 // import '../../dummy_data/dummy_objects.dart';
-import 'search_page_test.mocks.dart';
 
-@GenerateMocks([
-  MovieSearchBloc,
-  TvSearchBloc,
-  SearchMovies,
-  SearchTvs,
-])
+class MockMovieSearchBloc extends MockBloc<MovieSearchEvent, MovieSearchState>
+    implements MovieSearchBloc {}
+
+class MockTvSearchBloc extends MockBloc<TvSearchEvent, TvSearchState>
+    implements TvSearchBloc {}
+
 void main() {
-  late MockMovieSearchBloc movieSearchBloc;
-  late MockTvSearchBloc tvSearchBloc;
-
-  late MockSearchMovies mockSearchMovies;
-  late MockSearchTvs mockSearchTvs;
+  late MovieSearchBloc movieSearchBloc;
+  late TvSearchBloc tvSearchBloc;
 
   setUp(() {
     movieSearchBloc = MockMovieSearchBloc();
     tvSearchBloc = MockTvSearchBloc();
-    mockSearchMovies = MockSearchMovies();
-    mockSearchTvs = MockSearchTvs();
   });
 
   Widget _makeTestableWidget(Widget body) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => MovieSearchBloc(mockSearchMovies),
+          create: (_) => movieSearchBloc,
         ),
         BlocProvider(
-          create: (_) => TvSearchBloc(mockSearchTvs),
+          create: (_) => tvSearchBloc,
         ),
       ],
       child: MaterialApp(
@@ -46,101 +44,211 @@ void main() {
   }
 
   const tQuery = 'spiderman';
+  final tMovie = Movie(
+    adult: false,
+    backdropPath: '/muth4OYamXf41G2evdrLEg8d3om.jpg',
+    genreIds: const [14, 28],
+    id: 557,
+    originalTitle: 'Spider-Man',
+    overview:
+        'After being bitten by a genetically altered spider, nerdy high school student Peter Parker is endowed with amazing powers to become the Amazing superhero known as Spider-Man.',
+    popularity: 60.441,
+    posterPath: '/rweIrveL43TaxUN0akQEaAXL6x0.jpg',
+    releaseDate: '2002-05-01',
+    title: 'Spider-Man',
+    video: false,
+    voteAverage: 7.2,
+    voteCount: 13507,
+  );
+  final tTv = Tv(
+      backdropPath: "/56v2KjBlU4XaOv9rVYEQypROD7P.jpg",
+      firstAirDate: DateTime(2016, 7, 15), //"2016-07-15",
+      genreIds: const [18, 10765, 9648],
+      id: 66732,
+      name: "Stranger Things",
+      originCountry: const ["US"],
+      originalLanguage: "en",
+      originalName: "Stranger Things",
+      overview: "overview",
+      popularity: 475.516,
+      posterPath: "/49WJfeN0moxb9IPfGn8AIqMGskD.jpg",
+      voteAverage: 8.6,
+      voteCount: 14335);
 
-  testWidgets('should display empty state when page is just loaded',
+  testWidgets('[movie] should display loading when bloc states are loading',
       (WidgetTester tester) async {
-    when(movieSearchBloc.state).thenAnswer((_) => MovieSearchEmpty());
+    when(() => movieSearchBloc.state).thenReturn(MovieSearchLoading());
 
-    // final widgetFinder = find.byKey(Key('no-result-movie'));
+    final progressBarFinder =
+        find.byType(CircularProgressIndicator, skipOffstage: false);
 
-    await tester.pumpWidget(_makeTestableWidget(const SearchPage()));
-    await tester.pumpAndSettle();
+    await tester.pumpWidget(_makeTestableWidget(
+      const SearchPage(),
+    ));
+    // await tester.pumpAndSettle();
 
-    expect(movieSearchBloc.state, MovieSearchEmpty());
+    expect(movieSearchBloc.state, MovieSearchLoading());
+    expect(progressBarFinder, findsOneWidget);
   });
 
-  testWidgets('should display error when state is error',
+  testWidgets('[movie] should display empty state when state is empty',
       (WidgetTester tester) async {
-    when(movieSearchBloc.state)
-        .thenAnswer((_) => const MovieSearchError('error'));
+    when(() => movieSearchBloc.state).thenReturn(MovieSearchEmpty());
+
+    final widgetFinder = find.byKey(const Key('no-result-movie'));
+    await tester.pumpWidget(_makeTestableWidget(
+      const SearchPage(),
+    ));
+
+    expect(movieSearchBloc.state, MovieSearchEmpty());
+    expect(widgetFinder, findsOneWidget);
+  });
+
+  testWidgets('[movie] should display error when state is error',
+      (WidgetTester tester) async {
+    when(() => movieSearchBloc.state)
+        .thenReturn(const MovieSearchError('error'));
 
     final widgetFinder = find.byKey(const Key('movie-error-text'));
-
-    await tester.pumpWidget(_makeTestableWidget(const SearchPage()));
-    await tester.pumpAndSettle();
+    await tester.pumpWidget(_makeTestableWidget(
+      const SearchPage(),
+    ));
 
     expect(movieSearchBloc.state, const MovieSearchError('error'));
     expect(widgetFinder, findsOneWidget);
   });
 
-  testWidgets('should display loading when bloc states are loading',
+  testWidgets('[movie] should display MovieSearchHasData data is loaded',
       (WidgetTester tester) async {
-    // when(mockNotifier.nowPlayingState).thenReturn(RequestState.Loading);
-    // when(mockNotifier.popularMoviesState).thenReturn(RequestState.Loading);
-    // when(mockNotifier.topRatedMoviesState).thenReturn(RequestState.Loading);
-    // when(mockSearchMovies.execute(tQuery))
-    //     .thenAnswer((_) async => Right(tMovieList));
+    when(() => movieSearchBloc.state).thenReturn(MovieSearchHasData([tMovie]));
 
-    // when(movieSearchBloc.onEvent(const OnMovieQueryChanged(tQuery)))
-    //     .thenAnswer((_) => movieSearchBloc.emit(MovieSearchLoading()));
+    final widgetFinder = find.byType(MovieCard);
+    await tester.pumpWidget(_makeTestableWidget(
+      const SearchPage(),
+    ));
 
-    when(movieSearchBloc.state).thenAnswer((_) => MovieSearchLoading());
-
-    // final progressBarFinder =
-    //     find.byType(CircularProgressIndicator, skipOffstage: false);
-    // movieSearchBloc.add(const OnMovieQueryChanged(tQuery));
-    // movieSearchBloc.onEvent(const OnMovieQueryChanged(tQuery));
-
-    await tester.pumpWidget(_makeTestableWidget(const SearchPage()));
-    await tester.pumpAndSettle();
-
-    expect(movieSearchBloc.state, MovieSearchLoading());
-    // expect(progressBarFinder, findsOneWidget);
+    expect(movieSearchBloc.state, MovieSearchHasData([tMovie]));
+    expect(widgetFinder, findsOneWidget);
   });
 
-  // testWidgets('should display movie list when states are Loaded',
-  //     (WidgetTester tester) async {
-  //   when(mockNotifier.nowPlayingState).thenReturn(RequestState.Loaded);
-  //   when(mockNotifier.nowPlayingMovies).thenReturn(testMovieList);
-  //   when(mockNotifier.popularMoviesState).thenReturn(RequestState.Loaded);
-  //   when(mockNotifier.popularMovies).thenReturn(testMovieList);
-  //   when(mockNotifier.topRatedMoviesState).thenReturn(RequestState.Loaded);
-  //   when(mockNotifier.topRatedMovies).thenReturn(testMovieList);
-  //   when(mockNotifier.message).thenReturn('');
+  testWidgets('[movie] should trigger event when textfield is changed',
+      (WidgetTester tester) async {
+    when(() => movieSearchBloc.state).thenReturn(MovieSearchLoading());
 
-  //   final movieListFinder = find.byType(MovieList);
+    final inputFinder = find.byType(TextField).first;
+    await tester.pumpWidget(_makeTestableWidget(
+      const SearchPage(),
+    ));
+    await tester.enterText(inputFinder, tQuery);
+    await tester.pump(const Duration(seconds: 1));
 
-  //   await tester.pumpWidget(_makeTestableWidget(HomeMoviePage()));
+    expect(movieSearchBloc.state, MovieSearchLoading());
+    verify(() => movieSearchBloc.add(const OnMovieQueryChanged(tQuery)))
+        .called(1);
+  });
 
-  //   expect(movieListFinder, findsNWidgets(3));
-  // });
+  testWidgets('should hide keyboard when tab is clicked',
+      (WidgetTester tester) async {
+    when(() => movieSearchBloc.state).thenReturn(MovieSearchLoading());
 
-  // testWidgets('should display text failed when states are error',
-  //     (WidgetTester tester) async {
-  //   when(mockNotifier.nowPlayingState).thenReturn(RequestState.Error);
-  //   when(mockNotifier.popularMoviesState).thenReturn(RequestState.Error);
-  //   when(mockNotifier.topRatedMoviesState).thenReturn(RequestState.Error);
-  //   when(mockNotifier.message).thenReturn('');
+    final inputFinder = find.byType(TextField).first;
+    final widgetFinder = find.byIcon(Icons.movie).first;
 
-  //   await tester.pumpWidget(_makeTestableWidget(HomeMoviePage()));
+    await tester.pumpWidget(_makeTestableWidget(
+      const SearchPage(),
+    ));
+    await tester.showKeyboard(inputFinder);
+    await tester.tap(widgetFinder);
+  });
 
-  //   expect(find.byKey(Key('now playing error')), findsOneWidget);
-  //   expect(find.byKey(Key('popular error')), findsOneWidget);
-  //   expect(find.byKey(Key('top rated error')), findsOneWidget);
-  // });
+  testWidgets('[movie] should display unhandled text when state is not found',
+      (WidgetTester tester) async {
+    when(() => movieSearchBloc.state).thenReturn(MovieDummyFail());
 
-  // testWidgets('should display drawer when hamburger icon is pressed',
-  //     (WidgetTester tester) async {
-  //   when(mockNotifier.nowPlayingState).thenReturn(RequestState.Loading);
-  //   when(mockNotifier.popularMoviesState).thenReturn(RequestState.Loading);
-  //   when(mockNotifier.topRatedMoviesState).thenReturn(RequestState.Loading);
+    final widgetFinder = find.byKey(const Key('movie-unhandled-text'));
+    await tester.pumpWidget(_makeTestableWidget(
+      const SearchPage(),
+    ));
 
-  //   final drawerButton = find.byIcon(Icons.menu);
+    expect(movieSearchBloc.state, MovieDummyFail());
+    expect(widgetFinder, findsOneWidget);
+  });
+  ////////////////////////////////////
 
-  //   await tester.pumpWidget(_makeTestableWidget(HomeMoviePage()));
-  //   await tester.tap(drawerButton.first);
-  //   await tester.pump();
+  testWidgets('[tv] should display empty state when state is empty',
+      (WidgetTester tester) async {
+    when(() => tvSearchBloc.state).thenReturn(TvSearchEmpty());
 
-  //   expect(find.byType(Drawer), findsOneWidget);
-  // });
+    final widgetFinder = find.byKey(const Key('no-result-tv'));
+    await tester.pumpWidget(_makeTestableWidget(
+      const SearchPage(
+        initialTab: CategoryState.TV,
+      ),
+    ));
+
+    expect(tvSearchBloc.state, TvSearchEmpty());
+    expect(widgetFinder, findsOneWidget);
+  });
+
+  testWidgets('[tv] should display error when state is error',
+      (WidgetTester tester) async {
+    when(() => tvSearchBloc.state).thenReturn(const TvSearchError('error'));
+
+    final widgetFinder = find.byKey(const Key('tv-error-text'));
+    await tester.pumpWidget(_makeTestableWidget(
+      const SearchPage(
+        initialTab: CategoryState.TV,
+      ),
+    ));
+
+    expect(tvSearchBloc.state, const TvSearchError('error'));
+    expect(widgetFinder, findsOneWidget);
+  });
+
+  testWidgets('[tv] should display TvSearchHasData data is loaded',
+      (WidgetTester tester) async {
+    when(() => tvSearchBloc.state).thenReturn(TvSearchHasData([tTv]));
+
+    final widgetFinder = find.byType(TvCard);
+    await tester.pumpWidget(_makeTestableWidget(
+      const SearchPage(
+        initialTab: CategoryState.TV,
+      ),
+    ));
+
+    expect(tvSearchBloc.state, TvSearchHasData([tTv]));
+    expect(widgetFinder, findsOneWidget);
+  });
+
+  testWidgets('[tv] should trigger event when textfield is changed',
+      (WidgetTester tester) async {
+    when(() => tvSearchBloc.state).thenReturn(TvSearchLoading());
+
+    final inputFinder = find.byType(TextField).first;
+    await tester.pumpWidget(_makeTestableWidget(
+      const SearchPage(
+        initialTab: CategoryState.TV,
+      ),
+    ));
+    await tester.enterText(inputFinder, tQuery);
+    await tester.pump(const Duration(seconds: 1));
+
+    expect(tvSearchBloc.state, TvSearchLoading());
+    verify(() => tvSearchBloc.add(const OnTvQueryChanged(tQuery))).called(1);
+  });
+
+  testWidgets('[tv] should display unhandled text when state is not found',
+      (WidgetTester tester) async {
+    when(() => tvSearchBloc.state).thenReturn(TvDummyFail());
+
+    final widgetFinder = find.byKey(const Key('tv-unhandled-text'));
+    await tester.pumpWidget(_makeTestableWidget(
+      const SearchPage(
+        initialTab: CategoryState.TV,
+      ),
+    ));
+
+    expect(tvSearchBloc.state, TvDummyFail());
+    expect(widgetFinder, findsOneWidget);
+  });
 }

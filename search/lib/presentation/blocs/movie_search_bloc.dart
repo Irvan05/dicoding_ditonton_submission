@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie/movie.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:search/search.dart';
+import 'package:search/domain/usecases/search_movies.dart';
 
 part 'movie_search_state.dart';
 part 'movie_search_event.dart';

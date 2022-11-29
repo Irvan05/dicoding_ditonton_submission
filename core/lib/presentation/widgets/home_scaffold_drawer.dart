@@ -1,14 +1,10 @@
 import 'package:core/commons/utils/routes.dart';
-// import 'package:ditonton/presentation/pages/watchlist_page.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/movie.dart';
 import 'package:tv/tv.dart';
-import 'package:watchlist/watchlist.dart';
-
-// import 'package:about/about.dart';
 
 class HomeScaffoldDrawer extends StatelessWidget {
-  final currentPath;
+  final String currentPath;
   const HomeScaffoldDrawer(this.currentPath, {super.key});
 
   @override

@@ -4,9 +4,8 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie/movie.dart';
-import 'package:search/search.dart';
-// import 'package:search/presentation/provider/movie_search_notifier.dart';
-// import 'package:search/presentation/provider/tv_search_notifier.dart';
+import 'package:search/presentation/blocs/movie_search_bloc.dart';
+import 'package:search/presentation/blocs/tv_search_bloc.dart';
 import 'package:tv/tv.dart';
 
 class SearchPage extends StatelessWidget {
@@ -60,9 +59,7 @@ class SearchPage extends StatelessWidget {
 }
 
 class MovieTabView extends StatelessWidget {
-  const MovieTabView({
-    Key? key,
-  }) : super(key: key);
+  const MovieTabView();
 
   @override
   Widget build(BuildContext context) {
@@ -129,38 +126,17 @@ class MovieTabView extends StatelessWidget {
                   ),
                 );
               } else {
-                return const Expanded(
-                  child: Center(),
+                return Expanded(
+                  child: Center(
+                    child: Text(
+                      'unhandled state ${state.toString()}',
+                      key: const Key('movie-unhandled-text'),
+                    ),
+                  ),
                 );
               }
             },
           ),
-
-          // Consumer<MovieSearchNotifier>(
-          //   builder: (context, data, child) {
-          //     if (data.state == RequestState.Loading) {
-          //       return const Center(
-          //         child: CircularProgressIndicator(),
-          //       );
-          //     } else if (data.state == RequestState.Loaded) {
-          //       final result = data.searchResult;
-          //       return Expanded(
-          //         child: ListView.builder(
-          //           padding: const EdgeInsets.all(8),
-          //           itemBuilder: (context, index) {
-          //             final movie = data.searchResult[index];
-          //             return MovieCard(movie);
-          //           },
-          //           itemCount: result.length,
-          //         ),
-          //       );
-          //     } else {
-          //       return Expanded(
-          //         child: Container(),
-          //       );
-          //     }
-          //   },
-          // ),
         ],
       ),
     );
@@ -168,9 +144,7 @@ class MovieTabView extends StatelessWidget {
 }
 
 class TvTabView extends StatelessWidget {
-  const TvTabView({
-    Key? key,
-  }) : super(key: key);
+  const TvTabView();
 
   @override
   Widget build(BuildContext context) {
@@ -180,10 +154,6 @@ class TvTabView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextField(
-            // onSubmitted: (query) {
-            //   Provider.of<TvSearchNotifier>(context, listen: false)
-            //       .fetchTvSearch(query);
-            // },
             onChanged: (query) {
               context.read<TvSearchBloc>().add(OnTvQueryChanged(query));
             },
@@ -222,6 +192,7 @@ class TvTabView extends StatelessWidget {
                   children: const [
                     Divider(),
                     Center(
+                      key: Key('no-result-tv'),
                       child: Text('No result found...'),
                     )
                   ],
@@ -229,41 +200,22 @@ class TvTabView extends StatelessWidget {
               } else if (state is TvSearchError) {
                 return Expanded(
                   child: Center(
+                    key: const Key('tv-error-text'),
                     child: Text(state.message),
                   ),
                 );
               } else {
                 return Expanded(
-                  child: Container(),
+                  child: Center(
+                    child: Text(
+                      'unhandled state ${state.toString()}',
+                      key: const Key('tv-unhandled-text'),
+                    ),
+                  ),
                 );
               }
             },
           ),
-          // Consumer<TvSearchNotifier>(
-          //   builder: (context, data, child) {
-          //     if (data.state == RequestState.Loading) {
-          //       return const Center(
-          //         child: CircularProgressIndicator(),
-          //       );
-          //     } else if (data.state == RequestState.Loaded) {
-          //       final result = data.searchResult;
-          //       return Expanded(
-          //         child: ListView.builder(
-          //           padding: const EdgeInsets.all(8),
-          //           itemBuilder: (context, index) {
-          //             final tv = data.searchResult[index];
-          //             return TvCard(tv);
-          //           },
-          //           itemCount: result.length,
-          //         ),
-          //       );
-          //     } else {
-          //       return Expanded(
-          //         child: Container(),
-          //       );
-          //     }
-          //   },
-          // ),
         ],
       ),
     );

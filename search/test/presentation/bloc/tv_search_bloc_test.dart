@@ -4,8 +4,9 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:search/domain/usecases/search_tvs.dart';
+import 'package:search/presentation/blocs/tv_search_bloc.dart';
 import 'package:tv/tv.dart';
-import 'package:search/search.dart';
 
 import 'tv_search_bloc_test.mocks.dart';
 
@@ -74,5 +75,32 @@ void main() {
     verify: (bloc) {
       verify(mockSearchTvs.execute(tQuery));
     },
+  );
+
+  blocTest<TvSearchBloc, TvSearchState>(
+    'Should emit [Empty] when search is empty',
+    build: () {
+      return searchBloc;
+    },
+    act: (bloc) => bloc.add(const OnTvQueryChanged('')),
+    wait: const Duration(milliseconds: 500),
+    expect: () => [
+      TvSearchEmpty(),
+    ],
+  );
+
+  blocTest<TvSearchBloc, TvSearchState>(
+    'Should emit [Loading, Empty] when result is empty',
+    build: () {
+      when(mockSearchTvs.execute(tQuery))
+          .thenAnswer((_) async => const Right([]));
+      return searchBloc;
+    },
+    act: (bloc) => bloc.add(const OnTvQueryChanged(tQuery)),
+    wait: const Duration(milliseconds: 500),
+    expect: () => [
+      TvSearchLoading(),
+      TvSearchEmpty(),
+    ],
   );
 }
