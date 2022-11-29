@@ -34,8 +34,6 @@ class _TvDetailPageState extends State<TvDetailPage> {
       body: BlocConsumer<TvDetailBloc, TvDetailState>(
         listener: (context, state) {
           if (state is TvDetailLoaded) {
-            print('listener');
-            print(state.data.isAddedToWatchlist);
             final message = state.data.watchlistMessage;
             if (message == TvDetailBloc.watchlistAddSuccessMessage ||
                 message == TvDetailBloc.watchlistRemoveSuccessMessage) {
