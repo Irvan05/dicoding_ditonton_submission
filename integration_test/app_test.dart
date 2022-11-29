@@ -97,6 +97,7 @@ void main() {
 
     await tester.enterText(searchInput, 'avengers');
     await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pumpAndSettle(Duration(seconds: 1));
     await tester.pumpAndSettle();
     expect(find.byType(MovieCard), findsAtLeastNWidgets(1));
 
