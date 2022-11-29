@@ -1,8 +1,7 @@
-import 'package:core/core.dart';
-import 'package:tv/presentation/provider/on_the_air_tvs_notifier.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tv/presentation/blocs/on_the_air_tvs/on_the_air_tvs_bloc.dart';
 import 'package:tv/presentation/widgets/tv_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class OnTheAirTvsPage extends StatefulWidget {
   static const ROUTE_NAME = '/on-the-air-tvs';
@@ -16,8 +15,7 @@ class _OnTheAirTvsPageState extends State<OnTheAirTvsPage> {
   void initState() {
     super.initState();
     Future.microtask(() =>
-        Provider.of<OnTheAirTvsNotifier>(context, listen: false)
-            .fetchOnTheAirTvs());
+        BlocProvider.of<OnTheAirTvsBloc>(context).add(FetchOnTheAirTvs()));
   }
 
   @override
@@ -27,30 +25,32 @@ class _OnTheAirTvsPageState extends State<OnTheAirTvsPage> {
         title: const Text('On The Air Tvs'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Consumer<OnTheAirTvsNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.Loading) {
+          padding: const EdgeInsets.all(8.0),
+          child: BlocBuilder<OnTheAirTvsBloc, OnTheAirTvsState>(
+              builder: (context, state) {
+            if (state is OnTheAirTvsLoaded) {
+              return ListView.builder(
+                itemBuilder: (context, index) {
+                  final tv = state.tvs[index];
+                  return TvCard(tv);
+                },
+                itemCount: state.tvs.length,
+              );
+            } else if (state is OnTheAirTvsLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.state == RequestState.Loaded) {
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  final tv = data.tvs[index];
-                  return TvCard(tv);
-                },
-                itemCount: data.tvs.length,
+            } else if (state is OnTheAirTvsError) {
+              return Center(
+                key: const Key('error_message'),
+                child: Text(state.error),
               );
             } else {
               return Center(
-                key: const Key('error_message'),
-                child: Text(data.message),
+                child: Text('Unhandled state ${state.toString()}'),
               );
             }
-          },
-        ),
-      ),
+          })),
     );
   }
 }

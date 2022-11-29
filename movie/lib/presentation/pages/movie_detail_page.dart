@@ -189,10 +189,10 @@ class DetailContent extends StatelessWidget {
                             BlocBuilder<MovieDetailBloc, MovieDetailState>(
                               builder: (context, state) {
                                 if (state is MovieDetailLoaded) {
-                                  if (state.data.isRecommentaionError) {
+                                  if (state.data.isRecommendationError) {
                                     return Center(
                                       child: Text(
-                                        state.data.recommentaionError,
+                                        state.data.recommendationError,
                                       ),
                                     );
                                   } else {

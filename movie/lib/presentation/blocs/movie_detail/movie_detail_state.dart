@@ -5,24 +5,24 @@ part of 'movie_detail_bloc.dart';
 class MovieDetailLoadedData {
   final MovieDetail movie;
   final List<Movie> movieRecommendations;
-  final bool isRecommentaionError;
+  final bool isRecommendationError;
   final bool isAddedToWatchlist;
   final String watchlistMessage;
-  final String recommentaionError;
+  final String recommendationError;
 
   MovieDetailLoadedData({
     required this.movie,
     required this.movieRecommendations,
-    required this.isRecommentaionError,
+    required this.isRecommendationError,
     required this.isAddedToWatchlist,
     required this.watchlistMessage,
-    required this.recommentaionError,
+    required this.recommendationError,
   });
 
   MovieDetailLoadedData copyWith({
     MovieDetail? movie,
     List<Movie>? movieRecommendations,
-    bool? isRecommentaionError,
+    bool? isRecommendationError,
     bool? isAddedToWatchlist,
     String? watchlistMessage,
     String? error,
@@ -31,10 +31,11 @@ class MovieDetailLoadedData {
     return MovieDetailLoadedData(
       movie: movie ?? this.movie,
       movieRecommendations: movieRecommendations ?? this.movieRecommendations,
-      isRecommentaionError: isRecommentaionError ?? this.isRecommentaionError,
+      isRecommendationError:
+          isRecommendationError ?? this.isRecommendationError,
       isAddedToWatchlist: isAddedToWatchlist ?? this.isAddedToWatchlist,
       watchlistMessage: watchlistMessage ?? this.watchlistMessage,
-      recommentaionError: recommendationError ?? this.recommentaionError,
+      recommendationError: recommendationError ?? this.recommendationError,
     );
   }
 }

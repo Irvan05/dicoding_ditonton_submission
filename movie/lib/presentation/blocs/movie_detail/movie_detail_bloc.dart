@@ -46,8 +46,8 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
 
     late final MovieDetail _movie;
     late final List<Movie> _movies;
-    late final bool _isRecommentaionError;
-    String _recommentaionError = '';
+    late final bool _isRecommendationError;
+    String _recommendationError = '';
 
     detailResult.fold(
       (failure) {
@@ -60,11 +60,11 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
         _movie = movie;
         recommendationResult.fold(
           (failure) {
-            _isRecommentaionError = true;
-            _recommentaionError = failure.message;
+            _isRecommendationError = true;
+            _recommendationError = failure.message;
           },
           (movies) {
-            _isRecommentaionError = false;
+            _isRecommendationError = false;
             _movies = movies;
           },
         );
@@ -76,10 +76,10 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
       data: MovieDetailLoadedData(
         movie: _movie,
         movieRecommendations: _movies,
-        isRecommentaionError: _isRecommentaionError,
+        isRecommendationError: _isRecommendationError,
         isAddedToWatchlist: watchlistStatus,
         watchlistMessage: '',
-        recommentaionError: _recommentaionError,
+        recommendationError: _recommendationError,
       ),
     ));
   }

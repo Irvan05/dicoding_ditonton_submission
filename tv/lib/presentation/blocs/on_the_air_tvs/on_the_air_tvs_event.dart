@@ -6,3 +6,5 @@ abstract class OnTheAirTvsEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class FetchOnTheAirTvs extends OnTheAirTvsEvent {}

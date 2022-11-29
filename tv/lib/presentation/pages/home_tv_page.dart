@@ -1,13 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tv/domain/entities/tv.dart';
+import 'package:tv/presentation/blocs/on_the_air_tvs/on_the_air_tvs_bloc.dart';
+import 'package:tv/presentation/blocs/popular_tvs/popular_tvs_bloc.dart';
+import 'package:tv/presentation/blocs/top_rated_tvs/top_rated_tvs_bloc.dart';
 import 'package:tv/presentation/pages/on_the_air_tvs_page.dart';
 import 'package:tv/presentation/pages/popular_tv_page.dart';
 import 'package:tv/presentation/pages/top_rated_tvs_page.dart';
 import 'package:tv/presentation/pages/tv_detail_page.dart';
-import 'package:tv/presentation/provider/tv_list_notifier.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomeTvPage extends StatefulWidget {
   static const ROUTE_NAME = '/home-tv';
@@ -23,10 +25,9 @@ class _HomeTvPageState extends State<HomeTvPage> {
   void initState() {
     super.initState();
     Future.microtask(() {
-      Provider.of<TvListNotifier>(context, listen: false)
-        ..fetchOnTheAirTvs()
-        ..fetchPopularTvs()
-        ..fetchTopRatedTvs();
+      BlocProvider.of<OnTheAirTvsBloc>(context).add(FetchOnTheAirTvs());
+      BlocProvider.of<PopularTvsBloc>(context).add(FetchPopularTvs());
+      BlocProvider.of<TopRatedTvsBloc>(context).add(FetchTopRatedTvs());
     });
   }
 
@@ -60,18 +61,22 @@ class _HomeTvPageState extends State<HomeTvPage> {
                 onTap: () =>
                     Navigator.pushNamed(context, OnTheAirTvsPage.ROUTE_NAME),
               ),
-              Consumer<TvListNotifier>(builder: (context, data, child) {
-                final state = data.onTheAirState;
-                if (state == RequestState.Loading) {
+              BlocBuilder<OnTheAirTvsBloc, OnTheAirTvsState>(
+                  builder: (context, state) {
+                if (state is OnTheAirTvsLoaded) {
+                  return TvList(state.tvs);
+                } else if (state is OnTheAirTvsLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (state == RequestState.Loaded) {
-                  return TvList(data.onTheAirTvs);
+                } else if (state is OnTheAirTvsError) {
+                  return Center(
+                    key: const Key('on the air error'),
+                    child: Text(state.error),
+                  );
                 } else {
-                  return const Text(
-                    'Failed',
-                    key: Key('on the air error'),
+                  return Center(
+                    child: Text('Unhandled state ${state.toString()}'),
                   );
                 }
               }),
@@ -80,18 +85,22 @@ class _HomeTvPageState extends State<HomeTvPage> {
                 onTap: () =>
                     Navigator.pushNamed(context, PopularTvsPage.ROUTE_NAME),
               ),
-              Consumer<TvListNotifier>(builder: (context, data, child) {
-                final state = data.popularTvsState;
-                if (state == RequestState.Loading) {
+              BlocBuilder<PopularTvsBloc, PopularTvsState>(
+                  builder: (context, state) {
+                if (state is PopularTvsLoaded) {
+                  return TvList(state.tvs);
+                } else if (state is PopularTvsLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (state == RequestState.Loaded) {
-                  return TvList(data.popularTvs);
+                } else if (state is PopularTvsError) {
+                  return Center(
+                    key: const Key('popular error'),
+                    child: Text(state.error),
+                  );
                 } else {
-                  return const Text(
-                    'Failed',
-                    key: Key('popular error'),
+                  return Center(
+                    child: Text('Unhandled state ${state.toString()}'),
                   );
                 }
               }),
@@ -100,18 +109,22 @@ class _HomeTvPageState extends State<HomeTvPage> {
                 onTap: () =>
                     Navigator.pushNamed(context, TopRatedTvsPage.ROUTE_NAME),
               ),
-              Consumer<TvListNotifier>(builder: (context, data, child) {
-                final state = data.topRatedTvsState;
-                if (state == RequestState.Loading) {
+              BlocBuilder<TopRatedTvsBloc, TopRatedTvsState>(
+                  builder: (context, state) {
+                if (state is TopRatedTvsLoaded) {
+                  return TvList(state.tvs);
+                } else if (state is TopRatedTvsLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (state == RequestState.Loaded) {
-                  return TvList(data.topRatedTvs);
+                } else if (state is TopRatedTvsError) {
+                  return Center(
+                    key: const Key('top rated error'),
+                    child: Text(state.error),
+                  );
                 } else {
-                  return const Text(
-                    'Failed',
-                    key: Key('top rated error'),
+                  return Center(
+                    child: Text('Unhandled state ${state.toString()}'),
                   );
                 }
               }),

@@ -44,12 +44,15 @@ export 'presentation/pages/top_rated_tvs_page.dart';
 export 'presentation/pages/tv_detail_page.dart';
 //provider
 // export 'presentation/provider/on_the_air_tvs_notifier.dart';
-export 'presentation/provider/popular_tvs_notifier.dart';
-export 'presentation/provider/top_rated_tvs_notifier.dart';
-export 'presentation/provider/tv_detail_notifier.dart';
-export 'presentation/provider/tv_list_notifier.dart';
+// export 'presentation/provider/popular_tvs_notifier.dart';
+// export 'presentation/provider/top_rated_tvs_notifier.dart';
+// export 'presentation/provider/tv_detail_notifier.dart';
+// export 'presentation/provider/tv_list_notifier.dart';
 export 'presentation/provider/watchlist_tv_notifier.dart';
 //bloc
+export 'presentation/blocs/on_the_air_tvs/on_the_air_tvs_bloc.dart';
 export 'presentation/blocs/popular_tvs/popular_tvs_bloc.dart';
+export 'presentation/blocs/top_rated_tvs/top_rated_tvs_bloc.dart';
+export 'presentation/blocs/tv_detail/tv_detail_bloc.dart';
 //widgets
 export 'presentation/widgets/tv_card_list.dart';

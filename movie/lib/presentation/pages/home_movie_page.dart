@@ -77,21 +77,6 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                   );
                 }
               }),
-              // Consumer<MovieListNotifier>(builder: (context, data, child) {
-              //   final state = data.nowPlayingState;
-              //   if (state == RequestState.Loading) {
-              //     return const Center(
-              //       child: CircularProgressIndicator(),
-              //     );
-              //   } else if (state == RequestState.Loaded) {
-              //     return MovieList(data.nowPlayingMovies, 'now-playing');
-              //   } else {
-              //     return const Text(
-              //       'Failed',
-              //       key: Key('now playing error'),
-              //     );
-              //   }
-              // }),
               _buildSubHeading(
                 title: 'Popular',
                 onTap: () =>

@@ -49,37 +49,37 @@ void init() {
     ),
   );
 
-  locator.registerFactory(
-    () => TvListNotifier(
-      getOnTheAirTvs: locator(),
-      getPopularTvs: locator(),
-      getTopRatedTvs: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => TvDetailNotifier(
-        getTvDetail: locator(),
-        getTvRecommendations: locator(),
-        getWatchListStatusTv: locator(),
-        saveWatchlistTv: locator(),
-        removeWatchlistTv: locator(),
-        getSeasonDetailTv: locator()),
-  );
-  locator.registerFactory(
-    () => OnTheAirTvsNotifier(
-      getOnTheAirTvs: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => PopularTvsNotifier(
-      getPopularTvs: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => TopRatedTvsNotifier(
-      getTopRatedTvs: locator(),
-    ),
-  );
+  // locator.registerFactory(
+  //   () => TvListNotifier(
+  //     getOnTheAirTvs: locator(),
+  //     getPopularTvs: locator(),
+  //     getTopRatedTvs: locator(),
+  //   ),
+  // );
+  // locator.registerFactory(
+  //   () => TvDetailNotifier(
+  //       getTvDetail: locator(),
+  //       getTvRecommendations: locator(),
+  //       getWatchListStatusTv: locator(),
+  //       saveWatchlistTv: locator(),
+  //       removeWatchlistTv: locator(),
+  //       getSeasonDetailTv: locator()),
+  // );
+  // locator.registerFactory(
+  //   () => OnTheAirTvsNotifier(
+  //     getOnTheAirTvs: locator(),
+  //   ),
+  // );
+  // locator.registerFactory(
+  //   () => PopularTvsNotifier(
+  //     getPopularTvs: locator(),
+  //   ),
+  // );
+  // locator.registerFactory(
+  //   () => TopRatedTvsNotifier(
+  //     getTopRatedTvs: locator(),
+  //   ),
+  // );
   // locator.registerFactory(
   //   () => MovieSearchNotifier(
   //     searchMovies: locator(),
@@ -120,6 +120,30 @@ void init() {
       saveWatchlist: locator(),
       removeWatchlist: locator(),
     ),
+  );
+  locator.registerFactory(
+    () => OnTheAirTvsBloc(
+      getOnTheAirTvs: locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => PopularTvsBloc(
+      getPopularTvs: locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TopRatedTvsBloc(
+      getTopRatedTvs: locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => TvDetailBloc(
+        getTvDetail: locator(),
+        getTvRecommendations: locator(),
+        getWatchListStatus: locator(),
+        saveWatchlist: locator(),
+        removeWatchlist: locator(),
+        getSeasonDetailTv: locator()),
   );
   locator.registerFactory(
     () => MovieSearchBloc(
