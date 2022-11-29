@@ -18,6 +18,8 @@ dependencies:
   watchlist:
     path: ../watchlist
   http: ^0.13.3
+  firebase_core: ^2.3.0
+  firebase_analytics: ^10.0.6
 
   equatable: ^2.0.2
   google_fonts: ^3.0.1

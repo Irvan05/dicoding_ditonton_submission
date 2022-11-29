@@ -1,5 +1,7 @@
+import 'package:core/commons/utils/firebase_options.dart';
 import 'package:core/core.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 import 'package:http/io_client.dart';
@@ -16,88 +18,12 @@ final locator = GetIt.instance;
 bool isInit = false;
 
 Future<void> init() async {
-  isInit = true;
   IOClient ioClient = await SslPinning.ioClient;
-  // provider
-  // locator.registerFactory(
-  //   () => MovieListNotifier(
-  //     getNowPlayingMovies: locator(),
-  //     getPopularMovies: locator(),
-  //     getTopRatedMovies: locator(),
-  //   ),
-  // );
-  // locator.registerFactory(
-  //   () => MovieDetailNotifier(
-  //     getMovieDetail: locator(),
-  //     getMovieRecommendations: locator(),
-  //     getWatchListStatus: locator(),
-  //     saveWatchlist: locator(),
-  //     removeWatchlist: locator(),
-  //   ),
-  // );
-  // locator.registerFactory(
-  //   () => PopularMoviesNotifier(
-  //     locator(),
-  //   ),
-  // );
-  // locator.registerFactory(
-  //   () => TopRatedMoviesNotifier(
-  //     getTopRatedMovies: locator(),
-  //   ),
-  // );
-  // locator.registerFactory(
-  //   () => WatchlistMovieNotifier(
-  //     getWatchlistMovies: locator(),
-  //   ),
-  // );
 
-  // locator.registerFactory(
-  //   () => TvListNotifier(
-  //     getOnTheAirTvs: locator(),
-  //     getPopularTvs: locator(),
-  //     getTopRatedTvs: locator(),
-  //   ),
-  // );
-  // locator.registerFactory(
-  //   () => TvDetailNotifier(
-  //       getTvDetail: locator(),
-  //       getTvRecommendations: locator(),
-  //       getWatchListStatusTv: locator(),
-  //       saveWatchlistTv: locator(),
-  //       removeWatchlistTv: locator(),
-  //       getSeasonDetailTv: locator()),
-  // );
-  // locator.registerFactory(
-  //   () => OnTheAirTvsNotifier(
-  //     getOnTheAirTvs: locator(),
-  //   ),
-  // );
-  // locator.registerFactory(
-  //   () => PopularTvsNotifier(
-  //     getPopularTvs: locator(),
-  //   ),
-  // );
-  // locator.registerFactory(
-  //   () => TopRatedTvsNotifier(
-  //     getTopRatedTvs: locator(),
-  //   ),
-  // );
-  // locator.registerFactory(
-  //   () => MovieSearchNotifier(
-  //     searchMovies: locator(),
-  //   ),
-  // );
-  // locator.registerFactory(
-  //   () => TvSearchNotifier(
-  //     searchTvs: locator(),
-  //   ),
-  // );
-  // locator.registerFactory(
-  //   () => WatchlistTvNotifier(
-  //     getWatchlistTvs: locator(),
-  //   ),
-  // );
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  isInit = true;
   // bloc
   locator.registerFactory(
     () => HomeMovieBloc(
@@ -252,6 +178,7 @@ Future<void> init() async {
 
 //utils
   locator.registerLazySingleton<IOClient>(() => ioClient);
+  locator.registerLazySingleton(() => AnalyticsService());
 
 // external
   locator.registerLazySingleton(() => http.Client());
