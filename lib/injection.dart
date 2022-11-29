@@ -43,11 +43,11 @@ void init() {
   //     getTopRatedMovies: locator(),
   //   ),
   // );
-  locator.registerFactory(
-    () => WatchlistMovieNotifier(
-      getWatchlistMovies: locator(),
-    ),
-  );
+  // locator.registerFactory(
+  //   () => WatchlistMovieNotifier(
+  //     getWatchlistMovies: locator(),
+  //   ),
+  // );
 
   // locator.registerFactory(
   //   () => TvListNotifier(
@@ -90,11 +90,11 @@ void init() {
   //     searchTvs: locator(),
   //   ),
   // );
-  locator.registerFactory(
-    () => WatchlistTvNotifier(
-      getWatchlistTvs: locator(),
-    ),
-  );
+  // locator.registerFactory(
+  //   () => WatchlistTvNotifier(
+  //     getWatchlistTvs: locator(),
+  //   ),
+  // );
 
   // bloc
   locator.registerFactory(
@@ -153,6 +153,16 @@ void init() {
   locator.registerFactory(
     () => TvSearchBloc(
       locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => WatchlistMovieBloc(
+      getWatchlistMovies: locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => WatchlistTvBloc(
+      getWatchlistTvs: locator(),
     ),
   );
 

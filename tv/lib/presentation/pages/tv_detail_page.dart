@@ -7,7 +7,6 @@ import 'package:tv/domain/entities/tv.dart';
 import 'package:tv/domain/entities/tv_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:provider/provider.dart';
 import 'package:tv/presentation/blocs/tv_detail/tv_detail_bloc.dart';
 
 class TvDetailPage extends StatefulWidget {
@@ -35,6 +34,8 @@ class _TvDetailPageState extends State<TvDetailPage> {
       body: BlocConsumer<TvDetailBloc, TvDetailState>(
         listener: (context, state) {
           if (state is TvDetailLoaded) {
+            print('listener');
+            print(state.data.isAddedToWatchlist);
             final message = state.data.watchlistMessage;
             if (message == TvDetailBloc.watchlistAddSuccessMessage ||
                 message == TvDetailBloc.watchlistRemoveSuccessMessage) {
@@ -55,10 +56,11 @@ class _TvDetailPageState extends State<TvDetailPage> {
         },
         builder: (context, state) {
           if (state is TvDetailLoaded) {
-            final tv = state.data.tv;
+            print('builder');
+            print(state.data.isAddedToWatchlist);
             return SafeArea(
               child: DetailContent(
-                tv,
+                state.data.tv,
                 state.data.tvRecommendations,
                 state.data.isAddedToWatchlist,
               ),

@@ -21,5 +21,6 @@ export 'domain/usecases/save_watchlist_tv.dart';
 //presentation
 //pages
 export 'presentation/pages/watchlist_page.dart';
-//provider
-export 'watchlist.dart';
+//bloc
+export 'presentation/blocs/watchlist_movie/watchlist_movie_bloc.dart';
+export 'presentation/blocs/watchlist_tv/watchlist_tv_bloc.dart';

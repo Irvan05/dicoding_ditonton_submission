@@ -69,12 +69,10 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
             );
           } else if (state is MovieDetailError) {
             return Expanded(
-              child: Center(
-                child: Text(
-                  state.error,
-                ),
-              ),
-            );
+                child: Center(
+                    child: Text(
+              state.error,
+            )));
           } else {
             return Text('Unhandled State ${state.toString()}');
           }

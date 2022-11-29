@@ -48,7 +48,7 @@ export 'presentation/pages/tv_detail_page.dart';
 // export 'presentation/provider/top_rated_tvs_notifier.dart';
 // export 'presentation/provider/tv_detail_notifier.dart';
 // export 'presentation/provider/tv_list_notifier.dart';
-export 'presentation/provider/watchlist_tv_notifier.dart';
+// export 'presentation/provider/watchlist_tv_notifier.dart';
 //bloc
 export 'presentation/blocs/on_the_air_tvs/on_the_air_tvs_bloc.dart';
 export 'presentation/blocs/popular_tvs/popular_tvs_bloc.dart';

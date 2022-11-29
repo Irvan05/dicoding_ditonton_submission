@@ -34,9 +34,9 @@ class MyApp extends StatelessWidget {
         // ChangeNotifierProvider(
         //   create: (_) => di.locator<PopularMoviesNotifier>(),
         // ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistMovieNotifier>(),
-        ),
+        // ChangeNotifierProvider(
+        //   create: (_) => di.locator<WatchlistMovieNotifier>(),
+        // ),
         //Tv
         // ChangeNotifierProvider(
         //   create: (_) => di.locator<TvListNotifier>(),
@@ -59,9 +59,9 @@ class MyApp extends StatelessWidget {
         // ChangeNotifierProvider(
         //   create: (_) => di.locator<TvSearchNotifier>(),
         // ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistTvNotifier>(),
-        ),
+        // ChangeNotifierProvider(
+        //   create: (_) => di.locator<WatchlistTvNotifier>(),
+        // ),
         //bloc
         BlocProvider(
           create: (_) => di.locator<HomeMovieBloc>(),
@@ -92,6 +92,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => di.locator<TvSearchBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<WatchlistMovieBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<WatchlistTvBloc>(),
         ),
       ],
       child: MaterialApp(

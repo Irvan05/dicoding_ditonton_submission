@@ -1,8 +1,10 @@
 import 'package:core/core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie/movie.dart';
 import 'package:tv/tv.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:watchlist/presentation/blocs/watchlist_movie/watchlist_movie_bloc.dart';
+import 'package:watchlist/presentation/blocs/watchlist_tv/watchlist_tv_bloc.dart';
 
 class WatchlistPage extends StatefulWidget {
   static const ROUTE_NAME = '/watchlist';
@@ -18,10 +20,8 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
   void initState() {
     super.initState();
     Future.microtask(() {
-      Provider.of<WatchlistMovieNotifier>(context, listen: false)
-          .fetchWatchlistMovies();
-      Provider.of<WatchlistTvNotifier>(context, listen: false)
-          .fetchWatchlistTvs();
+      BlocProvider.of<WatchlistMovieBloc>(context).add(FetchWatchlistMovies());
+      BlocProvider.of<WatchlistTvBloc>(context).add(FetchWatchlistTvs());
     });
   }
 
@@ -33,10 +33,12 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
 
   @override
   void didPopNext() {
-    Provider.of<WatchlistMovieNotifier>(context, listen: false)
-        .fetchWatchlistMovies();
-    Provider.of<WatchlistTvNotifier>(context, listen: false)
-        .fetchWatchlistTvs();
+    // Provider.of<WatchlistMovieNotifier>(context, listen: false)
+    //     .fetchWatchlistMovies();
+    // Provider.of<WatchlistTvNotifier>(context, listen: false)
+    //     .fetchWatchlistTvs();
+    BlocProvider.of<WatchlistMovieBloc>(context).add(FetchWatchlistMovies());
+    BlocProvider.of<WatchlistTvBloc>(context).add(FetchWatchlistTvs());
   }
 
   @override
@@ -83,24 +85,28 @@ class MovieTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<WatchlistMovieNotifier>(
-      builder: (context, data, child) {
-        if (data.watchlistState == RequestState.Loading) {
+    return BlocBuilder<WatchlistMovieBloc, WatchlistMovieState>(
+      builder: (context, state) {
+        if (state is WatchlistMovieLoading) {
           return const Center(
             child: CircularProgressIndicator(),
           );
-        } else if (data.watchlistState == RequestState.Loaded) {
+        } else if (state is WatchlistMovieLoaded) {
           return ListView.builder(
             itemBuilder: (context, index) {
-              final movie = data.watchlistMovies[index];
+              final movie = state.moviesData[index];
               return MovieCard(movie);
             },
-            itemCount: data.watchlistMovies.length,
+            itemCount: state.moviesData.length,
+          );
+        } else if (state is WatchlistMovieError) {
+          return Center(
+            key: const Key('error_message'),
+            child: Text(state.error),
           );
         } else {
           return Center(
-            key: const Key('error_message'),
-            child: Text(data.message),
+            child: Text('unhandled state: ${state.toString()}'),
           );
         }
       },
@@ -115,24 +121,28 @@ class TvTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<WatchlistTvNotifier>(
-      builder: (context, data, child) {
-        if (data.watchlistState == RequestState.Loading) {
+    return BlocBuilder<WatchlistTvBloc, WatchlistTvState>(
+      builder: (context, state) {
+        if (state is WatchlistTvLoading) {
           return const Center(
             child: CircularProgressIndicator(),
           );
-        } else if (data.watchlistState == RequestState.Loaded) {
+        } else if (state is WatchlistTvLoaded) {
           return ListView.builder(
             itemBuilder: (context, index) {
-              final tv = data.watchlistTvs[index];
-              return TvCard(tv);
+              final movie = state.tvsData[index];
+              return TvCard(movie);
             },
-            itemCount: data.watchlistTvs.length,
+            itemCount: state.tvsData.length,
+          );
+        } else if (state is WatchlistTvError) {
+          return Center(
+            key: const Key('error_message'),
+            child: Text(state.error),
           );
         } else {
           return Center(
-            key: const Key('error_message'),
-            child: Text(data.message),
+            child: Text('unhandled state: ${state.toString()}'),
           );
         }
       },
