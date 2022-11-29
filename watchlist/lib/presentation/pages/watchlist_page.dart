@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie/movie.dart';
@@ -9,7 +11,9 @@ import 'package:watchlist/presentation/blocs/watchlist_tv/watchlist_tv_bloc.dart
 class WatchlistPage extends StatefulWidget {
   static const ROUTE_NAME = '/watchlist';
 
-  const WatchlistPage({super.key});
+  final CategoryState initialTab;
+
+  const WatchlistPage({this.initialTab = CategoryState.Movies});
 
   @override
   _WatchlistPageState createState() => _WatchlistPageState();
@@ -33,17 +37,31 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
 
   @override
   void didPopNext() {
-    // Provider.of<WatchlistMovieNotifier>(context, listen: false)
-    //     .fetchWatchlistMovies();
-    // Provider.of<WatchlistTvNotifier>(context, listen: false)
-    //     .fetchWatchlistTvs();
     BlocProvider.of<WatchlistMovieBloc>(context).add(FetchWatchlistMovies());
     BlocProvider.of<WatchlistTvBloc>(context).add(FetchWatchlistTvs());
   }
 
   @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  int setInitialTab(tab) {
+    switch (widget.initialTab) {
+      case CategoryState.Movies:
+        return 0;
+      case CategoryState.TV:
+        return 1;
+      default:
+        return 0;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+      initialIndex: setInitialTab(widget.initialTab),
       length: 2,
       child: Scaffold(
         appBar: AppBar(
@@ -70,18 +88,10 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
       ),
     );
   }
-
-  @override
-  void dispose() {
-    routeObserver.unsubscribe(this);
-    super.dispose();
-  }
 }
 
 class MovieTabView extends StatelessWidget {
-  const MovieTabView({
-    Key? key,
-  }) : super(key: key);
+  const MovieTabView();
 
   @override
   Widget build(BuildContext context) {
@@ -101,11 +111,12 @@ class MovieTabView extends StatelessWidget {
           );
         } else if (state is WatchlistMovieError) {
           return Center(
-            key: const Key('error_message'),
+            key: const Key('error_message_movie'),
             child: Text(state.error),
           );
         } else {
           return Center(
+            key: const Key('movie-unhandled-text'),
             child: Text('unhandled state: ${state.toString()}'),
           );
         }
@@ -115,9 +126,7 @@ class MovieTabView extends StatelessWidget {
 }
 
 class TvTabView extends StatelessWidget {
-  const TvTabView({
-    Key? key,
-  }) : super(key: key);
+  const TvTabView();
 
   @override
   Widget build(BuildContext context) {
@@ -137,11 +146,12 @@ class TvTabView extends StatelessWidget {
           );
         } else if (state is WatchlistTvError) {
           return Center(
-            key: const Key('error_message'),
+            key: const Key('error_message_tv'),
             child: Text(state.error),
           );
         } else {
           return Center(
+            key: const Key('tv-unhandled-text'),
             child: Text('unhandled state: ${state.toString()}'),
           );
         }

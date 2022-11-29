@@ -2,7 +2,7 @@
 
 part of 'movie_detail_bloc.dart';
 
-class MovieDetailLoadedData {
+class MovieDetailLoadedData extends Equatable {
   final MovieDetail movie;
   final List<Movie> movieRecommendations;
   final bool isRecommendationError;
@@ -25,7 +25,6 @@ class MovieDetailLoadedData {
     bool? isRecommendationError,
     bool? isAddedToWatchlist,
     String? watchlistMessage,
-    String? error,
     String? recommendationError,
   }) {
     return MovieDetailLoadedData(
@@ -38,6 +37,16 @@ class MovieDetailLoadedData {
       recommendationError: recommendationError ?? this.recommendationError,
     );
   }
+
+  @override
+  List<Object> get props => [
+        movie,
+        movieRecommendations,
+        isRecommendationError,
+        isAddedToWatchlist,
+        watchlistMessage,
+        recommendationError
+      ];
 }
 
 abstract class MovieDetailState extends Equatable {

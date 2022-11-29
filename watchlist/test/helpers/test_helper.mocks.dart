@@ -258,6 +258,14 @@ class MockDatabaseHelperWatchlist extends _i1.Mock
         returnValue: _i4.Future<_i10.Database?>.value(),
       ) as _i4.Future<_i10.Database?>);
   @override
+  void partialCreate(_i10.Database? db) => super.noSuchMethod(
+        Invocation.method(
+          #partialCreate,
+          [db],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
   _i4.Future<int> insertWatchlistMovie(_i6.MovieTable? movie) =>
       (super.noSuchMethod(
         Invocation.method(

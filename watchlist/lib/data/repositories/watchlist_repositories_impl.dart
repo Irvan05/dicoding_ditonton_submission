@@ -41,8 +41,12 @@ class WatchlistRepositoryImpl implements WatchlistRepository {
 
   @override
   Future<Either<Failure, List<Movie>>> getWatchlistMovies() async {
-    final result = await localDataSource.getWatchlistMovies();
-    return Right(result.map((data) => data.toEntity()).toList());
+    try {
+      final result = await localDataSource.getWatchlistMovies();
+      return Right(result.map((data) => data.toEntity()).toList());
+    } on DatabaseException catch (e) {
+      return Left(DatabaseFailure(e.message));
+    }
   }
 
   @override

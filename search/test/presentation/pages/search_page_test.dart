@@ -10,8 +10,6 @@ import 'package:search/presentation/pages/search_page.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:tv/tv.dart';
 
-// import '../../dummy_data/dummy_objects.dart';
-
 class MockMovieSearchBloc extends MockBloc<MovieSearchEvent, MovieSearchState>
     implements MovieSearchBloc {}
 
@@ -85,7 +83,6 @@ void main() {
     await tester.pumpWidget(_makeTestableWidget(
       const SearchPage(),
     ));
-    // await tester.pumpAndSettle();
 
     expect(movieSearchBloc.state, MovieSearchLoading());
     expect(progressBarFinder, findsOneWidget);

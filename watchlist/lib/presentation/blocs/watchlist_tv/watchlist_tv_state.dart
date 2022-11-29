@@ -20,3 +20,5 @@ class WatchlistTvLoaded extends WatchlistTvState {
 
   const WatchlistTvLoaded({required this.tvsData});
 }
+
+class TvDummyFail extends WatchlistTvState {}
