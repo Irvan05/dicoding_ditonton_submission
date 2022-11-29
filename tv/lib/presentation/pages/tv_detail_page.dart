@@ -56,8 +56,6 @@ class _TvDetailPageState extends State<TvDetailPage> {
         },
         builder: (context, state) {
           if (state is TvDetailLoaded) {
-            print('builder');
-            print(state.data.isAddedToWatchlist);
             return SafeArea(
               child: DetailContent(
                 state.data.tv,
