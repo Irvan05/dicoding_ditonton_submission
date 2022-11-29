@@ -42,46 +42,52 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
     emit(MovieDetailLoading());
 
     final detailResult = await getMovieDetail.execute(id);
-    final recommendationResult = await getMovieRecommendations.execute(id);
 
-    late final MovieDetail _movie;
-    late final List<Movie> _movies;
-    late final bool _isRecommendationError;
-    String _recommendationError = '';
+    MovieDetail? _movie;
+    String errorMessage = '';
 
     detailResult.fold(
       (failure) {
-        emit(MovieDetailError(
-          error: failure.message,
-        ));
-        return;
+        errorMessage = failure.message;
       },
       (movie) {
         _movie = movie;
-        recommendationResult.fold(
-          (failure) {
-            _isRecommendationError = true;
-            _recommendationError = failure.message;
-          },
-          (movies) {
-            _isRecommendationError = false;
-            _movies = movies;
-          },
-        );
       },
     );
 
-    final watchlistStatus = await loadWatchlistStatus(_movie.id);
-    emit(MovieDetailLoaded(
-      data: MovieDetailLoadedData(
-        movie: _movie,
-        movieRecommendations: _movies,
-        isRecommendationError: _isRecommendationError,
-        isAddedToWatchlist: watchlistStatus,
-        watchlistMessage: '',
-        recommendationError: _recommendationError,
-      ),
-    ));
+    if (_movie == null) {
+      emit(MovieDetailError(
+        error: errorMessage,
+      ));
+    } else {
+      List<Movie>? _movies;
+      late final bool _isRecommendationError;
+      String _recommendationError = '';
+
+      final recommendationResult = await getMovieRecommendations.execute(id);
+      recommendationResult.fold(
+        (failure) {
+          _isRecommendationError = true;
+          _recommendationError = failure.message;
+        },
+        (movies) {
+          _isRecommendationError = false;
+          _movies = movies;
+        },
+      );
+
+      final watchlistStatus = await loadWatchlistStatus(_movie!.id);
+      emit(MovieDetailLoaded(
+        data: MovieDetailLoadedData(
+          movie: _movie!,
+          movieRecommendations: _movies ?? <Movie>[],
+          isRecommendationError: _isRecommendationError,
+          isAddedToWatchlist: watchlistStatus,
+          watchlistMessage: '',
+          recommendationError: _recommendationError,
+        ),
+      ));
+    }
   }
 
   Future<void> addWatchlist(
