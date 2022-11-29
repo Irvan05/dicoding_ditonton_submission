@@ -1,5 +1,9 @@
 import 'package:core/domain/entities/genre.dart';
-import 'package:tv/tv.dart';
+import 'package:tv/data/models/tv_table.dart';
+import 'package:tv/domain/entities/season.dart';
+import 'package:tv/domain/entities/season_episode.dart';
+import 'package:tv/domain/entities/tv.dart';
+import 'package:tv/domain/entities/tv_detail.dart';
 
 final testTv = Tv(
     backdropPath: "/56v2KjBlU4XaOv9rVYEQypROD7P.jpg",

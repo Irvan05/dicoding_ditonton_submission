@@ -1,11 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:movie/movie.dart';
+import 'package:movie/domain/entities/movie.dart';
+import 'package:movie/domain/usecases/get_popular_movies.dart';
 
 part 'popular_movies_event.dart';
 part 'popular_movies_state.dart';
 
-class PopularMoviesBloc extends Bloc<PopularMovieEvent, PopularMoviesState> {
+class PopularMoviesBloc extends Bloc<PopularMoviesEvent, PopularMoviesState> {
   final GetPopularMovies getPopularMovies;
   PopularMoviesBloc({required this.getPopularMovies})
       : super(PopularMoviesLoading()) {

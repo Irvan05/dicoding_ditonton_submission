@@ -4,7 +4,14 @@ import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:tv/tv.dart';
+import 'package:tv/data/datasources/tv_local_data_source.dart';
+import 'package:tv/data/models/season_episode_model.dart';
+import 'package:tv/data/models/season_model.dart';
+import 'package:tv/data/models/tv_detail_model.dart';
+import 'package:tv/data/models/tv_model.dart';
+import 'package:tv/data/models/tv_table.dart';
+import 'package:tv/data/repositories/tv_repository_impl.dart';
+import 'package:tv/domain/entities/tv.dart';
 
 import '../../dummy_data/dummy_objects.dart';
 import '../../helpers/test_helper.mocks.dart';

@@ -1,6 +1,6 @@
 import 'package:core/core.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:movie/movie.dart';
+import 'package:movie/data/models/movie_detail_model.dart';
 
 void main() {
   final tMovieDetailModel = MovieDetailResponse(

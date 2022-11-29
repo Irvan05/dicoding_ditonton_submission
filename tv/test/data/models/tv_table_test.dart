@@ -1,5 +1,5 @@
-import 'package:tv/tv.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:tv/data/models/tv_table.dart';
 
 void main() {
   const tTvTable = TvTable(
