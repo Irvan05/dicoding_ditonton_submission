@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-11-30 14:30:01</td>
+            <td class="headerValue">2022-11-30 15:44:57</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -102,50 +102,38 @@
 <a name="40"><span class="lineNum">      40 </span><span class="lineCov">          2 :       );''');</span></a>
 <a name="41"><span class="lineNum">      41 </span>            :   }</a>
 <a name="42"><span class="lineNum">      42 </span>            : </a>
-<a name="43"><span class="lineNum">      43 </span>            :   // void _onCreate(Database db, int version) async {</a>
-<a name="44"><span class="lineNum">      44 </span>            :   //   await db.execute('''</a>
-<a name="45"><span class="lineNum">      45 </span>            :   //     CREATE TABLE  $_tblCacheMovie (</a>
-<a name="46"><span class="lineNum">      46 </span>            :   //       id INTEGER PRIMARY KEY,</a>
-<a name="47"><span class="lineNum">      47 </span>            :   //       title TEXT,</a>
-<a name="48"><span class="lineNum">      48 </span>            :   //       overview TEXT,</a>
-<a name="49"><span class="lineNum">      49 </span>            :   //       posterPath TEXT,</a>
-<a name="50"><span class="lineNum">      50 </span>            :   //       category TEXT</a>
-<a name="51"><span class="lineNum">      51 </span>            :   //     );</a>
-<a name="52"><span class="lineNum">      52 </span>            :   //   ''');</a>
-<a name="53"><span class="lineNum">      53 </span>            :   // }</a>
-<a name="54"><span class="lineNum">      54 </span>            : </a>
-<a name="55"><span class="lineNum">      55 </span><span class="lineCov">          2 :   Future&lt;void&gt; insertCacheTransactionMovie(</span></a>
-<a name="56"><span class="lineNum">      56 </span>            :       List&lt;MovieTable&gt; movies, String category) async {</a>
-<a name="57"><span class="lineNum">      57 </span><span class="lineCov">          2 :     final db = await database;</span></a>
-<a name="58"><span class="lineNum">      58 </span>            : </a>
-<a name="59"><span class="lineNum">      59 </span><span class="lineCov">          4 :     db!.transaction((txn) async {</span></a>
-<a name="60"><span class="lineNum">      60 </span><span class="lineCov">          4 :       for (final movie in movies) {</span></a>
-<a name="61"><span class="lineNum">      61 </span><span class="lineCov">          2 :         final movieJson = movie.toJson();</span></a>
-<a name="62"><span class="lineNum">      62 </span><span class="lineCov">          2 :         movieJson['category'] = category;</span></a>
-<a name="63"><span class="lineNum">      63 </span><span class="lineCov">          2 :         txn.insert(_tblCacheMovie, movieJson);</span></a>
-<a name="64"><span class="lineNum">      64 </span>            :       }</a>
-<a name="65"><span class="lineNum">      65 </span>            :     });</a>
-<a name="66"><span class="lineNum">      66 </span>            :   }</a>
-<a name="67"><span class="lineNum">      67 </span>            : </a>
-<a name="68"><span class="lineNum">      68 </span><span class="lineNoCov">          0 :   Future&lt;List&lt;Map&lt;String, dynamic&gt;&gt;&gt; getCacheMovies(String category) async {</span></a>
-<a name="69"><span class="lineNum">      69 </span><span class="lineNoCov">          0 :     final db = await database;</span></a>
-<a name="70"><span class="lineNum">      70 </span><span class="lineNoCov">          0 :     final List&lt;Map&lt;String, dynamic&gt;&gt; results = await db!.query(</span></a>
-<a name="71"><span class="lineNum">      71 </span>            :       _tblCacheMovie,</a>
-<a name="72"><span class="lineNum">      72 </span>            :       where: 'category = ?',</a>
-<a name="73"><span class="lineNum">      73 </span><span class="lineNoCov">          0 :       whereArgs: [category],</span></a>
-<a name="74"><span class="lineNum">      74 </span>            :     );</a>
-<a name="75"><span class="lineNum">      75 </span>            :     return results;</a>
-<a name="76"><span class="lineNum">      76 </span>            :   }</a>
-<a name="77"><span class="lineNum">      77 </span>            : </a>
-<a name="78"><span class="lineNum">      78 </span><span class="lineNoCov">          0 :   Future&lt;int&gt; clearCacheMovie(String category) async {</span></a>
-<a name="79"><span class="lineNum">      79 </span><span class="lineNoCov">          0 :     final db = await database;</span></a>
-<a name="80"><span class="lineNum">      80 </span><span class="lineNoCov">          0 :     return await db!.delete(</span></a>
-<a name="81"><span class="lineNum">      81 </span>            :       _tblCacheMovie,</a>
-<a name="82"><span class="lineNum">      82 </span>            :       where: 'category = ?',</a>
-<a name="83"><span class="lineNum">      83 </span><span class="lineNoCov">          0 :       whereArgs: [category],</span></a>
-<a name="84"><span class="lineNum">      84 </span>            :     );</a>
-<a name="85"><span class="lineNum">      85 </span>            :   }</a>
-<a name="86"><span class="lineNum">      86 </span>            : }</a>
+<a name="43"><span class="lineNum">      43 </span><span class="lineCov">          2 :   Future&lt;void&gt; insertCacheTransactionMovie(</span></a>
+<a name="44"><span class="lineNum">      44 </span>            :       List&lt;MovieTable&gt; movies, String category) async {</a>
+<a name="45"><span class="lineNum">      45 </span><span class="lineCov">          2 :     final db = await database;</span></a>
+<a name="46"><span class="lineNum">      46 </span>            : </a>
+<a name="47"><span class="lineNum">      47 </span><span class="lineCov">          4 :     db!.transaction((txn) async {</span></a>
+<a name="48"><span class="lineNum">      48 </span><span class="lineCov">          4 :       for (final movie in movies) {</span></a>
+<a name="49"><span class="lineNum">      49 </span><span class="lineCov">          2 :         final movieJson = movie.toJson();</span></a>
+<a name="50"><span class="lineNum">      50 </span><span class="lineCov">          2 :         movieJson['category'] = category;</span></a>
+<a name="51"><span class="lineNum">      51 </span><span class="lineCov">          2 :         txn.insert(_tblCacheMovie, movieJson);</span></a>
+<a name="52"><span class="lineNum">      52 </span>            :       }</a>
+<a name="53"><span class="lineNum">      53 </span>            :     });</a>
+<a name="54"><span class="lineNum">      54 </span>            :   }</a>
+<a name="55"><span class="lineNum">      55 </span>            : </a>
+<a name="56"><span class="lineNum">      56 </span><span class="lineNoCov">          0 :   Future&lt;List&lt;Map&lt;String, dynamic&gt;&gt;&gt; getCacheMovies(String category) async {</span></a>
+<a name="57"><span class="lineNum">      57 </span><span class="lineNoCov">          0 :     final db = await database;</span></a>
+<a name="58"><span class="lineNum">      58 </span><span class="lineNoCov">          0 :     final List&lt;Map&lt;String, dynamic&gt;&gt; results = await db!.query(</span></a>
+<a name="59"><span class="lineNum">      59 </span>            :       _tblCacheMovie,</a>
+<a name="60"><span class="lineNum">      60 </span>            :       where: 'category = ?',</a>
+<a name="61"><span class="lineNum">      61 </span><span class="lineNoCov">          0 :       whereArgs: [category],</span></a>
+<a name="62"><span class="lineNum">      62 </span>            :     );</a>
+<a name="63"><span class="lineNum">      63 </span>            :     return results;</a>
+<a name="64"><span class="lineNum">      64 </span>            :   }</a>
+<a name="65"><span class="lineNum">      65 </span>            : </a>
+<a name="66"><span class="lineNum">      66 </span><span class="lineNoCov">          0 :   Future&lt;int&gt; clearCacheMovie(String category) async {</span></a>
+<a name="67"><span class="lineNum">      67 </span><span class="lineNoCov">          0 :     final db = await database;</span></a>
+<a name="68"><span class="lineNum">      68 </span><span class="lineNoCov">          0 :     return await db!.delete(</span></a>
+<a name="69"><span class="lineNum">      69 </span>            :       _tblCacheMovie,</a>
+<a name="70"><span class="lineNum">      70 </span>            :       where: 'category = ?',</a>
+<a name="71"><span class="lineNum">      71 </span><span class="lineNoCov">          0 :       whereArgs: [category],</span></a>
+<a name="72"><span class="lineNum">      72 </span>            :     );</a>
+<a name="73"><span class="lineNum">      73 </span>            :   }</a>
+<a name="74"><span class="lineNum">      74 </span>            : }</a>
 </pre>
       </td>
     </tr>

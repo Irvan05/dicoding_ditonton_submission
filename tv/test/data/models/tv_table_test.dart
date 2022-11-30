@@ -12,7 +12,7 @@ void main() {
   final tTvDetail = TvDetail(
     adult: false,
     backdropPath: "posterPath",
-    genres: [Genre(id: 18, name: 'Drama')],
+    genres: const [Genre(id: 18, name: 'Drama')],
     id: 1,
     name: 'name',
     overview: "overview",

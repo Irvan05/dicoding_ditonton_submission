@@ -60,7 +60,7 @@ void main() {
     'Should emit [Loading, Error] when get is unsuccessful',
     build: () {
       when(mockGetPopularTvs.execute())
-          .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+          .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
       return popularTvBloc;
     },
     act: (bloc) => bloc.add(FetchPopularTvs()),

@@ -65,7 +65,7 @@ void main() {
     'Should emit [Loading, Error] when failed',
     build: () {
       when(getWatchlistMovies.execute())
-          .thenAnswer((_) async => Left(DatabaseFailure(tFailure)));
+          .thenAnswer((_) async => const Left(DatabaseFailure(tFailure)));
       return watchlistMovieBloc;
     },
     act: (bloc) => bloc.add(FetchWatchlistMovies()),

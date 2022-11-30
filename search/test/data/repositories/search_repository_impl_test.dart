@@ -21,10 +21,10 @@ void main() {
     );
   });
 
-  final tMovieModel = MovieModel(
+  const tMovieModel = MovieModel(
     adult: false,
     backdropPath: '/muth4OYamXf41G2evdrLEg8d3om.jpg',
-    genreIds: const [14, 28],
+    genreIds: [14, 28],
     id: 557,
     originalTitle: 'Spider-Man',
     overview:
@@ -114,7 +114,7 @@ void main() {
       // act
       final result = await repository.searchMovies(tQuery);
       // assert
-      expect(result, Left(ServerFailure('')));
+      expect(result, const Left(ServerFailure('')));
     });
 
     test(
@@ -126,8 +126,8 @@ void main() {
       // act
       final result = await repository.searchMovies(tQuery);
       // assert
-      expect(
-          result, Left(ConnectionFailure('Failed to connect to the network')));
+      expect(result,
+          const Left(ConnectionFailure('Failed to connect to the network')));
     });
   });
 
@@ -154,7 +154,7 @@ void main() {
       // act
       final result = await repository.searchTvs(tQuery);
       // assert
-      expect(result, Left(ServerFailure('')));
+      expect(result, const Left(ServerFailure('')));
     });
 
     test(
@@ -166,8 +166,8 @@ void main() {
       // act
       final result = await repository.searchTvs(tQuery);
       // assert
-      expect(
-          result, Left(ConnectionFailure('Failed to connect to the network')));
+      expect(result,
+          const Left(ConnectionFailure('Failed to connect to the network')));
     });
   });
 }

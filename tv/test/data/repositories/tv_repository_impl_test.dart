@@ -153,7 +153,7 @@ void main() {
         final result = await repository.getOnTheAirTvs();
         // assert
         verify(mockRemoteDataSource.getOnTheAirTvs());
-        expect(result, equals(Left(ServerFailure(''))));
+        expect(result, equals(const Left(ServerFailure(''))));
       });
     });
 
@@ -181,7 +181,7 @@ void main() {
         final result = await repository.getOnTheAirTvs();
         // assert
         verify(mockLocalDataSource.getCachedNowPlayingTvs());
-        expect(result, Left(CacheFailure('No Cache')));
+        expect(result, const Left(CacheFailure('No Cache')));
       });
     });
 
@@ -242,7 +242,7 @@ void main() {
       // act
       final result = await repository.getPopularTvs();
       // assert
-      expect(result, Left(ServerFailure('')));
+      expect(result, const Left(ServerFailure('')));
     });
 
     test(
@@ -254,8 +254,8 @@ void main() {
       // act
       final result = await repository.getPopularTvs();
       // assert
-      expect(
-          result, Left(ConnectionFailure('Failed to connect to the network')));
+      expect(result,
+          const Left(ConnectionFailure('Failed to connect to the network')));
     });
   });
 
@@ -280,7 +280,7 @@ void main() {
       // act
       final result = await repository.getTopRatedTvs();
       // assert
-      expect(result, Left(ServerFailure('')));
+      expect(result, const Left(ServerFailure('')));
     });
 
     test(
@@ -292,8 +292,8 @@ void main() {
       // act
       final result = await repository.getTopRatedTvs();
       // assert
-      expect(
-          result, Left(ConnectionFailure('Failed to connect to the network')));
+      expect(result,
+          const Left(ConnectionFailure('Failed to connect to the network')));
     });
   });
 
@@ -365,7 +365,7 @@ void main() {
       final result = await repository.getTvDetail(tId);
       // assert
       verify(mockRemoteDataSource.getTvDetail(tId));
-      expect(result, equals(Left(ServerFailure(''))));
+      expect(result, equals(const Left(ServerFailure(''))));
     });
 
     test(
@@ -378,8 +378,10 @@ void main() {
       final result = await repository.getTvDetail(tId);
       // assert
       verify(mockRemoteDataSource.getTvDetail(tId));
-      expect(result,
-          equals(Left(ConnectionFailure('Failed to connect to the network'))));
+      expect(
+          result,
+          equals(const Left(
+              ConnectionFailure('Failed to connect to the network'))));
     });
   });
 
@@ -410,7 +412,7 @@ void main() {
       final result = await repository.getTvRecommendations(tId);
       // assertbuild runner
       verify(mockRemoteDataSource.getTvRecommendations(tId));
-      expect(result, equals(Left(ServerFailure(''))));
+      expect(result, equals(const Left(ServerFailure(''))));
     });
 
     test(
@@ -423,8 +425,10 @@ void main() {
       final result = await repository.getTvRecommendations(tId);
       // assert
       verify(mockRemoteDataSource.getTvRecommendations(tId));
-      expect(result,
-          equals(Left(ConnectionFailure('Failed to connect to the network'))));
+      expect(
+          result,
+          equals(const Left(
+              ConnectionFailure('Failed to connect to the network'))));
     });
   });
 
@@ -479,7 +483,7 @@ void main() {
       final result = await repository.getSeasonDetailTv(tId, tSeasonNum);
       // assert
       verify(mockRemoteDataSource.getSeasonDetail(tId, tSeasonNum));
-      expect(result, equals(Left(ServerFailure(''))));
+      expect(result, equals(const Left(ServerFailure(''))));
     });
 
     test(
@@ -492,8 +496,10 @@ void main() {
       final result = await repository.getSeasonDetailTv(tId, tSeasonNum);
       // assert
       verify(mockRemoteDataSource.getSeasonDetail(tId, tSeasonNum));
-      expect(result,
-          equals(Left(ConnectionFailure('Failed to connect to the network'))));
+      expect(
+          result,
+          equals(const Left(
+              ConnectionFailure('Failed to connect to the network'))));
     });
   });
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:bloc_test/bloc_test.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +70,7 @@ void main() {
     voteCount: 13507,
   );
   final tMovieList = [tMovie];
-  final tMovieDetail = MovieDetail(
+  const tMovieDetail = MovieDetail(
     adult: false,
     backdropPath: 'backdropPath',
     genres: [Genre(id: 1, name: 'Action')],
@@ -82,7 +84,7 @@ void main() {
     voteAverage: 1,
     voteCount: 1,
   );
-  final tAltMovieDetail = MovieDetail(
+  const tAltMovieDetail = MovieDetail(
     adult: false,
     backdropPath: 'backdropPath',
     genres: [Genre(id: 1, name: 'Action')],
@@ -256,7 +258,7 @@ void main() {
     await tester.tap(buttonFinder);
     await tester.pump();
 
-    verify(() => movieDetailBloc.add(AddWatchlist(movie: tMovieDetail)))
+    verify(() => movieDetailBloc.add(const AddWatchlist(movie: tMovieDetail)))
         .called(1);
   });
 
@@ -272,7 +274,8 @@ void main() {
     await tester.tap(buttonFinder);
     await tester.pump();
 
-    verify(() => movieDetailBloc.add(RemoveFromWatchlist(movie: tMovieDetail)))
+    verify(() =>
+            movieDetailBloc.add(const RemoveFromWatchlist(movie: tMovieDetail)))
         .called(1);
   });
 

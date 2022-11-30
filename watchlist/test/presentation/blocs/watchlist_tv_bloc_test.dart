@@ -61,7 +61,7 @@ void main() {
     'Should emit [Loading, Error] when failed',
     build: () {
       when(getWatchlistTvs.execute())
-          .thenAnswer((_) async => Left(DatabaseFailure(tFailure)));
+          .thenAnswer((_) async => const Left(DatabaseFailure(tFailure)));
       return watchlistTvBloc;
     },
     act: (bloc) => bloc.add(FetchWatchlistTvs()),

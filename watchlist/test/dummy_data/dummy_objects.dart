@@ -36,7 +36,7 @@ final testTv = Tv(
 final testMovieList = [testMovie];
 final testTvList = [testTv];
 
-final testMovieDetail = MovieDetail(
+const testMovieDetail = MovieDetail(
   adult: false,
   backdropPath: 'backdropPath',
   genres: [Genre(id: 1, name: 'Action')],
@@ -53,7 +53,7 @@ final testMovieDetail = MovieDetail(
 final testTvDetail = TvDetail(
   adult: false,
   backdropPath: "/56v2KjBlU4XaOv9rVYEQypROD7P.jpg",
-  genres: [Genre(id: 18, name: 'Drama')],
+  genres: const [Genre(id: 18, name: 'Drama')],
   id: 66732,
   name: 'Stranger Things',
   overview: "overview",

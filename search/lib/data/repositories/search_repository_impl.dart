@@ -18,9 +18,9 @@ class SearchRepositoryImpl implements SearchRepository {
       final result = await remoteDataSource.searchMovies(query);
       return Right(result.map((model) => model.toEntity()).toList());
     } on ServerException {
-      return Left(ServerFailure(''));
+      return const Left(ServerFailure(''));
     } on SocketException {
-      return Left(ConnectionFailure('Failed to connect to the network'));
+      return const Left(ConnectionFailure('Failed to connect to the network'));
     }
   }
 
@@ -30,9 +30,9 @@ class SearchRepositoryImpl implements SearchRepository {
       final result = await remoteDataSource.searchTvs(query);
       return Right(result.map((model) => model.toEntity()).toList());
     } on ServerException {
-      return Left(ServerFailure(''));
+      return const Left(ServerFailure(''));
     } on SocketException {
-      return Left(ConnectionFailure('Failed to connect to the network'));
+      return const Left(ConnectionFailure('Failed to connect to the network'));
     }
   }
 }

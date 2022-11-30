@@ -77,7 +77,7 @@ void main() {
   final tTvDetail = TvDetail(
     adult: false,
     backdropPath: "/56v2KjBlU4XaOv9rVYEQypROD7P.jpg",
-    genres: [Genre(id: 1, name: 'Drama')],
+    genres: const [Genre(id: 1, name: 'Drama')],
     id: 1,
     name: 'Stranger Things',
     overview: "overview",
@@ -168,8 +168,8 @@ void main() {
       build: () {
         when(mockGetTvDetail.execute(tId))
             .thenAnswer((_) async => Right(tTvDetail));
-        when(mockGetTvRecommendations.execute(tId))
-            .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+        when(mockGetTvRecommendations.execute(tId)).thenAnswer(
+            (_) async => const Left(ServerFailure('Server Failure')));
         when(mockGetWatchListStatusTv.execute(tId))
             .thenAnswer((_) async => false);
         return tvDetailBloc;
@@ -195,8 +195,8 @@ void main() {
     blocTest<TvDetailBloc, TvDetailState>(
       'Should emit [Loading, Error] when get get is unsuccessful',
       build: () {
-        when(mockGetTvDetail.execute(tId))
-            .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+        when(mockGetTvDetail.execute(tId)).thenAnswer(
+            (_) async => const Left(ServerFailure('Server Failure')));
         return tvDetailBloc;
       },
       act: (bloc) => bloc.add(const FetchTvDetail(id: tId)),
@@ -244,8 +244,8 @@ void main() {
     blocTest<TvDetailBloc, TvDetailState>(
       'Should emit [Loaded] with failed state if get is unsucessful',
       build: () {
-        when(mockGetSeasonDetailTv.execute(tId, tSeasonNum))
-            .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+        when(mockGetSeasonDetailTv.execute(tId, tSeasonNum)).thenAnswer(
+            (_) async => const Left(ServerFailure('Server Failure')));
         return tvDetailBloc;
       },
       act: (bloc) {
@@ -303,7 +303,7 @@ void main() {
       'Should emit [Loaded] and show error when failed',
       build: () {
         when(mockSaveWatchlistTv.execute(tTvDetail))
-            .thenAnswer((_) async => Left(DatabaseFailure('error')));
+            .thenAnswer((_) async => const Left(DatabaseFailure('error')));
         when(mockGetWatchListStatusTv.execute(tId))
             .thenAnswer((_) async => false);
         return tvDetailBloc;
@@ -367,7 +367,7 @@ void main() {
       'Should emit [Loaded] and show error when failed',
       build: () {
         when(mockRemoveWatchlistTv.execute(tTvDetail))
-            .thenAnswer((_) async => Left(DatabaseFailure('error')));
+            .thenAnswer((_) async => const Left(DatabaseFailure('error')));
         when(mockGetWatchListStatusTv.execute(tId))
             .thenAnswer((_) async => true);
         return tvDetailBloc;

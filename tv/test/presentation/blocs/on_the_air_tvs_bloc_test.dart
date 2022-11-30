@@ -61,7 +61,7 @@ void main() {
     'Should emit [Loading, Error] when get get is unsuccessful',
     build: () {
       when(mockGetOnTheAirTvs.execute())
-          .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+          .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
       return homeTvBloc;
     },
     act: (bloc) => bloc.add(FetchOnTheAirTvs()),

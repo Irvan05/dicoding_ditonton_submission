@@ -3,10 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:movie/data/models/movie_detail_model.dart';
 
 void main() {
-  final tMovieDetailModel = MovieDetailResponse(
+  const tMovieDetailModel = MovieDetailResponse(
     adult: false,
     backdropPath: 'backdropPath',
-    genres: const [GenreModel(id: 1, name: 'test')],
+    genres: [GenreModel(id: 1, name: 'test')],
     id: 1,
     originalTitle: 'originalTitle',
     overview: 'overview',

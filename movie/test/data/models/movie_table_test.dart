@@ -11,7 +11,7 @@ void main() {
     overview: 'overview',
   );
 
-  final tMovieDetail = MovieDetail(
+  const tMovieDetail = MovieDetail(
     adult: false,
     backdropPath: 'backdropPath',
     genres: [Genre(id: 1, name: 'Action')],

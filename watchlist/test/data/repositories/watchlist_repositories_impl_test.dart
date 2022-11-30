@@ -36,7 +36,7 @@ void main() {
       // act
       final result = await repository.saveWatchlistMovie(testMovieDetail);
       // assert
-      expect(result, Left(DatabaseFailure('Failed to add watchlist')));
+      expect(result, const Left(DatabaseFailure('Failed to add watchlist')));
     });
   });
 
@@ -58,7 +58,7 @@ void main() {
       // act
       final result = await repository.removeWatchlistMovie(testMovieDetail);
       // assert
-      expect(result, Left(DatabaseFailure('Failed to remove watchlist')));
+      expect(result, const Left(DatabaseFailure('Failed to remove watchlist')));
     });
   });
 
@@ -93,7 +93,7 @@ void main() {
       // act
       final result = await repository.getWatchlistMovies();
       // assert
-      expect(result, Left(DatabaseFailure('Failed to add watchlist')));
+      expect(result, const Left(DatabaseFailure('Failed to add watchlist')));
     });
   });
 
@@ -115,7 +115,7 @@ void main() {
       // act
       final result = await repository.saveWatchlistTv(testTvDetail);
       // assert
-      expect(result, Left(DatabaseFailure('Failed to add watchlist')));
+      expect(result, const Left(DatabaseFailure('Failed to add watchlist')));
     });
   });
 
@@ -137,7 +137,7 @@ void main() {
       // act
       final result = await repository.removeWatchlistTv(testTvDetail);
       // assert
-      expect(result, Left(DatabaseFailure('Failed to remove watchlist')));
+      expect(result, const Left(DatabaseFailure('Failed to remove watchlist')));
     });
   });
 

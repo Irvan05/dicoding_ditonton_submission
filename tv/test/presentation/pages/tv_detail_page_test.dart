@@ -75,7 +75,7 @@ void main() {
   final tTvDetail = TvDetail(
     adult: false,
     backdropPath: "/56v2KjBlU4XaOv9rVYEQypROD7P.jpg",
-    genres: [Genre(id: 18, name: 'Drama')],
+    genres: const [Genre(id: 18, name: 'Drama')],
     id: 66732,
     name: 'Stranger Things',
     overview: "overview",

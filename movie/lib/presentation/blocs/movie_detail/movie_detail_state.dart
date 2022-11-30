@@ -10,7 +10,7 @@ class MovieDetailLoadedData extends Equatable {
   final String watchlistMessage;
   final String recommendationError;
 
-  MovieDetailLoadedData({
+  const MovieDetailLoadedData({
     required this.movie,
     required this.movieRecommendations,
     required this.isRecommendationError,

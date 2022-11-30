@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, constant_identifier_names
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tv/presentation/blocs/popular_tvs/popular_tvs_bloc.dart';
