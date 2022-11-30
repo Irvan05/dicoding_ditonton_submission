@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie/domain/entities/movie.dart';
@@ -22,11 +24,6 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
   void initState() {
     super.initState();
     Future.microtask(() {
-      // Provider.of<MovieListNotifier>(context, listen: false)
-      //   ..fetchNowPlayingMovies()
-      //   ..fetchPopularMovies()
-      //   ..fetchTopRatedMovies();
-
       BlocProvider.of<HomeMovieBloc>(context).add(FetchNowPlayingMovies());
       BlocProvider.of<PopularMoviesBloc>(context).add(FetchPopularMovies());
       BlocProvider.of<TopRatedMoviesBloc>(context).add(FetchTopRatedMovies());
@@ -68,11 +65,12 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                   );
                 } else if (state is HomeMovieError) {
                   return Center(
-                    key: const Key('now playing error'),
+                    key: const Key('now-playing-error'),
                     child: Text(state.error),
                   );
                 } else {
                   return Center(
+                    key: const Key('now-playing-unhandled'),
                     child: Text('Unhandled state ${state.toString()}'),
                   );
                 }
@@ -85,18 +83,19 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
                   builder: (context, state) {
                 if (state is PopularMoviesLoaded) {
-                  return MovieList(state.movies, 'top-rated');
+                  return MovieList(state.movies, 'popular');
                 } else if (state is PopularMoviesLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else if (state is PopularMoviesError) {
                   return Center(
-                    key: const Key('popular error'),
+                    key: const Key('popular-error'),
                     child: Text(state.error),
                   );
                 } else {
                   return Center(
+                    key: const Key('popular-unhandled'),
                     child: Text('Unhandled state ${state.toString()}'),
                   );
                 }
@@ -116,11 +115,12 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                   );
                 } else if (state is TopRatedMoviesError) {
                   return Center(
-                    key: const Key('top rated error'),
+                    key: const Key('top-rated-error'),
                     child: Text(state.error),
                   );
                 } else {
                   return Center(
+                    key: const Key('top-rated-unhandled'),
                     child: Text('Unhandled state ${state.toString()}'),
                   );
                 }
@@ -187,6 +187,7 @@ class MovieList extends StatelessWidget {
                   placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),
                   ),
+                  // coverage:ignore-line
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),

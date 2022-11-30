@@ -1,66 +1,107 @@
-// import 'package:core/utils/state_enum.dart';
-// import 'package:ditonton/domain/entities/tv.dart';
-// import 'package:ditonton/presentation/pages/on_the_air_tvs_page.dart';
-// import 'package:ditonton/presentation/provider/on_the_air_tvs_notifier.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:mockito/annotations.dart';
-// import 'package:mockito/mockito.dart';
-// import 'package:provider/provider.dart';
+import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:tv/domain/entities/tv.dart';
+import 'package:tv/presentation/blocs/on_the_air_tvs/on_the_air_tvs_bloc.dart';
+import 'package:tv/presentation/pages/on_the_air_tvs_page.dart';
+import 'package:tv/presentation/widgets/tv_card_list.dart';
 
-// import 'on_the_air_tvs_page_test.mocks.dart';
+class MockOnTheAirTvsBloc extends MockBloc<OnTheAirTvsEvent, OnTheAirTvsState>
+    implements OnTheAirTvsBloc {}
 
-// @GenerateMocks([OnTheAirTvsNotifier])
-// void main() {
-//   late MockOnTheAirTvsNotifier mockNotifier;
+void main() {
+  late OnTheAirTvsBloc topRatedTvsBloc;
 
-//   setUp(() {
-//     mockNotifier = MockOnTheAirTvsNotifier();
-//   });
+  setUp(() {
+    topRatedTvsBloc = MockOnTheAirTvsBloc();
+  });
 
-//   Widget _makeTestableWidget(Widget body) {
-//     return ChangeNotifierProvider<OnTheAirTvsNotifier>.value(
-//       value: mockNotifier,
-//       child: MaterialApp(
-//         home: body,
-//       ),
-//     );
-//   }
+  // ignore: no_leading_underscores_for_local_identifiers
+  Widget _makeTestableWidget(Widget body) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => topRatedTvsBloc,
+        ),
+      ],
+      child: MaterialApp(
+        home: body,
+      ),
+    );
+  }
 
-//   testWidgets('Page should display progress bar when loading',
-//       (WidgetTester tester) async {
-//     when(mockNotifier.state).thenReturn(RequestState.Loading);
+  final tTv = Tv(
+      backdropPath: "/56v2KjBlU4XaOv9rVYEQypROD7P.jpg",
+      firstAirDate: DateTime(2016, 7, 15), //"2016-07-15",
+      genreIds: const [18, 10765, 9648],
+      id: 1,
+      name: "Stranger Things",
+      originCountry: const ["US"],
+      originalLanguage: "en",
+      originalName: "Stranger Things",
+      overview: "overview",
+      popularity: 475.516,
+      posterPath: "/49WJfeN0moxb9IPfGn8AIqMGskD.jpg",
+      voteAverage: 8.6,
+      voteCount: 14335);
+  final tTvList = <Tv>[tTv];
 
-//     final progressFinder = find.byType(CircularProgressIndicator);
-//     final centerFinder = find.byType(Center);
+  testWidgets('should display loading when state are loading',
+      (WidgetTester tester) async {
+    when(() => topRatedTvsBloc.state).thenReturn(OnTheAirTvsLoading());
 
-//     await tester.pumpWidget(_makeTestableWidget(OnTheAirTvsPage()));
+    final progressBarFinder =
+        find.byType(CircularProgressIndicator, skipOffstage: false);
 
-//     expect(centerFinder, findsOneWidget);
-//     expect(progressFinder, findsOneWidget);
-//   });
+    await tester.pumpWidget(_makeTestableWidget(
+      OnTheAirTvsPage(),
+    ));
 
-//   testWidgets('Page should display when data is loaded',
-//       (WidgetTester tester) async {
-//     when(mockNotifier.state).thenReturn(RequestState.Loaded);
-//     when(mockNotifier.tvs).thenReturn(<Tv>[]);
+    expect(topRatedTvsBloc.state, OnTheAirTvsLoading());
+    expect(progressBarFinder, findsOneWidget);
+  });
 
-//     final listViewFinder = find.byType(ListView);
+  testWidgets('should display error when state are error',
+      (WidgetTester tester) async {
+    when(() => topRatedTvsBloc.state)
+        .thenReturn(const OnTheAirTvsError(error: 'error'));
 
-//     await tester.pumpWidget(_makeTestableWidget(OnTheAirTvsPage()));
+    final widgetFinder = find.byKey(const Key('error_message'));
+    await tester.pumpWidget(_makeTestableWidget(
+      OnTheAirTvsPage(),
+    ));
 
-//     expect(listViewFinder, findsOneWidget);
-//   });
+    expect(topRatedTvsBloc.state, const OnTheAirTvsError(error: 'error'));
+    expect(widgetFinder, findsOneWidget);
+  });
 
-//   testWidgets('Page should display text with message when Error',
-//       (WidgetTester tester) async {
-//     when(mockNotifier.state).thenReturn(RequestState.Error);
-//     when(mockNotifier.message).thenReturn('Error message');
+  testWidgets('should display loaded when state are loaded',
+      (WidgetTester tester) async {
+    when(() => topRatedTvsBloc.state)
+        .thenReturn(OnTheAirTvsLoaded(tvs: tTvList));
 
-//     final textFinder = find.byKey(Key('error_message'));
+    final widgetFinder = find.byType(TvCard);
+    await tester.pumpWidget(_makeTestableWidget(
+      OnTheAirTvsPage(),
+    ));
 
-//     await tester.pumpWidget(_makeTestableWidget(OnTheAirTvsPage()));
+    verify(() => topRatedTvsBloc.add(FetchOnTheAirTvs())).called(1);
+    expect(topRatedTvsBloc.state, OnTheAirTvsLoaded(tvs: tTvList));
+    expect(widgetFinder, findsOneWidget);
+  });
 
-//     expect(textFinder, findsOneWidget);
-//   });
-// }
+  testWidgets('should display unhandled text when state is not found',
+      (WidgetTester tester) async {
+    when(() => topRatedTvsBloc.state).thenReturn(OnTheAirTvsDummy());
+
+    final widgetFinder = find.byKey(const Key('unhandled_message'));
+    await tester.pumpWidget(_makeTestableWidget(
+      OnTheAirTvsPage(),
+    ));
+
+    expect(topRatedTvsBloc.state, OnTheAirTvsDummy());
+    expect(widgetFinder, findsOneWidget);
+  });
+}

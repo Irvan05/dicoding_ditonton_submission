@@ -39,18 +39,6 @@ class DatabaseHelperTv {
       );''');
   }
 
-  // void _onCreate(Database db, int version) async {
-  //   await db.execute('''
-  //     CREATE TABLE  $_tblCacheTv (
-  //       id INTEGER PRIMARY KEY,
-  //       name TEXT,
-  //       overview TEXT,
-  //       posterPath TEXT,
-  //       category TEXT
-  //     );
-  //   ''');
-  // }
-
   Future<void> insertCacheTransactionTv(
       List<TvTable> tvs, String category) async {
     final db = await database;

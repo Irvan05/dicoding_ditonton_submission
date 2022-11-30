@@ -68,9 +68,9 @@ Future<void> init() async {
     () => TvDetailBloc(
         getTvDetail: locator(),
         getTvRecommendations: locator(),
-        getWatchListStatus: locator(),
-        saveWatchlist: locator(),
-        removeWatchlist: locator(),
+        getWatchListStatusTv: locator(),
+        saveWatchlistTv: locator(),
+        removeWatchlistTv: locator(),
         getSeasonDetailTv: locator()),
   );
   locator.registerFactory(

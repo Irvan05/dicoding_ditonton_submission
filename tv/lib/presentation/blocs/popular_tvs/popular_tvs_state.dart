@@ -20,3 +20,5 @@ class PopularTvsLoaded extends PopularTvsState {
 
   const PopularTvsLoaded({required this.tvs});
 }
+
+class PopularTvsDummy extends PopularTvsState {}

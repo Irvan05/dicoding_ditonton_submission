@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie/presentation/blocs/popular_movies/popular_movies_bloc.dart';
 import 'package:movie/presentation/widgets/movie_card_list.dart';
@@ -47,6 +49,7 @@ class _PopularMoviesPageState extends State<PopularMoviesPage> {
               );
             } else {
               return Center(
+                key: const Key('unhandled_message'),
                 child: Text('Unhandled state ${state.toString()}'),
               );
             }

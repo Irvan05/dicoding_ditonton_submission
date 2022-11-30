@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_null_aware_operators
+
 import 'package:core/data/models/genre_model.dart';
 import 'package:tv/data/models/season_model.dart';
 import 'package:tv/domain/entities/tv_detail.dart';

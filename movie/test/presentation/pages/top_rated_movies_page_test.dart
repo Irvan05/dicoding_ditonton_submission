@@ -1,66 +1,110 @@
-// import 'package:core/utils/state_enum.dart';
-// import 'package:ditonton/domain/entities/movie.dart';
-// import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
-// import 'package:ditonton/presentation/provider/top_rated_movies_notifier.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:mockito/annotations.dart';
-// import 'package:mockito/mockito.dart';
-// import 'package:provider/provider.dart';
+import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:movie/domain/entities/movie.dart';
+import 'package:movie/presentation/blocs/top_rated_movies/top_rated_movies_bloc.dart';
+import 'package:movie/presentation/pages/top_rated_movies_page.dart';
+import 'package:movie/presentation/widgets/movie_card_list.dart';
 
-// import 'top_rated_movies_page_test.mocks.dart';
+class MockTopRatedMoviesBloc
+    extends MockBloc<TopRatedMoviesEvent, TopRatedMoviesState>
+    implements TopRatedMoviesBloc {}
 
-// @GenerateMocks([TopRatedMoviesNotifier])
-// void main() {
-//   late MockTopRatedMoviesNotifier mockNotifier;
+void main() {
+  late TopRatedMoviesBloc topRatedMoviesBloc;
 
-//   setUp(() {
-//     mockNotifier = MockTopRatedMoviesNotifier();
-//   });
+  setUp(() {
+    topRatedMoviesBloc = MockTopRatedMoviesBloc();
+  });
 
-//   Widget _makeTestableWidget(Widget body) {
-//     return ChangeNotifierProvider<TopRatedMoviesNotifier>.value(
-//       value: mockNotifier,
-//       child: MaterialApp(
-//         home: body,
-//       ),
-//     );
-//   }
+  // ignore: no_leading_underscores_for_local_identifiers
+  Widget _makeTestableWidget(Widget body) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => topRatedMoviesBloc,
+        ),
+      ],
+      child: MaterialApp(
+        home: body,
+      ),
+    );
+  }
 
-//   testWidgets('Page should display progress bar when loading',
-//       (WidgetTester tester) async {
-//     when(mockNotifier.state).thenReturn(RequestState.Loading);
+  final tMovie = Movie(
+    adult: false,
+    backdropPath: '/muth4OYamXf41G2evdrLEg8d3om.jpg',
+    genreIds: const [14, 28],
+    id: 557,
+    originalTitle: 'Spider-Man',
+    overview:
+        'After being bitten by a genetically altered spider, nerdy high school student Peter Parker is endowed with amazing powers to become the Amazing superhero known as Spider-Man.',
+    popularity: 60.441,
+    posterPath: '/rweIrveL43TaxUN0akQEaAXL6x0.jpg',
+    releaseDate: '2002-05-01',
+    title: 'Spider-Man',
+    video: false,
+    voteAverage: 7.2,
+    voteCount: 13507,
+  );
+  final tMovieList = [tMovie];
 
-//     final progressFinder = find.byType(CircularProgressIndicator);
-//     final centerFinder = find.byType(Center);
+  testWidgets('should display loading when state are loading',
+      (WidgetTester tester) async {
+    when(() => topRatedMoviesBloc.state).thenReturn(TopRatedMoviesLoading());
 
-//     await tester.pumpWidget(_makeTestableWidget(TopRatedMoviesPage()));
+    final progressBarFinder =
+        find.byType(CircularProgressIndicator, skipOffstage: false);
 
-//     expect(centerFinder, findsOneWidget);
-//     expect(progressFinder, findsOneWidget);
-//   });
+    await tester.pumpWidget(_makeTestableWidget(
+      TopRatedMoviesPage(),
+    ));
 
-//   testWidgets('Page should display when data is loaded',
-//       (WidgetTester tester) async {
-//     when(mockNotifier.state).thenReturn(RequestState.Loaded);
-//     when(mockNotifier.movies).thenReturn(<Movie>[]);
+    expect(topRatedMoviesBloc.state, TopRatedMoviesLoading());
+    expect(progressBarFinder, findsOneWidget);
+  });
 
-//     final listViewFinder = find.byType(ListView);
+  testWidgets('should display error when state are error',
+      (WidgetTester tester) async {
+    when(() => topRatedMoviesBloc.state)
+        .thenReturn(const TopRatedMoviesError(error: 'error'));
 
-//     await tester.pumpWidget(_makeTestableWidget(TopRatedMoviesPage()));
+    final widgetFinder = find.byKey(const Key('error_message'));
+    await tester.pumpWidget(_makeTestableWidget(
+      TopRatedMoviesPage(),
+    ));
 
-//     expect(listViewFinder, findsOneWidget);
-//   });
+    expect(topRatedMoviesBloc.state, const TopRatedMoviesError(error: 'error'));
+    expect(widgetFinder, findsOneWidget);
+  });
 
-//   testWidgets('Page should display text with message when Error',
-//       (WidgetTester tester) async {
-//     when(mockNotifier.state).thenReturn(RequestState.Error);
-//     when(mockNotifier.message).thenReturn('Error message');
+  testWidgets('should display loaded when state are loaded',
+      (WidgetTester tester) async {
+    when(() => topRatedMoviesBloc.state)
+        .thenReturn(TopRatedMoviesLoaded(movies: tMovieList));
 
-//     final textFinder = find.byKey(Key('error_message'));
+    final widgetFinder = find.byType(MovieCard);
+    await tester.pumpWidget(_makeTestableWidget(
+      TopRatedMoviesPage(),
+    ));
 
-//     await tester.pumpWidget(_makeTestableWidget(TopRatedMoviesPage()));
+    verify(() => topRatedMoviesBloc.add(FetchTopRatedMovies())).called(1);
+    expect(topRatedMoviesBloc.state, TopRatedMoviesLoaded(movies: tMovieList));
+    expect(widgetFinder, findsOneWidget);
+  });
 
-//     expect(textFinder, findsOneWidget);
-//   });
-// }
+  testWidgets('should display unhandled text when state is not found',
+      (WidgetTester tester) async {
+    when(() => topRatedMoviesBloc.state).thenReturn(TopRatedMoviesDummy());
+
+    final widgetFinder = find.byKey(const Key('unhandled_message'));
+    await tester.pumpWidget(_makeTestableWidget(
+      TopRatedMoviesPage(),
+    ));
+
+    expect(topRatedMoviesBloc.state, TopRatedMoviesDummy());
+    expect(widgetFinder, findsOneWidget);
+  });
+}

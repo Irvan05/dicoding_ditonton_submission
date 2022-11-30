@@ -1,88 +1,253 @@
-// import 'package:core/utils/state_enum.dart';
-// import 'package:ditonton/presentation/pages/home_tv_page.dart';
-// import 'package:ditonton/presentation/provider/tv_list_notifier.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:mockito/annotations.dart';
-// import 'package:mockito/mockito.dart';
-// import 'package:provider/provider.dart';
+// ignore_for_file: use_key_in_widget_constructors
 
-// import '../../dummy_data/dummy_objects.dart';
-// import 'home_tv_page_test.mocks.dart';
+import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:tv/domain/entities/tv.dart';
+import 'package:tv/presentation/blocs/on_the_air_tvs/on_the_air_tvs_bloc.dart';
+import 'package:tv/presentation/blocs/popular_tvs/popular_tvs_bloc.dart';
+import 'package:tv/presentation/blocs/top_rated_tvs/top_rated_tvs_bloc.dart';
+import 'package:tv/presentation/pages/home_tv_page.dart';
 
-// @GenerateMocks([TvListNotifier])
-// void main() {
-//   late MockTvListNotifier mockNotifier;
+class MockOnTheAirTvsBloc extends MockBloc<OnTheAirTvsEvent, OnTheAirTvsState>
+    implements OnTheAirTvsBloc {}
 
-//   setUp(() {
-//     mockNotifier = MockTvListNotifier();
-//   });
+class MockPopularTvsBloc extends MockBloc<PopularTvsEvent, PopularTvsState>
+    implements PopularTvsBloc {}
 
-//   Widget _makeTestableWidget(Widget body) {
-//     return ChangeNotifierProvider<TvListNotifier>.value(
-//       value: mockNotifier,
-//       child: MaterialApp(
-//         home: body,
-//       ),
-//     );
-//   }
+class MockTopRatedTvsBloc extends MockBloc<TopRatedTvsEvent, TopRatedTvsState>
+    implements TopRatedTvsBloc {}
 
-//   testWidgets('should display loading when states are loading',
-//       (WidgetTester tester) async {
-//     when(mockNotifier.onTheAirState).thenReturn(RequestState.Loading);
-//     when(mockNotifier.popularTvsState).thenReturn(RequestState.Loading);
-//     when(mockNotifier.topRatedTvsState).thenReturn(RequestState.Loading);
+class TestPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: const Center(child: Text('Another page')),
+    );
+  }
+}
 
-//     final progressBarFinder = find.byType(CircularProgressIndicator);
+void main() {
+  late OnTheAirTvsBloc onTheAirTvsBloc;
+  late PopularTvsBloc popularTvsBloc;
+  late TopRatedTvsBloc topRatedTvsBloc;
 
-//     await tester.pumpWidget(_makeTestableWidget(HomeTvPage()));
+  setUp(() {
+    onTheAirTvsBloc = MockOnTheAirTvsBloc();
+    popularTvsBloc = MockPopularTvsBloc();
+    topRatedTvsBloc = MockTopRatedTvsBloc();
+  });
 
-//     expect(progressBarFinder, findsNWidgets(3));
-//   });
+  // ignore: no_leading_underscores_for_local_identifiers
+  Widget _makeTestableWidget(Widget body) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => onTheAirTvsBloc,
+        ),
+        BlocProvider(
+          create: (_) => popularTvsBloc,
+        ),
+        BlocProvider(
+          create: (_) => topRatedTvsBloc,
+        ),
+      ],
+      child: MaterialApp(
+        onGenerateRoute: (RouteSettings settings) {
+          switch (settings.name) {
+            default:
+              return MaterialPageRoute(builder: (_) => TestPage());
+          }
+        },
+        home: body,
+      ),
+    );
+  }
 
-//   testWidgets('should display tv list when states are Loaded',
-//       (WidgetTester tester) async {
-//     when(mockNotifier.onTheAirState).thenReturn(RequestState.Loaded);
-//     when(mockNotifier.onTheAirTvs).thenReturn(testTvList);
-//     when(mockNotifier.popularTvsState).thenReturn(RequestState.Loaded);
-//     when(mockNotifier.popularTvs).thenReturn(testTvList);
-//     when(mockNotifier.topRatedTvsState).thenReturn(RequestState.Loaded);
-//     when(mockNotifier.topRatedTvs).thenReturn(testTvList);
-//     when(mockNotifier.message).thenReturn('');
+  final tTv = Tv(
+      backdropPath: "/56v2KjBlU4XaOv9rVYEQypROD7P.jpg",
+      firstAirDate: DateTime(2016, 7, 15), //"2016-07-15",
+      genreIds: const [18, 10765, 9648],
+      id: 1,
+      name: "Stranger Things",
+      originCountry: const ["US"],
+      originalLanguage: "en",
+      originalName: "Stranger Things",
+      overview: "overview",
+      popularity: 475.516,
+      posterPath: "/49WJfeN0moxb9IPfGn8AIqMGskD.jpg",
+      voteAverage: 8.6,
+      voteCount: 14335);
+  final tTvList = <Tv>[tTv];
 
-//     final tvListFinder = find.byType(TvList);
+  testWidgets('should display loading when states are loading',
+      (WidgetTester tester) async {
+    when(() => onTheAirTvsBloc.state).thenReturn(OnTheAirTvsLoading());
+    when(() => popularTvsBloc.state).thenReturn(PopularTvsLoading());
+    when(() => topRatedTvsBloc.state).thenReturn(TopRatedTvsLoading());
 
-//     await tester.pumpWidget(_makeTestableWidget(HomeTvPage()));
+    final progressBarFinder =
+        find.byType(CircularProgressIndicator, skipOffstage: false);
 
-//     expect(tvListFinder, findsNWidgets(3));
-//   });
+    await tester.pumpWidget(_makeTestableWidget(
+      const HomeTvPage(),
+    ));
 
-//   testWidgets('should display text failed when states are error',
-//       (WidgetTester tester) async {
-//     when(mockNotifier.onTheAirState).thenReturn(RequestState.Error);
-//     when(mockNotifier.popularTvsState).thenReturn(RequestState.Error);
-//     when(mockNotifier.topRatedTvsState).thenReturn(RequestState.Error);
-//     when(mockNotifier.message).thenReturn('');
+    expect(onTheAirTvsBloc.state, OnTheAirTvsLoading());
+    expect(popularTvsBloc.state, PopularTvsLoading());
+    expect(topRatedTvsBloc.state, TopRatedTvsLoading());
+    expect(progressBarFinder, findsNWidgets(3));
+  });
 
-//     await tester.pumpWidget(_makeTestableWidget(HomeTvPage()));
+  testWidgets('should display error when states are error',
+      (WidgetTester tester) async {
+    when(() => onTheAirTvsBloc.state)
+        .thenReturn(const OnTheAirTvsError(error: 'error'));
+    when(() => popularTvsBloc.state)
+        .thenReturn(const PopularTvsError(error: 'error'));
+    when(() => topRatedTvsBloc.state)
+        .thenReturn(const TopRatedTvsError(error: 'error'));
 
-//     expect(find.byKey(Key('on the air error')), findsOneWidget);
-//     expect(find.byKey(Key('popular error')), findsOneWidget);
-//     expect(find.byKey(Key('top rated error')), findsOneWidget);
-//   });
+    final widgetFinder = find.byKey(const Key('on-the-air-error'));
+    final widgetFinder2 = find.byKey(const Key('popular-error'));
+    final widgetFinder3 = find.byKey(const Key('top-rated-error'));
+    await tester.pumpWidget(_makeTestableWidget(
+      const HomeTvPage(),
+    ));
 
-//   testWidgets('should display drawer when hamburger icon is pressed',
-//       (WidgetTester tester) async {
-//     when(mockNotifier.onTheAirState).thenReturn(RequestState.Loading);
-//     when(mockNotifier.popularTvsState).thenReturn(RequestState.Loading);
-//     when(mockNotifier.topRatedTvsState).thenReturn(RequestState.Loading);
+    verify(() => onTheAirTvsBloc.add(FetchOnTheAirTvs())).called(1);
+    expect(onTheAirTvsBloc.state, const OnTheAirTvsError(error: 'error'));
+    expect(popularTvsBloc.state, const PopularTvsError(error: 'error'));
+    expect(topRatedTvsBloc.state, const TopRatedTvsError(error: 'error'));
+    expect(widgetFinder, findsOneWidget);
+    expect(widgetFinder2, findsOneWidget);
+    expect(widgetFinder3, findsOneWidget);
+  });
 
-//     final drawerButton = find.byIcon(Icons.menu);
+  testWidgets('should display loaded when states are loaded',
+      (WidgetTester tester) async {
+    when(() => onTheAirTvsBloc.state)
+        .thenReturn(OnTheAirTvsLoaded(tvs: tTvList));
+    when(() => popularTvsBloc.state).thenReturn(PopularTvsLoaded(tvs: tTvList));
+    when(() => topRatedTvsBloc.state)
+        .thenReturn(TopRatedTvsLoaded(tvs: tTvList));
 
-//     await tester.pumpWidget(_makeTestableWidget(HomeTvPage()));
-//     await tester.tap(drawerButton.first);
-//     await tester.pump();
+    final widgetFinder = find.byType(TvList);
+    await tester.pumpWidget(_makeTestableWidget(
+      const HomeTvPage(),
+    ));
 
-//     expect(find.byType(Drawer), findsOneWidget);
-//   });
-// }
+    expect(
+      onTheAirTvsBloc.state,
+      OnTheAirTvsLoaded(tvs: tTvList),
+    );
+    expect(
+      popularTvsBloc.state,
+      PopularTvsLoaded(tvs: tTvList),
+    );
+    expect(
+      topRatedTvsBloc.state,
+      TopRatedTvsLoaded(tvs: tTvList),
+    );
+    expect(widgetFinder, findsNWidgets(3));
+  });
+
+  testWidgets('hould display unhandled text when state is not found',
+      (WidgetTester tester) async {
+    when(() => onTheAirTvsBloc.state).thenReturn(OnTheAirTvsDummy());
+    when(() => popularTvsBloc.state).thenReturn(PopularTvsDummy());
+    when(() => topRatedTvsBloc.state).thenReturn(TopRatedTvsDummy());
+
+    final widgetFinder = find.byKey(const Key('on-the-air-unhandled'));
+    final widgetFinder2 = find.byKey(const Key('popular-unhandled'));
+    final widgetFinder3 = find.byKey(const Key('top-rated-unhandled'));
+    await tester.pumpWidget(_makeTestableWidget(
+      const HomeTvPage(),
+    ));
+
+    expect(onTheAirTvsBloc.state, OnTheAirTvsDummy());
+    expect(popularTvsBloc.state, PopularTvsDummy());
+    expect(topRatedTvsBloc.state, TopRatedTvsDummy());
+    expect(widgetFinder, findsOneWidget);
+    expect(widgetFinder2, findsOneWidget);
+    expect(widgetFinder3, findsOneWidget);
+  });
+
+  testWidgets('test push search', (WidgetTester tester) async {
+    when(() => onTheAirTvsBloc.state)
+        .thenReturn(OnTheAirTvsLoaded(tvs: tTvList));
+    when(() => popularTvsBloc.state).thenReturn(PopularTvsLoaded(tvs: tTvList));
+    when(() => topRatedTvsBloc.state)
+        .thenReturn(TopRatedTvsLoaded(tvs: tTvList));
+
+    final iconFinder = find.byIcon(Icons.search);
+
+    await tester.pumpWidget(_makeTestableWidget(
+      const HomeTvPage(),
+    ));
+    await tester.tap(iconFinder);
+  });
+
+  testWidgets('test push on-the-air-inkwell', (WidgetTester tester) async {
+    when(() => onTheAirTvsBloc.state)
+        .thenReturn(OnTheAirTvsLoaded(tvs: tTvList));
+    when(() => popularTvsBloc.state).thenReturn(PopularTvsLoaded(tvs: tTvList));
+    when(() => topRatedTvsBloc.state)
+        .thenReturn(TopRatedTvsLoaded(tvs: tTvList));
+
+    final widgetFinder = find.byKey(const Key('On The Air-inkwell'));
+
+    await tester.pumpWidget(_makeTestableWidget(
+      const HomeTvPage(),
+    ));
+    await tester.tap(widgetFinder);
+  });
+
+  testWidgets('test push Popular-inkwell', (WidgetTester tester) async {
+    when(() => onTheAirTvsBloc.state)
+        .thenReturn(OnTheAirTvsLoaded(tvs: tTvList));
+    when(() => popularTvsBloc.state).thenReturn(PopularTvsLoaded(tvs: tTvList));
+    when(() => topRatedTvsBloc.state)
+        .thenReturn(TopRatedTvsLoaded(tvs: tTvList));
+
+    final widgetFinder = find.byKey(const Key('Popular-inkwell'));
+
+    await tester.pumpWidget(_makeTestableWidget(
+      const HomeTvPage(),
+    ));
+    await tester.tap(widgetFinder);
+  });
+
+  testWidgets('test push Top Rated-inkwell', (WidgetTester tester) async {
+    when(() => onTheAirTvsBloc.state)
+        .thenReturn(OnTheAirTvsLoaded(tvs: tTvList));
+    when(() => popularTvsBloc.state).thenReturn(PopularTvsLoaded(tvs: tTvList));
+    when(() => topRatedTvsBloc.state)
+        .thenReturn(TopRatedTvsLoaded(tvs: tTvList));
+
+    final widgetFinder = find.byKey(const Key('Top Rated-inkwell'));
+
+    await tester.pumpWidget(_makeTestableWidget(
+      const HomeTvPage(),
+    ));
+    await tester.tap(widgetFinder);
+  });
+
+  testWidgets('test push detail page', (WidgetTester tester) async {
+    when(() => onTheAirTvsBloc.state)
+        .thenReturn(OnTheAirTvsLoaded(tvs: tTvList));
+    when(() => popularTvsBloc.state).thenReturn(PopularTvsLoaded(tvs: tTvList));
+    when(() => topRatedTvsBloc.state)
+        .thenReturn(TopRatedTvsLoaded(tvs: tTvList));
+
+    final widgetFinder = find.byKey(const Key('on-the-air-0'));
+
+    await tester.pumpWidget(_makeTestableWidget(
+      const HomeTvPage(),
+    ));
+    await tester.tap(widgetFinder);
+  });
+}

@@ -89,54 +89,6 @@ class TvRepositoryImpl implements TvRepository {
     }
   }
 
-  // @override
-  // Future<Either<Failure, List<Tv>>> searchTvs(String query) async {
-  //   try {
-  //     final result = await remoteDataSource.searchTvs(query);
-  //     return Right(result.map((model) => model.toEntity()).toList());
-  //   } on ServerException {
-  //     return Left(ServerFailure(''));
-  //   } on SocketException {
-  //     return Left(ConnectionFailure('Failed to connect to the network'));
-  //   }
-  // }
-
-  // @override
-  // Future<Either<Failure, String>> saveWatchlistTv(TvDetail tv) async {
-  //   try {
-  //     final result =
-  //         await localDataSource.insertWatchlistTv(TvTable.fromEntity(tv));
-  //     return Right(result);
-  //   } on DatabaseException catch (e) {
-  //     return Left(DatabaseFailure(e.message));
-  //   } catch (e) {
-  //     throw e;
-  //   }
-  // }
-
-  // @override
-  // Future<Either<Failure, String>> removeWatchlistTv(TvDetail tv) async {
-  //   try {
-  //     final result =
-  //         await localDataSource.removeWatchlistTv(TvTable.fromEntity(tv));
-  //     return Right(result);
-  //   } on DatabaseException catch (e) {
-  //     return Left(DatabaseFailure(e.message));
-  //   }
-  // }
-
-  // @override
-  // Future<bool> isAddedToWatchlistTv(int id) async {
-  //   final result = await localDataSource.getTvById(id);
-  //   return result != null;
-  // }
-
-  // @override
-  // Future<Either<Failure, List<Tv>>> getWatchlistTvs() async {
-  //   final result = await localDataSource.getWatchlistTvs();
-  //   return Right(result.map((data) => data.toEntity()).toList());
-  // }
-
   @override
   Future<Either<Failure, SeasonEpisode>> getSeasonDetailTv(
       int id, int seasonNum) async {

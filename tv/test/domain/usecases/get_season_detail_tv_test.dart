@@ -15,8 +15,8 @@ void main() {
     usecase = GetSeasonDetailTv(mockTvRepository);
   });
 
-  final tId = 1;
-  final rSeasonNum = 1;
+  const tId = 1;
+  const rSeasonNum = 1;
 
   test('should get season episode from the repository', () async {
     // arrange

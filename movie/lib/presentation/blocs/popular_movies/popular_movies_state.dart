@@ -20,3 +20,5 @@ class PopularMoviesLoaded extends PopularMoviesState {
 
   const PopularMoviesLoaded({required this.movies});
 }
+
+class PopularMoviesDummy extends PopularMoviesState {}

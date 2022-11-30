@@ -80,6 +80,13 @@ void main() {
     voteAverage: 1,
     voteCount: 1,
   );
+  final movieDetailLoadedData = MovieDetailLoadedData(
+      movie: tMovieDetail,
+      movieRecommendations: tMovieList,
+      isRecommendationError: false,
+      isAddedToWatchlist: false,
+      watchlistMessage: '',
+      recommendationError: '');
 
   group('FetchMovieDetail', () {
     blocTest<MovieDetailBloc, MovieDetailState>(
@@ -97,13 +104,7 @@ void main() {
       expect: () => [
         MovieDetailLoading(),
         MovieDetailLoaded(
-          data: MovieDetailLoadedData(
-              movie: tMovieDetail,
-              movieRecommendations: tMovieList,
-              isRecommendationError: false,
-              isAddedToWatchlist: false,
-              watchlistMessage: '',
-              recommendationError: ''),
+          data: movieDetailLoadedData,
         ),
       ],
       verify: (bloc) {
@@ -128,13 +129,11 @@ void main() {
       expect: () => [
         MovieDetailLoading(),
         MovieDetailLoaded(
-          data: MovieDetailLoadedData(
-              movie: tMovieDetail,
-              movieRecommendations: const <Movie>[],
-              isRecommendationError: true,
-              isAddedToWatchlist: false,
-              watchlistMessage: '',
-              recommendationError: 'Server Failure'),
+          data: movieDetailLoadedData.copyWith(
+            movieRecommendations: const <Movie>[],
+            isRecommendationError: true,
+            recommendationError: 'Server Failure',
+          ),
         ),
       ],
       verify: (bloc) {
@@ -173,36 +172,17 @@ void main() {
         return movieDetailBloc;
       },
       act: (bloc) async {
-        bloc.emit(MovieDetailLoaded(
-          data: MovieDetailLoadedData(
-              movie: tMovieDetail,
-              movieRecommendations: tMovieList,
-              isRecommendationError: false,
-              isAddedToWatchlist: false,
-              watchlistMessage: '',
-              recommendationError: ''),
-        ));
+        bloc.emit(MovieDetailLoaded(data: movieDetailLoadedData));
 
         bloc.add(AddWatchlist(movie: tMovieDetail));
       },
       expect: () => [
+        MovieDetailLoaded(data: movieDetailLoadedData),
         MovieDetailLoaded(
-          data: MovieDetailLoadedData(
-              movie: tMovieDetail,
-              movieRecommendations: tMovieList,
-              isRecommendationError: false,
-              isAddedToWatchlist: false,
-              watchlistMessage: '',
-              recommendationError: ''),
-        ),
-        MovieDetailLoaded(
-          data: MovieDetailLoadedData(
-              movie: tMovieDetail,
-              movieRecommendations: tMovieList,
-              isRecommendationError: false,
-              isAddedToWatchlist: true,
-              watchlistMessage: 'success',
-              recommendationError: ''),
+          data: movieDetailLoadedData.copyWith(
+            isAddedToWatchlist: true,
+            watchlistMessage: 'success',
+          ),
         ),
       ],
       verify: (bloc) {
@@ -221,37 +201,16 @@ void main() {
         return movieDetailBloc;
       },
       act: (bloc) async {
-        bloc.emit(MovieDetailLoaded(
-          data: MovieDetailLoadedData(
-              movie: tMovieDetail,
-              movieRecommendations: tMovieList,
-              isRecommendationError: false,
-              isAddedToWatchlist: false,
-              watchlistMessage: '',
-              recommendationError: ''),
-        ));
+        bloc.emit(MovieDetailLoaded(data: movieDetailLoadedData));
 
         bloc.add(AddWatchlist(movie: tMovieDetail));
       },
       expect: () => [
+        MovieDetailLoaded(data: movieDetailLoadedData),
         MovieDetailLoaded(
-          data: MovieDetailLoadedData(
-              movie: tMovieDetail,
-              movieRecommendations: tMovieList,
-              isRecommendationError: false,
-              isAddedToWatchlist: false,
-              watchlistMessage: '',
-              recommendationError: ''),
-        ),
-        MovieDetailLoaded(
-          data: MovieDetailLoadedData(
-              movie: tMovieDetail,
-              movieRecommendations: tMovieList,
-              isRecommendationError: false,
-              isAddedToWatchlist: false,
-              watchlistMessage: 'error',
-              recommendationError: ''),
-        ),
+            data: movieDetailLoadedData.copyWith(
+          watchlistMessage: 'error',
+        )),
       ],
       verify: (bloc) {
         verify(mockGetWatchListStatusMovie.execute(tId));
@@ -267,41 +226,28 @@ void main() {
         when(mockRemoveWatchlistMovie.execute(tMovieDetail))
             .thenAnswer((_) async => const Right('success'));
         when(mockGetWatchListStatusMovie.execute(tId))
-            .thenAnswer((_) async => true);
+            .thenAnswer((_) async => false);
         return movieDetailBloc;
       },
       act: (bloc) async {
         bloc.emit(MovieDetailLoaded(
-          data: MovieDetailLoadedData(
-              movie: tMovieDetail,
-              movieRecommendations: tMovieList,
-              isRecommendationError: false,
-              isAddedToWatchlist: false,
-              watchlistMessage: '',
-              recommendationError: ''),
+          data: movieDetailLoadedData.copyWith(
+            isAddedToWatchlist: true,
+          ),
         ));
 
         bloc.add(RemoveFromWatchlist(movie: tMovieDetail));
       },
       expect: () => [
         MovieDetailLoaded(
-          data: MovieDetailLoadedData(
-              movie: tMovieDetail,
-              movieRecommendations: tMovieList,
-              isRecommendationError: false,
-              isAddedToWatchlist: false,
-              watchlistMessage: '',
-              recommendationError: ''),
+          data: movieDetailLoadedData.copyWith(
+            isAddedToWatchlist: true,
+          ),
         ),
         MovieDetailLoaded(
-          data: MovieDetailLoadedData(
-              movie: tMovieDetail,
-              movieRecommendations: tMovieList,
-              isRecommendationError: false,
-              isAddedToWatchlist: true,
-              watchlistMessage: 'success',
-              recommendationError: ''),
-        ),
+            data: movieDetailLoadedData.copyWith(
+          watchlistMessage: 'success',
+        )),
       ],
       verify: (bloc) {
         verify(mockGetWatchListStatusMovie.execute(tId));
@@ -315,40 +261,29 @@ void main() {
         when(mockRemoveWatchlistMovie.execute(tMovieDetail))
             .thenAnswer((_) async => Left(DatabaseFailure('error')));
         when(mockGetWatchListStatusMovie.execute(tId))
-            .thenAnswer((_) async => false);
+            .thenAnswer((_) async => true);
         return movieDetailBloc;
       },
       act: (bloc) async {
         bloc.emit(MovieDetailLoaded(
-          data: MovieDetailLoadedData(
-              movie: tMovieDetail,
-              movieRecommendations: tMovieList,
-              isRecommendationError: false,
-              isAddedToWatchlist: false,
-              watchlistMessage: '',
-              recommendationError: ''),
+          data: movieDetailLoadedData.copyWith(
+            isAddedToWatchlist: true,
+          ),
         ));
 
         bloc.add(RemoveFromWatchlist(movie: tMovieDetail));
       },
       expect: () => [
         MovieDetailLoaded(
-          data: MovieDetailLoadedData(
-              movie: tMovieDetail,
-              movieRecommendations: tMovieList,
-              isRecommendationError: false,
-              isAddedToWatchlist: false,
-              watchlistMessage: '',
-              recommendationError: ''),
+          data: movieDetailLoadedData.copyWith(
+            isAddedToWatchlist: true,
+          ),
         ),
         MovieDetailLoaded(
-          data: MovieDetailLoadedData(
-              movie: tMovieDetail,
-              movieRecommendations: tMovieList,
-              isRecommendationError: false,
-              isAddedToWatchlist: false,
-              watchlistMessage: 'error',
-              recommendationError: ''),
+          data: movieDetailLoadedData.copyWith(
+            isAddedToWatchlist: true,
+            watchlistMessage: 'error',
+          ),
         ),
       ],
       verify: (bloc) {
@@ -357,39 +292,4 @@ void main() {
       },
     );
   });
-
-  // blocTest<MovieDetailBloc, MovieDetailState>(
-  //   'Should emit [Loading, Loaded] when data is gotten successfully',
-  //   build: () {
-  //     when(mockGetMovieDetail.execute())
-  //         .thenAnswer((_) async => Right(tMovieList));
-  //     return movieDetailBloc;
-  //   },
-  //   act: (bloc) => bloc.add(FetchNowPlayingMovies()),
-  //   expect: () => [
-  //     MovieDetailLoading(),
-  //     MovieDetailLoaded(movies: tMovieList),
-  //   ],
-  //   verify: (bloc) {
-  //     verify(mockGetMovieDetail.execute());
-  //   },
-  // );
-
-  // blocTest<MovieDetailBloc, MovieDetailState>(
-  //   'Should emit [Loading, Error] when get get is unsuccessful',
-  //   build: () {
-  //     when(mockGetMovieDetail.execute())
-  //         .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
-  //     return movieDetailBloc;
-  //   },
-  //   act: (bloc) => bloc.add(FetchNowPlayingMovies()),
-  //   wait: const Duration(milliseconds: 500),
-  //   expect: () => [
-  //     MovieDetailLoading(),
-  //     const MovieDetailError(error: 'Server Failure'),
-  //   ],
-  //   verify: (bloc) {
-  //     verify(mockGetMovieDetail.execute());
-  //   },
-  // );
 }

@@ -20,3 +20,5 @@ class TopRatedMoviesLoaded extends TopRatedMoviesState {
 
   const TopRatedMoviesLoaded({required this.movies});
 }
+
+class TopRatedMoviesDummy extends TopRatedMoviesState {}

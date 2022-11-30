@@ -69,3 +69,5 @@ class MovieDetailLoaded extends MovieDetailState {
   @override
   List<Object> get props => [data];
 }
+
+class MovieDetailDummy extends MovieDetailState {}

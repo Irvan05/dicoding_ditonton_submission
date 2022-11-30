@@ -74,31 +74,6 @@ final testTvDetail = TvDetail(
   voteCount: 14342,
 );
 
-// final testEpisode = Episode(
-//   airDate: DateTime(2016, 7, 15),
-//   episodeNumber: 1,
-//   id: 1198665,
-//   name: "Chapter One: The Vanishing of Will Byers",
-//   overview: "overview",
-//   productionCode: "tt6020684",
-//   runtime: 49,
-//   seasonNumber: 1,
-//   showId: 66732,
-//   stillPath: "/AdwF2jXvhdODr6gUZ61bHKRkz09.jpg",
-//   voteAverage: 8.47,
-//   voteCount: 919,
-// );
-// final testSeasonEpisode = SeasonEpisode(
-//   airDate: DateTime(2016, 7, 15),
-//   episodes: [testEpisode],
-//   name: "Season 1",
-//   overview: "overview",
-//   id: "57599ae2c3a3684ea900242d",
-//   posterPath: "/rbnuP7hlynAMLdqcQRCpZW9qDkV.jpg",
-//   seasonNumber: 1,
-//   seasonDetailId: 77680,
-// );
-
 final testWatchlistMovie = Movie.watchlist(
   id: 1,
   title: 'title',
@@ -112,13 +87,13 @@ final testWatchlistTv = Tv.watchlist(
   overview: 'overview',
 );
 
-final testMovieTable = MovieTable(
+const testMovieTable = MovieTable(
   id: 1,
   title: 'title',
   posterPath: 'posterPath',
   overview: 'overview',
 );
-final testTvTable = TvTable(
+const testTvTable = TvTable(
   id: 66732,
   name: 'Stranger Things',
   posterPath: '/49WJfeN0moxb9IPfGn8AIqMGskD.jpg',

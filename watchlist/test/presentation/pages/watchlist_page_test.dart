@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:bloc_test/bloc_test.dart';
 import 'package:core/commons/utils/state_enum.dart';
 import 'package:flutter/material.dart';
@@ -149,19 +151,6 @@ void main() {
     expect(movieSearchBloc.state, MovieDummyFail());
     expect(widgetFinder, findsOneWidget);
   });
-
-  // testWidgets('[movie] should trigger event when textfield is changed',
-  //     (WidgetTester tester) async {
-  //   when(() => movieSearchBloc.state).thenReturn(WatchlistMovieLoading());
-
-  //   final inputFinder = find.byType(TextField).first;
-  //   await tester.pumpWidget(_makeTestableWidget(
-  //     const WatchlistPage(),
-  //   ));
-  //   await tester.enterText(inputFinder, tQuery);
-  //   await tester.pump(const Duration(seconds: 1));
-
-  //   expect(movieSearchBloc.state, WatchlistMovieLoading());
 
   testWidgets('[tv] should display loading when bloc states are loading',
       (WidgetTester tester) async {

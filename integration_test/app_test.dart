@@ -13,9 +13,9 @@ void main() {
     else
       app.main();
 
-    await tester.pumpAndSettle();
+    await tester.pumpAndSettle(Duration(seconds: 5));
     final movieListFinder = find.byType(MovieList, skipOffstage: false);
-    expect(movieListFinder, findsNWidgets(3));
+    expect(movieListFinder, findsAtLeastNWidgets(1));
 
     final scrollFinder = find.byType(Scrollable);
     final popularPageButton = find.byKey(Key('Popular-inkwell'));
@@ -50,7 +50,7 @@ void main() {
 
     await tester.pumpAndSettle();
     final movieListFinder = find.byType(MovieList, skipOffstage: false);
-    expect(movieListFinder, findsNWidgets(3));
+    expect(movieListFinder, findsAtLeastNWidgets(1));
 
     final topRatedPageButton = find.byKey(Key('Top Rated-inkwell'));
     final scrollFinder = find.byType(Scrollable);
@@ -85,7 +85,7 @@ void main() {
 
     await tester.pumpAndSettle();
     final movieListFinder = find.byType(MovieList, skipOffstage: false);
-    expect(movieListFinder, findsNWidgets(3));
+    expect(movieListFinder, findsAtLeastNWidgets(1));
 
     final searchIcon = find.byIcon(Icons.search);
     expect(searchIcon, findsOneWidget);
@@ -124,7 +124,7 @@ void main() {
 
     await tester.pumpAndSettle();
     final movieListFinder = find.byType(MovieList, skipOffstage: false);
-    expect(movieListFinder, findsNWidgets(3));
+    expect(movieListFinder, findsAtLeastNWidgets(1));
 
     // open movie detail
     await tester.tap(find.byType(InkWell).first);

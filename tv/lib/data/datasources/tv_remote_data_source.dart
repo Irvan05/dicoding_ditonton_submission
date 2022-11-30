@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:convert';
 
 import 'package:core/core.dart';
@@ -13,7 +15,6 @@ abstract class TvRemoteDataSource {
   Future<List<TvModel>> getTopRatedTvs();
   Future<TvDetailResponse> getTvDetail(int id);
   Future<List<TvModel>> getTvRecommendations(int id);
-  // Future<List<TvModel>> searchTvs(String query);
   Future<SeasonEpisodeResponse> getSeasonDetail(int id, int seasonNum);
 }
 
@@ -83,18 +84,6 @@ class TvRemoteDataSourceImpl implements TvRemoteDataSource {
       throw ServerException();
     }
   }
-
-  // @override
-  // Future<List<TvModel>> searchTvs(String query) async {
-  //   final response = await client
-  //       .get(Uri.parse('$BASE_URL/search/tv?$API_KEY&query=$query'));
-
-  //   if (response.statusCode == 200) {
-  //     return TvResponse.fromJson(json.decode(response.body)).tvList;
-  //   } else {
-  //     throw ServerException();
-  //   }
-  // }
 
   @override
   Future<SeasonEpisodeResponse> getSeasonDetail(int id, int seasonNum) async {

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_if_null_operators, prefer_null_aware_operators
+
 import 'package:tv/domain/entities/season_episode.dart';
 import 'package:equatable/equatable.dart';
 

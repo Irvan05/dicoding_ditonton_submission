@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/presentation/blocs/top_rated_movies/top_rated_movies_bloc.dart';
@@ -47,6 +49,7 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
               );
             } else {
               return Center(
+                key: const Key('unhandled_message'),
                 child: Text('Unhandled state ${state.toString()}'),
               );
             }

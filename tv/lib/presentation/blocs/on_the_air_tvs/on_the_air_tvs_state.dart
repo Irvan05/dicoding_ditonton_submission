@@ -20,3 +20,5 @@ class OnTheAirTvsLoaded extends OnTheAirTvsState {
 
   const OnTheAirTvsLoaded({required this.tvs});
 }
+
+class OnTheAirTvsDummy extends OnTheAirTvsState {}

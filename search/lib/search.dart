@@ -15,9 +15,6 @@ export 'domain/usecases/search_tvs.dart';
 //presentation
 //pages
 export 'presentation/pages/search_page.dart';
-//provider
-// export 'presentation/provider/movie_search_notifier.dart';
-// export 'presentation/provider/tv_search_notifier.dart';
 //bloc
 export 'presentation/blocs/movie_search_bloc.dart';
 export 'presentation/blocs/tv_search_bloc.dart';

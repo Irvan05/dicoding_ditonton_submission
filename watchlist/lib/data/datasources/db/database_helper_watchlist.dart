@@ -47,25 +47,6 @@ class DatabaseHelperWatchlist {
       );''');
   }
 
-  // void _onCreate(Database db, int version) async {
-  //   await db.execute('''
-  //     CREATE TABLE  $_tblWatchlistMovie (
-  //       id INTEGER PRIMARY KEY,
-  //       title TEXT,
-  //       overview TEXT,
-  //       posterPath TEXT
-  //     );
-  //   ''');
-  //   await db.execute('''
-  //     CREATE TABLE  $_tblWatchlistTv (
-  //       id INTEGER PRIMARY KEY,
-  //       name TEXT,
-  //       overview TEXT,
-  //       posterPath TEXT
-  //     );
-  //   ''');
-  // }
-
   Future<int> insertWatchlistMovie(MovieTable movie) async {
     final db = await database;
     return await db!.insert(_tblWatchlistMovie, movie.toJson());

@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names, library_private_types_in_public_api
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,18 +66,19 @@ class _HomeTvPageState extends State<HomeTvPage> {
               BlocBuilder<OnTheAirTvsBloc, OnTheAirTvsState>(
                   builder: (context, state) {
                 if (state is OnTheAirTvsLoaded) {
-                  return TvList(state.tvs);
+                  return TvList(state.tvs, 'on-the-air');
                 } else if (state is OnTheAirTvsLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else if (state is OnTheAirTvsError) {
                   return Center(
-                    key: const Key('on the air error'),
+                    key: const Key('on-the-air-error'),
                     child: Text(state.error),
                   );
                 } else {
                   return Center(
+                    key: const Key('on-the-air-unhandled'),
                     child: Text('Unhandled state ${state.toString()}'),
                   );
                 }
@@ -88,18 +91,19 @@ class _HomeTvPageState extends State<HomeTvPage> {
               BlocBuilder<PopularTvsBloc, PopularTvsState>(
                   builder: (context, state) {
                 if (state is PopularTvsLoaded) {
-                  return TvList(state.tvs);
+                  return TvList(state.tvs, 'popular');
                 } else if (state is PopularTvsLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else if (state is PopularTvsError) {
                   return Center(
-                    key: const Key('popular error'),
+                    key: const Key('popular-error'),
                     child: Text(state.error),
                   );
                 } else {
                   return Center(
+                    key: const Key('popular-unhandled'),
                     child: Text('Unhandled state ${state.toString()}'),
                   );
                 }
@@ -112,18 +116,19 @@ class _HomeTvPageState extends State<HomeTvPage> {
               BlocBuilder<TopRatedTvsBloc, TopRatedTvsState>(
                   builder: (context, state) {
                 if (state is TopRatedTvsLoaded) {
-                  return TvList(state.tvs);
+                  return TvList(state.tvs, 'top-rated');
                 } else if (state is TopRatedTvsLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else if (state is TopRatedTvsError) {
                   return Center(
-                    key: const Key('top rated error'),
+                    key: const Key('top-rated-error'),
                     child: Text(state.error),
                   );
                 } else {
                   return Center(
+                    key: const Key('top-rated-unhandled'),
                     child: Text('Unhandled state ${state.toString()}'),
                   );
                 }
@@ -144,6 +149,7 @@ class _HomeTvPageState extends State<HomeTvPage> {
           style: kHeading6,
         ),
         InkWell(
+          key: Key('$title-inkwell'),
           onTap: onTap,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -159,8 +165,9 @@ class _HomeTvPageState extends State<HomeTvPage> {
 
 class TvList extends StatelessWidget {
   final List<Tv> tvs;
+  final String keyTemplate;
 
-  const TvList(this.tvs, {super.key});
+  const TvList(this.tvs, this.keyTemplate, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -173,6 +180,7 @@ class TvList extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(8),
             child: InkWell(
+              key: Key('$keyTemplate-$index'),
               onTap: () {
                 Navigator.pushNamed(
                   context,

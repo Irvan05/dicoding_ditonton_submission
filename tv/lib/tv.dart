@@ -30,11 +30,6 @@ export 'domain/usecases/get_season_detail_tv.dart';
 export 'domain/usecases/get_top_rated_tvs.dart';
 export 'domain/usecases/get_tv_detail.dart';
 export 'domain/usecases/get_tv_recommendations.dart';
-// export 'domain/usecases/get_watchlist_status_tv.dart';
-// export 'domain/usecases/get_watchlist_tvs.dart';
-// export 'domain/usecases/remove_watchlist_tv.dart';
-// export 'domain/usecases/save_watchlist_tv.dart';
-
 //presentation
 //pages
 export 'presentation/pages/home_tv_page.dart';
@@ -42,13 +37,6 @@ export 'presentation/pages/on_the_air_tvs_page.dart';
 export 'presentation/pages/popular_tv_page.dart';
 export 'presentation/pages/top_rated_tvs_page.dart';
 export 'presentation/pages/tv_detail_page.dart';
-//provider
-// export 'presentation/provider/on_the_air_tvs_notifier.dart';
-// export 'presentation/provider/popular_tvs_notifier.dart';
-// export 'presentation/provider/top_rated_tvs_notifier.dart';
-// export 'presentation/provider/tv_detail_notifier.dart';
-// export 'presentation/provider/tv_list_notifier.dart';
-// export 'presentation/provider/watchlist_tv_notifier.dart';
 //bloc
 export 'presentation/blocs/on_the_air_tvs/on_the_air_tvs_bloc.dart';
 export 'presentation/blocs/popular_tvs/popular_tvs_bloc.dart';

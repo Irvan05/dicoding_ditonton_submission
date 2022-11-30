@@ -20,17 +20,17 @@ class TvDetailBloc extends Bloc<TvDetailEvent, TvDetailState> {
 
   final GetTvDetail getTvDetail;
   final GetTvRecommendations getTvRecommendations;
-  final GetWatchListStatusTv getWatchListStatus;
-  final SaveWatchlistTv saveWatchlist;
-  final RemoveWatchlistTv removeWatchlist;
+  final GetWatchListStatusTv getWatchListStatusTv;
+  final SaveWatchlistTv saveWatchlistTv;
+  final RemoveWatchlistTv removeWatchlistTv;
   final GetSeasonDetailTv getSeasonDetailTv;
 
   TvDetailBloc({
     required this.getTvDetail,
     required this.getTvRecommendations,
-    required this.getWatchListStatus,
-    required this.saveWatchlist,
-    required this.removeWatchlist,
+    required this.getWatchListStatusTv,
+    required this.saveWatchlistTv,
+    required this.removeWatchlistTv,
     required this.getSeasonDetailTv,
   }) : super(TvDetailLoading()) {
     on<FetchTvDetail>(fetchTvDetail);
@@ -48,50 +48,54 @@ class TvDetailBloc extends Bloc<TvDetailEvent, TvDetailState> {
     emit(TvDetailLoading());
 
     final detailResult = await getTvDetail.execute(id);
-    final recommendationResult = await getTvRecommendations.execute(id);
 
-    late final TvDetail _tv;
-    late final List<Tv> _tvs;
-    late final bool _isRecommendationError;
-    String _recommendationError = '';
+    TvDetail? _tv;
+    String errorMessage = '';
 
     detailResult.fold(
       (failure) {
-        emit(TvDetailError(
-          error: failure.message,
-        ));
-        return;
+        errorMessage = failure.message;
       },
       (tv) {
         _tv = tv;
-        recommendationResult.fold(
-          (failure) {
-            _isRecommendationError = true;
-            _recommendationError = failure.message;
-          },
-          (tvs) {
-            _isRecommendationError = false;
-            _tvs = tvs;
-          },
-        );
       },
     );
 
-    final watchlistStatus = await loadWatchlistStatus(_tv.id);
-    emit(TvDetailLoaded(
-      data: TvDetailLoadedData(
-        tv: _tv,
-        tvRecommendations: _tvs,
-        isRecommendationError: _isRecommendationError,
-        recommendationError: _recommendationError,
-        seasonEpisodeState: RequestState.Empty,
-        seasonEpisode: null,
-        isSeasonEpisodeError: false,
-        seasonEpisodeError: '',
-        isAddedToWatchlist: watchlistStatus,
-        watchlistMessage: '',
-      ),
-    ));
+    if (_tv == null) {
+      emit(TvDetailError(
+        error: errorMessage,
+      ));
+    } else {
+      List<Tv>? _tvs;
+      late final bool _isRecommendationError;
+      String _recommendationError = '';
+      final recommendationResult = await getTvRecommendations.execute(id);
+      recommendationResult.fold(
+        (failure) {
+          _isRecommendationError = true;
+          _recommendationError = failure.message;
+        },
+        (tvs) {
+          _isRecommendationError = false;
+          _tvs = tvs;
+        },
+      );
+
+      final watchlistStatus = await getWatchListStatusTv.execute(_tv!.id);
+      emit(TvDetailLoaded(
+        data: TvDetailLoadedData(
+          tv: _tv!,
+          tvRecommendations: _tvs ?? <Tv>[],
+          isRecommendationError: _isRecommendationError,
+          recommendationError: _recommendationError,
+          seasonEpisodeState: RequestState.Empty,
+          seasonEpisode: null,
+          seasonEpisodeError: '',
+          isAddedToWatchlist: watchlistStatus,
+          watchlistMessage: '',
+        ),
+      ));
+    }
   }
 
   void fetchSeasonEpisodeTv(
@@ -136,7 +140,7 @@ class TvDetailBloc extends Bloc<TvDetailEvent, TvDetailState> {
   ) async {
     final currentState = state;
     if (currentState is TvDetailLoaded) {
-      final result = await saveWatchlist.execute(event.tv);
+      final result = await saveWatchlistTv.execute(event.tv);
       late final String watchlistMessage;
       result.fold(
         (failure) {
@@ -165,7 +169,7 @@ class TvDetailBloc extends Bloc<TvDetailEvent, TvDetailState> {
   ) async {
     final currentState = state;
     if (currentState is TvDetailLoaded) {
-      final result = await removeWatchlist.execute(event.tv);
+      final result = await removeWatchlistTv.execute(event.tv);
       late final String watchlistMessage;
       result.fold(
         (failure) {
@@ -189,6 +193,6 @@ class TvDetailBloc extends Bloc<TvDetailEvent, TvDetailState> {
   }
 
   Future<bool> loadWatchlistStatus(int id) async {
-    return await getWatchListStatus.execute(id);
+    return await getWatchListStatusTv.execute(id);
   }
 }

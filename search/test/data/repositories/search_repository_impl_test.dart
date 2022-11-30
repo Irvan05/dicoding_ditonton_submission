@@ -13,18 +13,12 @@ import '../../helpers/test_helper.mocks.dart';
 void main() {
   late SearchRepositoryImpl repository;
   late MockSearchRemoteDataSource mockRemoteDataSource;
-  // late MockHttpClient mockHttpClient;
-
-  // late SearchRemoteDataSourceImpl dataSource;
 
   setUp(() {
     mockRemoteDataSource = MockSearchRemoteDataSource();
     repository = SearchRepositoryImpl(
       remoteDataSource: mockRemoteDataSource,
     );
-
-    // mockHttpClient = MockHttpClient();
-    // dataSource = SearchRemoteDataSourceImpl(client: mockHttpClient);
   });
 
   final tMovieModel = MovieModel(

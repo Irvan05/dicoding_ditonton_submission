@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names, use_key_in_widget_constructors, library_private_types_in_public_api, avoid_unnecessary_containers
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,15 +68,17 @@ class _TvDetailPageState extends State<TvDetailPage> {
               child: CircularProgressIndicator(),
             );
           } else if (state is TvDetailError) {
-            return Expanded(
-              child: Center(
-                child: Text(
-                  state.error,
-                ),
+            return Center(
+              key: const Key('detail-error'),
+              child: Text(
+                state.error,
               ),
             );
           } else {
-            return Text('Unhandled State ${state.toString()}');
+            return Center(
+              key: const Key('unhandler-error'),
+              child: Text('Unhandled State ${state.toString()}'),
+            );
           }
         },
       ),
@@ -244,10 +248,9 @@ class DetailContent extends StatelessWidget {
 
 class SeasonList extends StatelessWidget {
   const SeasonList({
-    Key? key,
     required this.id,
     required this.seasons,
-  }) : super(key: key);
+  });
 
   final int id;
   final List<Season> seasons;
@@ -258,6 +261,7 @@ class SeasonList extends StatelessWidget {
       height: 208,
       child: Card(
           child: ListView.builder(
+        key: const Key('ListView-SeasonList'),
         scrollDirection: Axis.horizontal,
         itemCount: seasons.length,
         itemBuilder: (context, index) {
@@ -265,6 +269,7 @@ class SeasonList extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.all(4.0),
             child: InkWell(
+              key: Key('FetchSeasonEpisodeTv-inkwel-$index'),
               onTap: () {
                 Future.microtask(() {
                   context.read<TvDetailBloc>().add(FetchSeasonEpisodeTv(
@@ -310,9 +315,7 @@ class SeasonList extends StatelessWidget {
 }
 
 class TvSeasonBottomSheet extends StatelessWidget {
-  const TvSeasonBottomSheet({
-    Key? key,
-  }) : super(key: key);
+  const TvSeasonBottomSheet();
 
   @override
   Widget build(BuildContext context) {
@@ -343,19 +346,19 @@ class TvSeasonBottomSheet extends StatelessWidget {
                           RequestState.Error) {
                         return Text(
                           state.data.seasonEpisodeError,
-                          key: const Key('season sheet error'),
+                          key: const Key('season-sheet-error'),
                         );
                       } else {
                         return Center(
+                          key: const Key('season-sheet-unhandled'),
                           child: Text(
                               'Unhandled state ${state.data.seasonEpisodeState.toString()}'),
                         );
                       }
-                    } else {
-                      return Center(
-                        child: Text('Unhandled state ${state.toString()}'),
-                      );
                     }
+                    return Center(
+                      child: Text('Unhandled state ${state.toString()}'),
+                    );
                   }),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -416,6 +419,7 @@ class _SeasonEpisodeBodyState extends State<SeasonEpisodeBody> {
                       widget.seasonEpisode.overview != '' &&
                       widget.seasonEpisode.overview!.isNotEmpty
                   ? InkWell(
+                      key: const Key('inkwell-expand'),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
@@ -445,6 +449,7 @@ class _SeasonEpisodeBodyState extends State<SeasonEpisodeBody> {
                   : widget.seasonEpisode.episodes!.length,
               itemBuilder: (context, index) {
                 return ListTile(
+                  key: Key('SeasonEpisode-ListTile-$index'),
                   title: Container(
                     child: ClipRRect(
                       borderRadius: const BorderRadius.all(
@@ -497,6 +502,7 @@ class TvRecommendations extends StatelessWidget {
         if (state is TvDetailLoaded) {
           if (state.data.isRecommendationError) {
             return Center(
+              key: const Key('recommendation-error-text'),
               child: Text(
                 state.data.recommendationError,
               ),
@@ -511,6 +517,7 @@ class TvRecommendations extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: InkWell(
+                      key: Key('recommendation-inkwell-$index'),
                       onTap: () {
                         Navigator.pushReplacementNamed(
                           context,
@@ -539,13 +546,8 @@ class TvRecommendations extends StatelessWidget {
               ),
             );
           }
-        } else if (state is TvDetailLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else {
-          return Text('Unhandled State ${state.toString()}');
         }
+        return Text('Unhandled State ${state.toString()}');
       },
     );
   }

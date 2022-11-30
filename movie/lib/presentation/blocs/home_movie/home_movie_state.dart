@@ -20,3 +20,5 @@ class HomeMovieLoaded extends HomeMovieState {
 
   const HomeMovieLoaded({required this.movies});
 }
+
+class HomeMovieDummy extends HomeMovieState {}

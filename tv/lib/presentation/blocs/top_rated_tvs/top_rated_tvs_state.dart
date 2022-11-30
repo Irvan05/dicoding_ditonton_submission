@@ -20,3 +20,5 @@ class TopRatedTvsLoaded extends TopRatedTvsState {
 
   const TopRatedTvsLoaded({required this.tvs});
 }
+
+class TopRatedTvsDummy extends TopRatedTvsState {}

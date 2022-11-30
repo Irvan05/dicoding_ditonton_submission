@@ -12,7 +12,6 @@ abstract class MovieRemoteDataSource {
   Future<List<MovieModel>> getTopRatedMovies();
   Future<MovieDetailResponse> getMovieDetail(int id);
   Future<List<MovieModel>> getMovieRecommendations(int id);
-  // Future<List<MovieModel>> searchMovies(String query);
 }
 
 class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
@@ -82,16 +81,4 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
       throw ServerException();
     }
   }
-
-  // @override
-  // Future<List<MovieModel>> searchMovies(String query) async {
-  //   final response = await client
-  //       .get(Uri.parse('$BASE_URL/search/movie?$API_KEY&query=$query'));
-
-  //   if (response.statusCode == 200) {
-  //     return MovieResponse.fromJson(json.decode(response.body)).movieList;
-  //   } else {
-  //     throw ServerException();
-  //   }
-  // }
 }

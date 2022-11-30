@@ -1,11 +1,7 @@
-// To parse this JSON data, do
-//
-//     final seasonDetail = seasonDetailFromJson(jsonString);
-
 import 'package:equatable/equatable.dart';
 
 class SeasonEpisode extends Equatable {
-  SeasonEpisode({
+  const SeasonEpisode({
     required this.id,
     required this.airDate,
     required this.episodes,
@@ -39,7 +35,7 @@ class SeasonEpisode extends Equatable {
 }
 
 class Episode extends Equatable {
-  Episode({
+  const Episode({
     required this.airDate,
     required this.episodeNumber,
     required this.id,

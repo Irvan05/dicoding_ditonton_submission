@@ -1,66 +1,140 @@
-// import 'package:core/utils/state_enum.dart';
-// import 'package:ditonton/domain/entities/movie.dart';
-// import 'package:ditonton/presentation/pages/popular_movies_page.dart';
-// import 'package:ditonton/presentation/provider/popular_movies_notifier.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:mockito/annotations.dart';
-// import 'package:mockito/mockito.dart';
-// import 'package:provider/provider.dart';
+import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:movie/domain/entities/movie.dart';
+import 'package:movie/presentation/blocs/popular_movies/popular_movies_bloc.dart';
+import 'package:movie/presentation/pages/popular_movies_page.dart';
+import 'package:movie/presentation/widgets/movie_card_list.dart';
 
-// import 'popular_movies_page_test.mocks.dart';
+class MockPopularMoviesBloc
+    extends MockBloc<PopularMoviesEvent, PopularMoviesState>
+    implements PopularMoviesBloc {}
 
-// @GenerateMocks([PopularMoviesNotifier])
-// void main() {
-//   late MockPopularMoviesNotifier mockNotifier;
+// ignore: use_key_in_widget_constructors
+class TestPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: const Center(child: Text('Another page')),
+    );
+  }
+}
 
-//   setUp(() {
-//     mockNotifier = MockPopularMoviesNotifier();
-//   });
+void main() {
+  late PopularMoviesBloc popularMoviesBloc;
 
-//   Widget _makeTestableWidget(Widget body) {
-//     return ChangeNotifierProvider<PopularMoviesNotifier>.value(
-//       value: mockNotifier,
-//       child: MaterialApp(
-//         home: body,
-//       ),
-//     );
-//   }
+  setUp(() {
+    popularMoviesBloc = MockPopularMoviesBloc();
+  });
 
-//   testWidgets('Page should display center progress bar when loading',
-//       (WidgetTester tester) async {
-//     when(mockNotifier.state).thenReturn(RequestState.Loading);
+  // ignore: no_leading_underscores_for_local_identifiers
+  Widget _makeTestableWidget(Widget body) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => popularMoviesBloc,
+        ),
+      ],
+      child: MaterialApp(
+        onGenerateRoute: (RouteSettings settings) {
+          switch (settings.name) {
+            default:
+              print(settings.arguments.toString());
+              return MaterialPageRoute(builder: (_) => TestPage());
+          }
+        },
+        home: body,
+      ),
+    );
+  }
 
-//     final progressBarFinder = find.byType(CircularProgressIndicator);
-//     final centerFinder = find.byType(Center);
+  final tMovie = Movie(
+    adult: false,
+    backdropPath: '/muth4OYamXf41G2evdrLEg8d3om.jpg',
+    genreIds: const [14, 28],
+    id: 557,
+    originalTitle: 'Spider-Man',
+    overview:
+        'After being bitten by a genetically altered spider, nerdy high school student Peter Parker is endowed with amazing powers to become the Amazing superhero known as Spider-Man.',
+    popularity: 60.441,
+    posterPath: '/rweIrveL43TaxUN0akQEaAXL6x0.jpg',
+    releaseDate: '2002-05-01',
+    title: 'Spider-Man',
+    video: false,
+    voteAverage: 7.2,
+    voteCount: 13507,
+  );
+  final tMovieList = [tMovie];
 
-//     await tester.pumpWidget(_makeTestableWidget(PopularMoviesPage()));
+  testWidgets('should display loading when state are loading',
+      (WidgetTester tester) async {
+    when(() => popularMoviesBloc.state).thenReturn(PopularMoviesLoading());
 
-//     expect(centerFinder, findsOneWidget);
-//     expect(progressBarFinder, findsOneWidget);
-//   });
+    final progressBarFinder =
+        find.byType(CircularProgressIndicator, skipOffstage: false);
 
-//   testWidgets('Page should display ListView when data is loaded',
-//       (WidgetTester tester) async {
-//     when(mockNotifier.state).thenReturn(RequestState.Loaded);
-//     when(mockNotifier.movies).thenReturn(<Movie>[]);
+    await tester.pumpWidget(_makeTestableWidget(
+      PopularMoviesPage(),
+    ));
 
-//     final listViewFinder = find.byType(ListView);
+    expect(popularMoviesBloc.state, PopularMoviesLoading());
+    expect(progressBarFinder, findsOneWidget);
+  });
 
-//     await tester.pumpWidget(_makeTestableWidget(PopularMoviesPage()));
+  testWidgets('should display error when state are error',
+      (WidgetTester tester) async {
+    when(() => popularMoviesBloc.state)
+        .thenReturn(const PopularMoviesError(error: 'error'));
 
-//     expect(listViewFinder, findsOneWidget);
-//   });
+    final widgetFinder = find.byKey(const Key('error_message'));
+    await tester.pumpWidget(_makeTestableWidget(
+      PopularMoviesPage(),
+    ));
 
-//   testWidgets('Page should display text with message when Error',
-//       (WidgetTester tester) async {
-//     when(mockNotifier.state).thenReturn(RequestState.Error);
-//     when(mockNotifier.message).thenReturn('Error message');
+    expect(popularMoviesBloc.state, const PopularMoviesError(error: 'error'));
+    expect(widgetFinder, findsOneWidget);
+  });
 
-//     final textFinder = find.byKey(Key('error_message'));
+  testWidgets('should display loaded when state are loaded',
+      (WidgetTester tester) async {
+    when(() => popularMoviesBloc.state)
+        .thenReturn(PopularMoviesLoaded(movies: tMovieList));
 
-//     await tester.pumpWidget(_makeTestableWidget(PopularMoviesPage()));
+    final widgetFinder = find.byType(MovieCard);
+    await tester.pumpWidget(_makeTestableWidget(
+      PopularMoviesPage(),
+    ));
 
-//     expect(textFinder, findsOneWidget);
-//   });
-// }
+    verify(() => popularMoviesBloc.add(FetchPopularMovies())).called(1);
+    expect(popularMoviesBloc.state, PopularMoviesLoaded(movies: tMovieList));
+    expect(widgetFinder, findsOneWidget);
+  });
+
+  testWidgets('should display unhandled text when state is not found',
+      (WidgetTester tester) async {
+    when(() => popularMoviesBloc.state).thenReturn(PopularMoviesDummy());
+
+    final widgetFinder = find.byKey(const Key('unhandled_message'));
+    await tester.pumpWidget(_makeTestableWidget(
+      PopularMoviesPage(),
+    ));
+
+    expect(popularMoviesBloc.state, PopularMoviesDummy());
+    expect(widgetFinder, findsOneWidget);
+  });
+
+  testWidgets('test push search', (WidgetTester tester) async {
+    when(() => popularMoviesBloc.state)
+        .thenReturn(PopularMoviesLoaded(movies: tMovieList));
+
+    final widgetFinder = find.byType(InkWell);
+
+    await tester.pumpWidget(_makeTestableWidget(
+      PopularMoviesPage(),
+    ));
+    await tester.tap(widgetFinder);
+  });
+}

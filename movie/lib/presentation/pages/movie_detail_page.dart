@@ -68,13 +68,17 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
               child: CircularProgressIndicator(),
             );
           } else if (state is MovieDetailError) {
-            return Expanded(
-                child: Center(
-                    child: Text(
-              state.error,
-            )));
+            return Center(
+              child: Text(
+                state.error,
+                key: const Key('detail-error'),
+              ),
+            );
           } else {
-            return Text('Unhandled State ${state.toString()}');
+            return Text(
+              'Unhandled State ${state.toString()}',
+              key: const Key('unhandler-error'),
+            );
           }
         },
       ),
@@ -100,6 +104,7 @@ class DetailContent extends StatelessWidget {
           placeholder: (context, url) => const Center(
             child: CircularProgressIndicator(),
           ),
+          // coverage:ignore-line
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
         Container(
@@ -191,6 +196,8 @@ class DetailContent extends StatelessWidget {
                                     return Center(
                                       child: Text(
                                         state.data.recommendationError,
+                                        key: const Key(
+                                            'recommendation-error-text'),
                                       ),
                                     );
                                   } else {
@@ -203,6 +210,8 @@ class DetailContent extends StatelessWidget {
                                           return Padding(
                                             padding: const EdgeInsets.all(4.0),
                                             child: InkWell(
+                                              key: Key(
+                                                  'recommendation-inkwell-$index'),
                                               onTap: () {
                                                 Navigator.pushReplacementNamed(
                                                   context,
@@ -223,6 +232,7 @@ class DetailContent extends StatelessWidget {
                                                     child:
                                                         CircularProgressIndicator(),
                                                   ),
+                                                  // coverage:ignore-line
                                                   errorWidget: (context, url,
                                                           error) =>
                                                       const Icon(Icons.error),
@@ -235,14 +245,10 @@ class DetailContent extends StatelessWidget {
                                       ),
                                     );
                                   }
-                                } else if (state is MovieDetailLoading) {
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                } else {
-                                  return Text(
-                                      'Unhandled State ${state.toString()}');
                                 }
+                                // coverage:ignore-line
+                                return Text(
+                                    'Unhandled State ${state.toString()}');
                               },
                             ),
                           ],
@@ -261,9 +267,7 @@ class DetailContent extends StatelessWidget {
                 ),
               );
             },
-            // initialChildSize: 0.5,
             minChildSize: 0.25,
-            // maxChildSize: 1.0,
           ),
         ),
         Padding(
@@ -286,7 +290,7 @@ class DetailContent extends StatelessWidget {
   String _showGenres(List<Genre> genres) {
     String result = '';
     for (var genre in genres) {
-      result += genre.name + ', ';
+      result += '${genre.name}, ';
     }
 
     if (result.isEmpty) {

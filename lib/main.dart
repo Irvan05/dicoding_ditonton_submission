@@ -21,7 +21,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // routeObserver.subscribe();
     return MultiProvider(
       providers: [
         //bloc

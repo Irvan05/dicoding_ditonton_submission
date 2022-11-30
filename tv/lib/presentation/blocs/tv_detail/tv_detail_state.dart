@@ -1,13 +1,14 @@
+// ignore_for_file: prefer_const_constructors_in_immutables
+
 part of 'tv_detail_bloc.dart';
 
-class TvDetailLoadedData {
+class TvDetailLoadedData extends Equatable {
   final TvDetail tv;
   final List<Tv> tvRecommendations;
   final bool isRecommendationError;
   final String recommendationError;
   final RequestState seasonEpisodeState;
   final SeasonEpisode? seasonEpisode;
-  final bool isSeasonEpisodeError;
   final String seasonEpisodeError;
   final bool isAddedToWatchlist;
   final String watchlistMessage;
@@ -20,7 +21,6 @@ class TvDetailLoadedData {
     required this.seasonEpisodeState,
     required this.seasonEpisode,
     required this.seasonEpisodeError,
-    required this.isSeasonEpisodeError,
     required this.isAddedToWatchlist,
     required this.watchlistMessage,
   });
@@ -32,7 +32,6 @@ class TvDetailLoadedData {
     String? recommendationError,
     RequestState? seasonEpisodeState,
     SeasonEpisode? seasonEpisode,
-    bool? isSeasonEpisodeError,
     String? seasonEpisodeError,
     bool? isAddedToWatchlist,
     String? watchlistMessage,
@@ -46,12 +45,23 @@ class TvDetailLoadedData {
       recommendationError: recommendationError ?? this.recommendationError,
       seasonEpisodeState: seasonEpisodeState ?? this.seasonEpisodeState,
       seasonEpisode: seasonEpisode ?? this.seasonEpisode,
-      isSeasonEpisodeError: isSeasonEpisodeError ?? this.isSeasonEpisodeError,
       seasonEpisodeError: seasonEpisodeError ?? this.seasonEpisodeError,
       isAddedToWatchlist: isAddedToWatchlist ?? this.isAddedToWatchlist,
       watchlistMessage: watchlistMessage ?? this.watchlistMessage,
     );
   }
+
+  @override
+  List<Object> get props => [
+        tv,
+        tvRecommendations,
+        isRecommendationError,
+        recommendationError,
+        seasonEpisodeState,
+        seasonEpisodeError,
+        isAddedToWatchlist,
+        watchlistMessage,
+      ];
 }
 
 abstract class TvDetailState extends Equatable {
@@ -74,3 +84,5 @@ class TvDetailLoaded extends TvDetailState {
   @override
   List<Object> get props => [data];
 }
+
+class TvDetailDummy extends TvDetailState {}

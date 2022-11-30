@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, constant_identifier_names
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tv/presentation/blocs/on_the_air_tvs/on_the_air_tvs_bloc.dart';
 import 'package:tv/presentation/widgets/tv_card_list.dart';
@@ -47,6 +49,7 @@ class _OnTheAirTvsPageState extends State<OnTheAirTvsPage> {
               );
             } else {
               return Center(
+                key: const Key('unhandled_message'),
                 child: Text('Unhandled state ${state.toString()}'),
               );
             }

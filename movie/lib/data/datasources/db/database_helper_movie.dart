@@ -40,18 +40,6 @@ class DatabaseHelperMovie {
       );''');
   }
 
-  // void _onCreate(Database db, int version) async {
-  //   await db.execute('''
-  //     CREATE TABLE  $_tblCacheMovie (
-  //       id INTEGER PRIMARY KEY,
-  //       title TEXT,
-  //       overview TEXT,
-  //       posterPath TEXT,
-  //       category TEXT
-  //     );
-  //   ''');
-  // }
-
   Future<void> insertCacheTransactionMovie(
       List<MovieTable> movies, String category) async {
     final db = await database;

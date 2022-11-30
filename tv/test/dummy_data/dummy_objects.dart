@@ -8,10 +8,10 @@ import 'package:tv/domain/entities/tv_detail.dart';
 final testTv = Tv(
     backdropPath: "/56v2KjBlU4XaOv9rVYEQypROD7P.jpg",
     firstAirDate: DateTime(2016, 7, 15), //"2016-07-15",
-    genreIds: [18, 10765, 9648],
+    genreIds: const [18, 10765, 9648],
     id: 66732,
     name: "Stranger Things",
-    originCountry: ["US"],
+    originCountry: const ["US"],
     originalLanguage: "en",
     originalName: "Stranger Things",
     overview: "overview",
@@ -85,12 +85,6 @@ const testTvTable = TvTable(
   overview: 'overview',
 );
 
-final testMovieMap = {
-  'id': 1,
-  'overview': 'overview',
-  'posterPath': 'posterPath',
-  'title': 'title',
-};
 final testTvMap = {
   'id': 66732,
   'name': 'Stranger Things',
