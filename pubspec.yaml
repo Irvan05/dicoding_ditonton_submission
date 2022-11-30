@@ -46,6 +46,10 @@ dependencies:
     path: watchlist
 
 dev_dependencies:
+  build_runner: ^2.0.4
+  mockito: ^5.0.8
+  mocktail: ^0.3.0
+  sqflite_common_ffi: ^2.2.0+1
   flutter_test:
     sdk: flutter
   integration_test:
