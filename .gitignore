@@ -10,6 +10,7 @@
 .svn/
 .perl
 /coverage/html/
+*.coverage/
 
 # IntelliJ related
 *.iml
